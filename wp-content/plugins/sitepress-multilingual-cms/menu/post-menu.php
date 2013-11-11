@@ -1,10 +1,13 @@
 <?php $this->noscript_notice() ?>
 
-<?php if(get_post_meta($post->ID, '_icl_lang_duplicate_of', true)): ?>
+<?php
+$icl_lang_duplicate_of = get_post_meta($post->ID, '_icl_lang_duplicate_of', true);
+
+if($icl_lang_duplicate_of): ?>
 <div class="icl_cyan_box"><?php 
     printf(__('This document is a duplicate of %s and it is maintained by WPML.', 'sitepress'), 
-        '<a href="'.get_edit_post_link($translations[$this->get_default_language()]->element_id).'">' . 
-        $translations[$this->get_default_language()]->post_title . '</a>');
+        '<a href="'.get_edit_post_link($icl_lang_duplicate_of).'">' .
+		get_the_title($icl_lang_duplicate_of) . '</a>');
 ?>    
     <p><input id="icl_translate_independent" class="button-secondary" type="button" value="<?php _e('Translate independently', 'sitepress') ?>" /></p>
     <?php wp_nonce_field('reset_duplication_nonce', '_icl_nonce_rd') ?>
@@ -314,6 +317,10 @@
                             }
                             break;
                         default:
+							if($needs_update){
+							   $img = 'needs-update.png';
+						   	}
+
                             $edit_link = get_edit_post_link($translations[$lang['code']]->element_id);    
                     }
                 ?>

@@ -221,8 +221,8 @@
                 <td><?php echo apply_filters('the_title', $job->post_title ); ?></td>
                 <td><?php echo $job->lang_text ?></td>
                 <td nowrap="nowrap">
-                    <?php if ($job->original_doc_id) {?>
-						<a class="button-secondary" href="admin.php?page=<?php echo WPML_TM_FOLDER ?>/menu/translations-queue.php&job_id=<?php echo $job->job_id ?>"><?php _e('edit', 'wpml-translation-management'); ?></a>
+                    <?php if ($job->original_doc_id) { ?>
+						<a class="button-secondary" href="<?php echo apply_filters('icl_job_edit_url',admin_url('admin.php?page=' . WPML_TM_FOLDER . '/menu/translations-queue.php&job_id=' . $job->job_id),$job->job_id); ?>"><?php _e('edit', 'wpml-translation-management'); ?></a>
 					<?php
 					echo TranslationManagement::tm_post_link($job->original_doc_id, __('View original', 'wpml-translation-management'), true);} ?>
                 </td>
