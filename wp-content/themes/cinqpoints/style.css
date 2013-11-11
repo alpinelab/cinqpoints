@@ -35,3 +35,7 @@
 #footer a:not(:hover) {
   color: #444 !important;
 }
+
+.tb-welcome {
+  display: none !important;
+}
