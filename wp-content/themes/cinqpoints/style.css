@@ -28,3 +28,10 @@
 /* --------------------------------------------
  * CHILD THEME CSS
  * -------------------------------------------- */
+
+#footer,
+#footer p,
+#footer h4,
+#footer a:not(:hover) {
+  color: #444 !important;
+}
