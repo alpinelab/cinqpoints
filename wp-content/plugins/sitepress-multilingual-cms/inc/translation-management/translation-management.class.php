@@ -3678,19 +3678,23 @@ class TranslationManagement{
 	function load_plugins_wpml_config()
 	{
 		if ( is_multisite() ) {
-			// Get multisite plugins
+			// Get multi site plugins
 			$plugins = get_site_option( 'active_sitewide_plugins' );
-			foreach ( $plugins as $p => $dummy ) {
-				$config_file = ABSPATH . '/' . PLUGINDIR . '/' . dirname( $p ) . '/wpml-config.xml';
-				if ( trim( dirname( $p ), '\/.' ) && file_exists( $config_file ) ) {
-					$this->wpml_config_files[ ] = $config_file;
+			if ( !empty( $plugins ) ) {
+				foreach ( $plugins as $p => $dummy ) {
+					$config_file = WP_PLUGIN_DIR . '/' . dirname( $p ) . '/wpml-config.xml';
+					if ( trim( dirname( $p ), '\/.' ) && file_exists( $config_file ) ) {
+						$this->wpml_config_files[ ] = $config_file;
+					}
 				}
 			}
-		} else {
-			// Get single site plugins
-			$plugins = get_option( 'active_plugins' );
+		}
+
+		// Get single site or current blog active plugins
+		$plugins = get_option( 'active_plugins' );
+		if ( !empty( $plugins ) ) {
 			foreach ( $plugins as $p ) {
-				$config_file = ABSPATH . '/' . PLUGINDIR . '/' . dirname( $p ) . '/wpml-config.xml';
+				$config_file = WP_PLUGIN_DIR . '/' . dirname( $p ) . '/wpml-config.xml';
 				if ( trim( dirname( $p ), '\/.' ) && file_exists( $config_file ) ) {
 					$this->wpml_config_files[ ] = $config_file;
 				}
@@ -3708,7 +3712,6 @@ class TranslationManagement{
 			}
 		}
 	}
-
 
 	function load_theme_wpml_config(){
         if(get_template_directory() != get_stylesheet_directory()){
@@ -3962,28 +3965,36 @@ class TranslationManagement{
     }
 
     function make_duplicate($master_post_id, $lang){
-        global $sitepress, $wpdb;
-        
+		static $done = array();
+
+		if(isset($done[$master_post_id][$lang])) return;
+		$done[$master_post_id][$lang] = true;
+
+        global $sitepress, $sitepress_settings, $wpdb;
+
         do_action('icl_before_make_duplicate', $master_post_id, $lang);
         
         $master_post = get_post($master_post_id);
 
+		$is_duplicated = false;
         $trid = $sitepress->get_element_trid($master_post_id, 'post_' . $master_post->post_type);
         if($trid){
             $translations = $sitepress->get_element_translations($trid, 'post_' . $master_post->post_type);
 
             if(isset($translations[$lang])){
                 $postarr['ID'] = $translations[$lang]->element_id;
+				$is_duplicated = get_post_meta($translations[$lang]->element_id, '_icl_lang_duplicate_of', true);
             }
 
         }
 
         // covers the case when deleting in bulk from all languages
         // setting post_status to trash before wp_trash_post runs issues an WP error
+		$posts_to_delete_or_restore_in_bulk = false;
 		if(isset($_GET['action']) && ($_GET['action'] == 'trash' || $_GET['action'] == 'untrash') && isset($_GET['lang']) && $_GET['lang'] == 'all'){
             static $posts_to_delete_or_restore_in_bulk;
             if(is_null($posts_to_delete_or_restore_in_bulk)){
-                $posts_to_delete_or_restore_in_bulk = isset($_GET['post']) && is_array($_GET['post']) ? $_GET['post'] : array();
+                $posts_to_delete_or_restore_in_bulk = isset($_GET['post']) && is_array($_GET['post']) ? $_GET['post'] : false;
             }
         }
 
@@ -3993,7 +4004,8 @@ class TranslationManagement{
         $postarr['post_content']    = $master_post->post_content;
         $postarr['post_title']      = $master_post->post_title;
         $postarr['post_excerpt']    = $master_post->post_excerpt;
-        if(!isset($posts_to_delete_or_restore_in_bulk) || !in_array($postarr['ID'], $posts_to_delete_or_restore_in_bulk)){
+
+        if(($sitepress_settings['sync_delete'] || $is_duplicated) && (!$posts_to_delete_or_restore_in_bulk || !in_array($postarr['ID'], $posts_to_delete_or_restore_in_bulk))){
             $postarr['post_status']     = $master_post->post_status;
         }
         $postarr['comment_status']  = $master_post->comment_status;
@@ -4015,6 +4027,7 @@ class TranslationManagement{
         $_POST['icl_trid'] = $trid;
         $_POST['icl_post_language'] = $lang;
         $_POST['skip_sitepress_actions'] = true;
+        $_POST['post_type'] = $master_post->post_type;
 
         if(isset($postarr['ID'])){
             $id = wp_update_post($postarr);
@@ -4034,7 +4047,7 @@ class TranslationManagement{
 
             $this->save_post_actions($id, get_post($id), ICL_TM_DUPLICATE);
 
-            $this->duplicate_fix_children($master_post_id, $lang);
+			$this->duplicate_fix_children($master_post_id, $lang);
 
             // dup comments
             if($sitepress->get_option('sync_comments_on_duplicates')){
@@ -4582,7 +4595,7 @@ class TranslationManagement{
 	private static function icl_insert_term($name, $taxonomy, $term_args, $target_lang) {
 		global $sitepress;
 		$new_term = wp_insert_term($name, $taxonomy, $term_args);
-		if($new_term) {
+		if($new_term && !is_wp_error($new_term)) {
 			$tt_id = $sitepress->get_element_trid( $new_term['term_taxonomy_id'], 'tax_' . $taxonomy );
 			$sitepress->set_element_language_details( $new_term['term_taxonomy_id'], 'tax_' . $taxonomy, $tt_id, $target_lang );
 		}

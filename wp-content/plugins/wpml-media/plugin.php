@@ -5,13 +5,14 @@ Plugin URI: http://wpml.org/
 Description: Add multilingual support for Media files
 Author: ICanLocalize
 Author URI: http://wpml.org
-Version: 2.1
+Version: 2.1.1
 */
 
 if (defined('WPML_MEDIA_VERSION')) {
 	return;
 }
 
+define('WPML_MEDIA_VERSION', '2.1.1');
 define('WPML_MEDIA_PATH', dirname(__FILE__));
 
 require WPML_MEDIA_PATH . '/inc/constants.inc';

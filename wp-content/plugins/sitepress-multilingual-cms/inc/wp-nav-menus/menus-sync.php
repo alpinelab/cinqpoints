@@ -112,7 +112,7 @@ class ICLMenusSync
 
 	function get_menu_item_translations( $item, $menu_id )
 	{
-		global $sitepress;
+		global $wpdb, $sitepress;
 
 		$current_language = $sitepress->get_current_language();
 		$languages        = $sitepress->get_active_languages();
@@ -349,7 +349,11 @@ class ICLMenusSync
 					$menu_object             = $wpdb->get_row( $wpdb->prepare( $menu_query, $menu_translated_id ) );
 					$menu_data[ 'id' ]       = $menu_object->term_id;
 					$menu_data[ 'name' ]     = $menu_object->name;
+					$current_lang = $sitepress->get_current_language();
+
+					$sitepress->switch_lang($language[ 'code' ], false);
 					$menu_data[ 'items' ]    = $this->get_menu_items( $menu_translated_id, false, $menu_object->name );
+					$sitepress->switch_lang($current_lang, false);
 					$menu_data[ 'auto_add' ] = isset( $menu_options[ 'auto_add' ] ) && in_array( $menu_translated_id, $menu_options[ 'auto_add' ] );
 				}
 				$translations[ $language[ 'code' ] ] = $menu_data;
@@ -488,6 +492,10 @@ class ICLMenusSync
 				foreach ( $languages as $items ) {
 					foreach ( $items as $item_id => $name ) {
 						wp_delete_post( $item_id, true );
+						$delete_trid = $sitepress->get_element_trid( $item_id, 'post_nav_menu_item' );
+						if ( $delete_trid ) {
+							$sitepress->delete_element_translation( $trid, 'post_nav_menu_item', $language_code );
+						}
 					}
 				}
 			}

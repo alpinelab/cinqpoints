@@ -35,7 +35,7 @@ if($icl_lang_duplicate_of): ?>
         <div id="icl_translation_of_panel" class="icl_box_paragraph">
         <?php echo __('This is a translation of', 'sitepress') ?>&nbsp;
         <select name="icl_translation_of" id="icl_translation_of"<?php if((empty($_GET['action']) || $_GET['action'] != 'edit') && $trid) echo ' disabled="disabled"';?>>
-            <?php if($source_language == null || $source_language == $default_language): ?>
+            <?php if(!$source_language || $source_language == $default_language): ?>
                 <?php if($trid): ?>
                     <option value="none"><?php echo __('--None--', 'sitepress') ?></option>                    
                     <?php

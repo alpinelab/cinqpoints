@@ -91,3 +91,6 @@ Of course. You'll select the software sources you're interested in and activate 
 
 = 0.7 =
 * Bug fixes, multisite support and compatibility with WordPress 3.7
+
+= 0.7.1 =
+* Bug fixes

@@ -17,6 +17,9 @@ class WPML_String_Translation
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'init', array( 'WPML_Slug_Translation', 'init' ) );
 
+		//Handle Admin Notices
+		add_action( 'plugins_loaded', array( __CLASS__, '_st_warnings' ) );
+
 		add_action( 'icl_ajx_custom_call', array( $this, 'ajax_calls' ), 10, 2 );
 	}
 
@@ -57,9 +60,6 @@ class WPML_String_Translation
 			return false;
 		}
 
-		//Handle Admin Notices
-		self::_st_warnings();
-
 		add_action( 'admin_menu', array( $this, 'menu' ) );
 
 		add_filter( 'plugin_action_links', array( $this, 'plugin_action_links' ), 10, 2 );
@@ -93,6 +93,8 @@ class WPML_String_Translation
 
 	static function _st_warnings()
 	{
+		if(!class_exists('ICL_AdminNotifier')) return;
+		
 		global $sitepress, $sitepress_settings;
 		if(!isset($sitepress)) return;
 

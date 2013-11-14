@@ -91,14 +91,6 @@ class SitePress{
             // Post/page save actions
             add_action('save_post', array($this,'save_post_actions'), 10, 2);
 
-			// Blocks trashing or deleting of original posts that have translations
-			add_filter ('user_has_cap', array($this,'prevent_post_deletion'), 10, 3);
-			// Shows some feedback for posts that can't be deleted or trashed
-			add_filter( 'page_row_actions', array($this,'prevent_post_deletion_row_actions'), 10, 2);
-			add_filter( 'post_row_actions', array($this,'prevent_post_deletion_row_actions'), 10, 2);
-			// Shows some feedback in edit post page, for posts that can't be deleted or trashed
-			add_action('post_submitbox_start', array($this,'prevent_post_deletion_post_submitbox_start'));
-
             //post/page delete taxonomy
             add_action('deleted_term_relationships', array($this,'deleted_term_relationships'), 10, 2);
 
@@ -112,7 +104,7 @@ class SitePress{
             add_filter('pre_post_tax_input', array($this, 'validate_taxonomy_input'));
 
             // Post/page delete actions
-            add_action('delete_post', array($this,'delete_post_actions'));
+//            add_action('delete_post', array($this,'delete_post_actions'));
             add_action('deleted_post', array($this,'deleted_post_actions'));
             add_action('wp_trash_post', array($this,'trash_post_actions'));
             add_action('untrashed_post', array($this,'untrashed_post_actions'));
@@ -2778,7 +2770,8 @@ class SitePress{
             $postvars['post_type'] = $post_type;
         }
 
-        if(isset($postvars['action']) && $postvars['action']=='post-quickpress-publish'){
+		$element_type = 'post_' . $post_type;
+		if(isset($postvars['action']) && $postvars['action']=='post-quickpress-publish'){
             $post_id = $pidd;
             $language_code = $this->get_default_language();
         }elseif(isset($_GET['bulk_edit'])){
@@ -2789,7 +2782,7 @@ class SitePress{
 
             if(isset($postvars['icl_post_language'])){
                 $language_code = $postvars['icl_post_language'];
-            }elseif($_ldet   = $this->get_element_language_details($post_id, 'post_' . $post_type)){
+            }elseif($_ldet   = $this->get_element_language_details($post_id, $element_type )){
                 $language_code = $_ldet->language_code;
             }else{
                 $language_code = $this->get_default_language(); //latter case for XML-RPC publishing
@@ -2797,6 +2790,8 @@ class SitePress{
 
         }
 
+		$old_trid = false;
+		$icl_translation_of = false;
         if(isset($postvars['action']) && $postvars['action']=='inline-save' || isset($_GET['bulk_edit']) || isset($_GET['doing_wp_cron']) || (isset($_GET['action']) && $_GET['action']=='untrash')){
             $res = $wpdb->get_row("SELECT trid, language_code FROM {$wpdb->prefix}icl_translations WHERE element_id={$post_id} AND element_type LIKE 'post\\_%'");
             $trid = $res->trid;
@@ -2812,6 +2807,8 @@ class SitePress{
             // see if we have a "translation of" setting.
             if(isset($postvars['icl_translation_of'])){
                 if(is_numeric($postvars['icl_translation_of'])){
+					$old_trid = $trid;
+					$icl_translation_of = $postvars['icl_translation_of'];
                     $trid = $wpdb->get_var($wpdb->prepare("SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_id=%d AND element_type=%s", $postvars['icl_translation_of'], 'post_' . $post->post_type));
                 }else{
                     if (empty($postvars['icl_trid']))
@@ -2825,7 +2822,20 @@ class SitePress{
         // set post language if front-end translation creating
         $language_code = apply_filters('wpml_save_post_lang', $language_code);
 
-        $this->set_element_language_details($post_id, 'post_'.$post_type, $trid, $language_code);
+		$this->set_element_language_details( $post_id, $element_type, $trid, $language_code );
+
+		//Update translations as well
+		if ( $icl_translation_of && $old_trid && $old_trid != $trid ) {
+			$icl_translation_of_lang = $this->get_element_language_details( $icl_translation_of, $element_type );
+			$element_translations    = $this->get_element_translations( $old_trid, $element_type );
+
+			foreach ( $element_translations as $code => $element_translation ) {
+				$tr_trid = $this->get_element_trid( $element_translation->element_id, $element_type );
+				if ( $icl_translation_of_lang && $tr_trid != $trid && $code != $language_code && $code != $icl_translation_of_lang->language_code ) {
+					$this->set_element_language_details( $element_translation->element_id, $element_type, $trid, $code, $element_translation->source_language_code );
+				}
+			}
+		}
 
         if(!in_array($post_type, array('post','page')) && !$this->is_translated_post_type($post_type)){
 			wp_defer_term_counting( false ) ;
@@ -2833,7 +2843,7 @@ class SitePress{
         }
 
         // used by the sync jobs
-		$translated_posts_sql = $wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND element_id<>%d AND element_type=%s", $trid, $post_id, 'post_' . $post_type);
+		$translated_posts_sql = $wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND element_id<>%d AND element_type=%s", $trid, $post_id, $element_type );
         $translated_posts = $wpdb->get_col($translated_posts_sql);
 
         // synchronize the page order for translations
@@ -3061,6 +3071,7 @@ class SitePress{
 				$original_id  = false;
 				$can_delete   = true;
 				foreach ( $translations as $translation ) {
+					//TODO: check that the post exists too
 					if ( $translation->language_code != $sitepress->get_default_language() ) {
 						$can_delete = false;
 					} else {
@@ -3077,33 +3088,6 @@ class SitePress{
 		}
 
 		return true;
-	}
-
-	function prevent_post_deletion( $allcaps, $caps, $args )
-	{
-		if ( isset( $args[ 0 ] ) && isset( $args[ 2 ] ) && $args[ 0 ] == 'delete_post' ) {
-			$post = get_post( $args[ 2 ] );
-			$allcaps[ $caps[ 0 ] ] = $this->can_post_be_deleted($post);
-		}
-
-		return $allcaps;
-	}
-
-	function prevent_post_deletion_row_actions( $actions, $post )
-	{
-		if ( !$this->can_post_be_deleted( $post ) ) {
-			$actions[ 'icl_error_text' ] = __( 'This post cannot be deleted or trashed: please delete translated versions first.', 'sitepress' );
-		}
-
-		return $actions;
-	}
-
-	function prevent_post_deletion_post_submitbox_start()
-	{
-		global $post;
-		if ( !$this->can_post_be_deleted( $post ) ) {
-			echo '<span class="icl_error_text">' . __( 'This post cannot be deleted or trashed: please delete translated versions first.', 'sitepress' ) . '</span>';
-		}
 	}
 
 	function wp_unique_post_slug($slug, $post_ID, $post_status, $post_type, $post_parent){
@@ -3405,22 +3389,90 @@ class SitePress{
     }
     /* Custom fields synchronization - END */
 
-	function delete_post_actions( $post_id )
-	{
-		$post_type = get_post_type( $post_id );
+    function deleted_post_actions($post_id){
+        global $wpdb;
 
-		$trid = $this->get_element_trid( $post_id, 'post_' . $post_type );
-		if ( $trid ) {
-			$this->delete_element_translation( $trid, $post_id );
-		}
+		$post = get_post();
+		if(!isset($post)) $post = get_post($post_id);
+		$post_id = $post->ID;
+		if($post == null) return;
+
+		$post_type = $post->post_type;
+
 		require_once ICL_PLUGIN_PATH . '/inc/cache.php';
   		icl_cache_clear($post_type.'s_per_language', true);
-	}
 
-    function deleted_post_actions($post_id){
-        global $wpdb, $post;
+		$element_type = 'post_' . $post_type;
+		$trid = $this->get_element_trid( $post_id, $element_type );
 
-		if($post == null || !$this->settings[ 'sync_delete' ]) return;
+		if ( $trid ) {
+			$language_details = $this->get_element_language_details($post_id, $element_type );
+			$is_original = !$language_details->source_language_code;
+			$original_language = $language_details->language_code;
+
+			$this->delete_element_translation( $trid, $element_type, $language_details->language_code );
+
+			//If we've just deleted the original and there are still translation, let's set the original to the first available translation
+			$post_translations = $this->get_element_translations($trid, $element_type );
+			if($is_original && $post_translations) {
+				$languages = $this->get_active_languages(true);
+				$languages = $this->order_languages($languages);
+				$fallback_language = false;
+				$new_source_translation_id = false;
+
+				//Get first available languages (to keep their order)
+				foreach($languages as $language) {
+					if($language['code']!=$original_language) {
+						if ( isset( $post_translations[ $language['code'] ] ) ) {
+							$fallback_language = $language['code'];
+							$new_source_translation_id = $post_translations[ $fallback_language ]->element_id;
+							break;
+						}
+					}
+				}
+
+
+				foreach ( $post_translations as $post_translation ) {
+					$element_language_details = $this->get_element_language_details( $post_translation->element_id, $element_type );
+					if ( $post_translation->element_id == $new_source_translation_id ) {
+						$source_language = false;
+					} elseif ( $original_language == $element_language_details->source_language_code ) {
+						$source_language = $fallback_language;
+					} else {
+						$source_language = $element_language_details->source_language_code;
+					}
+
+					if($source_language) {
+						$wpdb->update( $wpdb->prefix . 'icl_translations', array(
+																				'language_code'        => $element_language_details->language_code,
+																				'source_language_code' => $source_language
+																		   ), array(
+																				   'translation_id' => $post_translation->translation_id
+																			  ) );
+					} else {
+						$fix_languages_prepared_sql = $wpdb->prepare(
+														   "UPDATE {$wpdb->prefix}icl_translations SET language_code=%s, source_language_code=NULL WHERE translation_id=%d",
+														   $element_language_details->language_code,
+														   $post_translation->translation_id
+						);
+
+						$wpdb->query($fix_languages_prepared_sql);
+					}
+
+					$_icl_lang_duplicate_of = get_post_meta( $post_translation->element_id, '_icl_lang_duplicate_of', true );
+					if ( $_icl_lang_duplicate_of ) {
+						if ( $element_language_details->language_code == $fallback_language ) {
+							delete_post_meta( $post_translation->element_id, '_icl_lang_duplicate_of' );
+						} else {
+							update_post_meta( $post_translation->element_id, '_icl_lang_duplicate_of', $new_source_translation_id );
+						}
+					}
+				}
+
+			}
+		}
+
+		if(!$this->settings[ 'sync_delete' ]) return;
 
         static $deleted_posts;
 
@@ -3428,11 +3480,10 @@ class SitePress{
             return; // avoid infinite loop
         }
         
-        $post_type = $post->post_type;
 
 		if ( ( empty( $deleted_posts ) || ( is_array( $deleted_posts ) && !isset( $deleted_posts[ $post_id ] ) ) )  ) {
-			$trid         = $this->get_element_trid( $post_id, 'post_' . $post_type );
-			$translations = $this->get_element_translations( $trid, 'post_' . $post_type );
+			$trid         = $this->get_element_trid( $post_id, $element_type );
+			$translations = $this->get_element_translations( $trid, $element_type );
 			foreach ( $translations as $t ) {
 				if ( $t->element_id != $post_id ) {
 					$deleted_posts[ ] = $post_id;
@@ -3731,6 +3782,13 @@ class SitePress{
 
             $source_language = isset($_GET['source_lang']) ? $_GET['source_lang'] : false;
 
+			if(!$source_language) {
+				if(isset($translations[$selected_language])) {
+					$selected_content_translation = $translations[$selected_language];
+					$selected_content_language_details = $this->get_element_language_details($selected_content_translation->element_id,'post_'.$post->post_type);
+					if(isset($selected_content_language_details)) $source_language = $selected_content_language_details->source_language_code;
+				}
+			}
             //globalize some variables to make them available through hooks
             global $icl_meta_box_globals;
             $icl_meta_box_globals = array(
@@ -3951,9 +4009,9 @@ class SitePress{
 	 * @return string
 	 */
 	function posts_join_filter($join, $query){
-        global $wpdb, $pagenow, $wp_taxonomies;
+        global $wpdb, $pagenow, $wp_taxonomies, $sitepress_settings;
 
-        if($pagenow=='upload.php' || $pagenow=='media-upload.php' || $query->is_attachment() ){
+        if($pagenow=='upload.php' || $pagenow=='media-upload.php' || $query->is_attachment() || (isset($query->queried_object) && $query->queried_object->ID == $sitepress_settings['urls']['root_page'] )){
             return $join;
         }
 
@@ -4023,10 +4081,10 @@ class SitePress{
     }
 
     function posts_where_filter($where, $query){
-        global $wpdb, $pagenow, $wp_taxonomies;
+        global $wpdb, $pagenow, $wp_taxonomies, $sitepress_settings;
         //exceptions
 
-        //$post_type = get_query_var('post_type');
+        if(isset($query->queried_object) && $query->queried_object->ID == $sitepress_settings['urls']['root_page']) return $where;
 
         // determine post type
         $db = debug_backtrace();
@@ -4398,7 +4456,7 @@ class SitePress{
 			<select name="icl_translation_of" id="icl_translation_of"<?php if ( ( !isset( $_GET[ 'action' ] ) || $_GET[ 'action' ] != 'edit' ) && $trid )
 				echo " disabled" ?>>
 				<?php
-				if ( $source_language == null || $source_language == $default_language ) {
+				if ( !$source_language || $source_language == $default_language ) {
 					if ( $trid ) {
 						?>
 						<option value="none"><?php echo __( '--None--', 'sitepress' ) ?></option>
@@ -8249,7 +8307,9 @@ class SitePress{
 		// If there are translations and is not paged content...
 
 		//Renders head alternate links only on certain conditions
-		$is_valid = count($languages)>1 && !is_paged() && (((is_single() || is_page()) && get_post_status ( get_the_ID() ) == 'publish') ||  (is_home() || is_front_page() || is_archive()));
+		$the_post   = get_post();
+		$the_id   = $the_post ? $the_post->ID : false;
+		$is_valid = $the_id && count($languages)>1 && !is_paged() && (((is_single() || is_page()) && get_post_status ( $the_id ) == 'publish') ||  (is_home() || is_front_page() || is_archive()));
 
 		if($is_valid) {
 			foreach($languages as $code => $lang){
