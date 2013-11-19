@@ -39,3 +39,8 @@
 .tb-welcome {
   display: none !important;
 }
+
+h4.spb_heading:before,
+h4.lined-heading:before {
+  border: none !important;
+}
