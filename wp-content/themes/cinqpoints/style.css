@@ -54,7 +54,8 @@ h4.lined-heading:before {
 }
 
 /* Remove drop shadows under products images */
-figure.product-transition {
+figure.product-transition, /* archive page */
+#product-img-slider { /* single page */
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
