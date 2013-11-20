@@ -42,7 +42,7 @@ h4.lined-heading:before {
 
 /* Remove flags from language switcher */
 #header-languages img {
-  display: none;
+  display: none !important;
 }
 
 /* Change main nav border to be bottom and black (instead of top and gray) */
@@ -58,6 +58,15 @@ figure.product-transition {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
+}
+
+/* Remove products archive page header */
+.woocommerce-shop-page .woocommerce-count-wrap,
+.woocommerce-shop-page .woocommerce-ordering {
+  display: none !important;
+}
+.woocommerce-shop-page .products {
+  border-top: none !important;
 }
 
 /*********
