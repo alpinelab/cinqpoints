@@ -49,6 +49,13 @@ h4.lined-heading:before {
   display: none;
 }
 
+#main-nav {
+  border-top: none !important;
+}
+#main-nav .container {
+  border-bottom: solid 1px black !important;
+}
+
 html, body,
 h1, h2, h3, h4, h5, h6,
 nav .menu li {
