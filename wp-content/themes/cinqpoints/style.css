@@ -70,6 +70,11 @@ figure.product-transition, /* archive page */
   border-top: none !important;
 }
 
+/* Make some space after product description */
+.single-product .product-main {
+  margin-bottom: 50px;
+}
+
 /*********
  * Fonts *
  *********/
