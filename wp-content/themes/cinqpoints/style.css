@@ -75,6 +75,12 @@ figure.product-transition, /* archive page */
   margin-bottom: 50px;
 }
 
+/* Make some space around the home slider */
+.home .home-slider-wrap {
+  margin-top: 50px;
+}
+
+
 /*********
  * Fonts *
  *********/
