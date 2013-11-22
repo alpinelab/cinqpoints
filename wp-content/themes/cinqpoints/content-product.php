@@ -76,10 +76,10 @@
 			}
 	
 			if ( has_post_thumbnail() ) {
-				$image_html = wp_get_attachment_image( get_post_thumbnail_id(), 'shop_catalog' );					
+				$image_html = wp_get_attachment_image( get_post_thumbnail_id(), 'shop_single' );					
 			}
 		?>
-		
+
 		<a href="<?php the_permalink(); ?>">
 			
 			<?php
@@ -99,7 +99,7 @@
 							if ( get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
 								continue;
 							
-							echo '<div class="product-image">'.wp_get_attachment_image( $attachment_id, 'shop_catalog' ).'</div>';	
+							echo '<div class="product-image">'.wp_get_attachment_image( $attachment_id, 'shop_single' ).'</div>';	
 							
 							$img_count++;
 							
@@ -139,7 +139,7 @@
 							if ( get_post_meta( $attachment->ID, '_woocommerce_exclude_image', true ) == 1 )
 								continue;
 				
-							echo '<div class="product-image">'.wp_get_attachment_image( $attachment->ID, 'shop_catalog' ).'</div>';	
+							echo '<div class="product-image">'.wp_get_attachment_image( $attachment->ID, 'shop_single' ).'</div>';	
 							
 							$img_count++;
 							
