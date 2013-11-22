@@ -80,6 +80,15 @@ figure.product-transition, /* archive page */
   margin-top: 50px;
 }
 
+/* Change ribbons to be full angles */
+.woocommerce .free-badge,
+.woocommerce .wc-new-badge {
+  padding-top: 25px;
+  top: -8px !important;
+  right: -45px !important;
+  background-color: black !important;
+}
+
 
 /*********
  * Fonts *
