@@ -61,6 +61,98 @@ figure.product-transition, /* archive page */
   box-shadow: none !important;
 }
 
+/* Remove drop shadows around shopping cart pop menu */
+nav .menu ul.sub-menu {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  border-top: solid 1px black !important;
+}
+
+/* Change alert messages color to white */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  background-color: white !important;
+  border: solid 1px black !important;
+  color: black !important;
+}
+.woocommerce-message:before,
+.woocommerce-error:before,
+.woocommerce-info:before {
+  color: black !important;
+}
+
+/* Change coupon button style on checkout page */
+.woocommerce input.button {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border: none !important;
+  background: none !important;
+  text-shadow: none !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+  font-weight: normal !important;
+}
+.woocommerce input.button:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+/* Change login box style */
+.woocommerce #account_details .login {
+  background-color: white !important;
+  color: black !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.woocommerce #account_details div.login {
+  border: solid 1px black !important;
+}
+.woocommerce #account_details .login h4.lined-heading span {
+  background-color: white !important;
+}
+
+/* Change shopping cart buttons style */
+.woocommerce .quantity,
+.woocommerce .quantity .minus,
+.woocommerce .quantity .plus,
+.woocommerce .quantity input.qty,
+.woocommerce table.shop_table tr td.product-remove .remove,
+.woocommerce .shipping-calculator-form .update-totals-button button,
+.woocommerce .coupon input.apply-coupon {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border: none !important;
+}
+.woocommerce .quantity .minus:hover,
+.woocommerce .quantity .plus:hover,
+.woocommerce table.shop_table tr td.product-remove .remove:hover,
+.woocommerce .shipping-calculator-form .update-totals-button button:hover,
+.woocommerce .coupon input.apply-coupon:hover {
+  background-color: black !important;
+  color: white !important;
+}
+input[name="calc_shipping_postcode"] {
+  display: none !important;
+}
+.woocommerce .shipping-calculator-form .form-row-left,
+.woocommerce .shipping-calculator-form .update-totals-button {
+  width: 30% !important;
+}
+
+
+/* Remove "need help ?" notice */
+.woocommerce-checkout .help-bar {
+  display: none !important;
+}
+
 /* Remove products archive page header */
 .woocommerce-shop-page .woocommerce-count-wrap,
 .woocommerce-shop-page .woocommerce-ordering {
