@@ -84,20 +84,20 @@ nav .menu ul.sub-menu {
 }
 
 /* Change coupon button style on checkout page */
-.woocommerce input.button {
+.woocommerce .checkout_coupon input.button {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
   background-color: white !important;
-  border: none !important;
   background: none !important;
+  border: none !important;
   text-shadow: none !important;
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
   border-radius: 0 !important;
   font-weight: normal !important;
 }
-.woocommerce input.button:hover {
+.woocommerce .checkout_coupon input.button:hover {
   background-color: black !important;
   color: white !important;
 }
@@ -241,6 +241,11 @@ input[name="calc_shipping_postcode"] {
   font-size: 0.8em !important;
 }
 
+/* Hide not working "If you're already logged in, proceed to next step" button */
+.checkout-pane .already-logged-in {
+  display: none !important;
+}
+
 /*********
  * Fonts *
  *********/
@@ -248,6 +253,7 @@ input[name="calc_shipping_postcode"] {
 /* Force fonts */
 html, body,
 h1, h2, h3, h4, h5, h6,
+form input[type="submit"], form button,
 a, nav .menu li {
   font-family: 'cinqpoints', sans-serif !important;
   text-transform: lowercase !important;
