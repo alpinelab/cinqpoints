@@ -248,7 +248,7 @@ input[name="calc_shipping_postcode"] {
 /* Force fonts */
 html, body,
 h1, h2, h3, h4, h5, h6,
-nav .menu li {
+a, nav .menu li {
   font-family: 'cinqpoints', sans-serif !important;
   text-transform: lowercase !important;
 }
