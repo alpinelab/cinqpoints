@@ -35,7 +35,7 @@
         	$product_item_text = __('0 items', 'swiftframework');
         } else {
         	$product_item_text = __('1 item', 'swiftframework');
-		}
+			}
 
         return $product_item_text;
 	}
