@@ -117,6 +117,22 @@ nav .menu ul.sub-menu {
   background-color: white !important;
 }
 
+/* Customize categories list in footer */
+.woocommerce.widget.widget_product_categories .widget-heading {
+  display: none !important;
+}
+.woocommerce.widget.widget_product_categories .product-categories .cat-item {
+  float: right !important;
+}
+.woocommerce.widget.widget_product_categories .product-categories .cat-item {
+  border: none !important;
+  float: left !important;
+  margin-left: 1em !important;
+}
+.woocommerce.widget.widget_product_categories .product-categories .cat-item a::before {
+  content: none !important;
+}
+
 /* Change shopping cart buttons style */
 .woocommerce .quantity,
 .woocommerce .quantity .minus,
