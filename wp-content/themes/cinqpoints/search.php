@@ -91,107 +91,45 @@
 
 <div class="inner-page-wrap <?php echo $page_wrap_class; ?> clearfix">
 
-	<!-- OPEN page -->
-	<?php if ($sidebar_config == "left-sidebar" || $sidebar_config == "right-sidebar") { ?>
-	<div class="archive-page span8 clearfix">
-	<?php } else if ($sidebar_config == "both-sidebars") { ?>
-	<div class="archive-page row clearfix">
-	<?php } else { ?>
-	<div class="archive-page clearfix">
-	<?php } ?>
-	
-		<?php if ($sidebar_config == "both-sidebars") { ?>
-			
-			<div class="page-content span6 clearfix">
-			
-				<?php if(have_posts()) : ?>
-					
-					<div class="blog-wrap">
-					
-						<!-- OPEN .blog-items -->
-						<ul class="blog-items row <?php echo $list_class; ?> clearfix">
-				
-						<?php while (have_posts()) : the_post(); ?>
-				
-							<?php 
-								$post_format = get_post_format($post->ID);
-								if ( $post_format == "" ) {
-									$post_format = 'standard';
-								} 
-							?>
-							<li class="blog-item <?php echo $item_class; ?> format-<?php echo $post_format; ?>">
-								<?php echo sf_get_post_item($post->ID, $blog_type); ?>
-							</li>
-				
-						<?php endwhile; ?>
-								
-						<!-- CLOSE .blog-items -->
-						</ul>
-					
-					</div>
-					
-				<?php else: ?>
-				
-				<h3><?php _e("Sorry, there are no posts to display.", "swiftframework"); ?></h3>
-					
-				<?php endif; ?>
-				
-				<div class="pagination-wrap">
-					<?php echo pagenavi($wp_query); ?>									
-				</div>
-				
-			</div>
-				
-			<aside class="sidebar left-sidebar span3">
-				<?php dynamic_sidebar($left_sidebar); ?>
-			</aside>
-		
-		<?php } else { ?>
-		
 		<div class="page-content clearfix">
 
 			<?php if(have_posts()) : ?>
-				
+
 				<div class="blog-wrap">
-				
+
 					<!-- OPEN .blog-items -->
 					<ul class="blog-items row <?php echo $list_class; ?> clearfix">
-			
+
 					<?php while (have_posts()) : the_post(); ?>
-			
-						<?php 
+
+						<?php
 							$post_format = get_post_format($post->ID);
 							if ( $post_format == "" ) {
 								$post_format = 'standard';
-							} 
+							}
 						?>
 						<li class="blog-item <?php echo $item_class; ?> format-<?php echo $post_format; ?>">
 							<?php echo sf_get_post_item($post->ID, $blog_type); ?>
 						</li>
-			
+
 					<?php endwhile; ?>
-							
+
 					<!-- CLOSE .blog-items -->
 					</ul>
-					
+
 				</div>
-			
+
 			<?php else: ?>
-			
+
 			<h3><?php _e("Sorry, there are no posts to display.", "swiftframework"); ?></h3>
-		
+
 			<?php endif; ?>
-			
+
 			<div class="pagination-wrap">
-				<?php echo pagenavi($wp_query); ?>									
+				<?php echo pagenavi($wp_query); ?>
 			</div>
-			
+
 		</div>
-		
-		<?php } ?>	
-	
-	<!-- CLOSE page -->
-	</div>
 
 </div>
 
