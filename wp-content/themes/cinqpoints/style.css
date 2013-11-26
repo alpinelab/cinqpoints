@@ -166,12 +166,12 @@ input[name="calc_shipping_postcode"] {
 }
 
 /* Change forms elements to be white with a black border */
-.woocommerce form input[type="text"],
-.woocommerce form input[type="email"],
-.woocommerce form input[type="password"],
-.woocommerce form textarea,
-.woocommerce form select,
-.woocommerce form .woo-select,
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select,
+form .woo-select,
 .chzn-container-single,
 .chzn-container-single .chzn-single,
 .chzn-container-single .chzn-drop {
