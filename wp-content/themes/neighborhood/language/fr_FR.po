@@ -429,7 +429,7 @@ msgstr ""
 #: neighborhood/archive.php:76 neighborhood/archive.php:78
 #: neighborhood/archive.php:80
 msgid "Archive for"
-msgstr ""
+msgstr "Archive pour"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/shortcodes.php:1
@@ -455,7 +455,7 @@ msgstr ""
 #. Text in echo
 #: neighborhood/functions.php:1384
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #. Text in echo
 #: neighborhood/archive.php:83
@@ -602,18 +602,18 @@ msgstr ""
 #: neighborhood/includes/widgets/widget-posts.php:66
 #: neighborhood/includes/swift-framework/page-builder/builder/shortcodes/posts-carousel.php:1
 msgid "By %1$s on %2$s"
-msgstr ""
+msgstr "Par %1$s sur %2$s"
 
 #. Text in function
 #: neighborhood/functions.php:1419
 msgid "By %1$s on %2$s at %3$s"
-msgstr ""
+msgstr "Par %1$s sur %2$s à %3$s"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats.php:1
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats-3.6.php:1
 msgid "By <a href=\"%2$s\">%1$s</a> on %3$s"
-msgstr ""
+msgstr "Par <a href=\"%2$s\">%1$s</a> sur %3$s"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/shortcodes.php:1
@@ -681,7 +681,7 @@ msgstr ""
 #. Text in function
 #: neighborhood/comments.php:64
 msgid "Click here to cancel the reply"
-msgstr ""
+msgstr "Cliquez ici pour annuler la réponse"
 
 #. Text in function
 #: neighborhood/includes/custom-post-types/clients-type.php:1
@@ -773,7 +773,7 @@ msgstr ""
 #. Text in function
 #: neighborhood/comments.php:64
 msgid "Comment"
-msgstr ""
+msgstr "Commentaire"
 
 #. Text in echo
 #: neighborhood/woocommerce/single-product/meta.php:24
@@ -1347,12 +1347,12 @@ msgstr ""
 #. Text in function
 #: neighborhood/comments.php:64
 msgid "Leave a reply"
-msgstr ""
+msgstr "Laissez une réponse"
 
 #. Text in function
 #: neighborhood/comments.php:64
 msgid "Leave a reply to %s"
-msgstr ""
+msgstr "Laissez une réponse à %s"
 
 #. Text in echo
 #: neighborhood/includes/swift-framework/sf-shortcodes/interface.php:443
@@ -1418,7 +1418,7 @@ msgstr ""
 #. Text in function
 #: neighborhood/functions.php:1396
 msgid "Log in to reply."
-msgstr ""
+msgstr "Connectez-vous pour répondre."
 
 #. Text in function
 #: neighborhood/comments.php:64
@@ -1426,6 +1426,8 @@ msgid ""
 "Logged in as <a href=\"%1$s\">%2$s</a>. <a href=\"%3$s\" title=\"Log out of "
 "this account\">Log out?</a>"
 msgstr ""
+"Connecté en tant que  <a href=\"%1$s\">%2$s</a>. <a href=\"%3$s\" title=\"Se "
+"déconnecter de ce compte\">Se déconnecter ?</a>"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/sf-content-display/sf-header.php:1
@@ -1482,7 +1484,7 @@ msgstr ""
 #: neighborhood/includes/swift-framework/page-builder/builder/shortcodes/testimonial-carousel.php:1
 #: neighborhood/includes/swift-framework/page-builder/builder/shortcodes/testimonial.php:1
 msgid "More"
-msgstr ""
+msgstr "Plus"
 
 #. Text in function
 #: neighborhood/includes/plugins/love-it-pro/includes/widgets.php:39
@@ -1767,34 +1769,34 @@ msgstr ""
 #. Text in function
 #: neighborhood/comments.php:64
 msgid "Post comment"
-msgstr ""
+msgstr "Publier le commentaire"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats.php:1
 #: neighborhood/single.php:190
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats-3.6.php:1
 msgid "Posted by"
-msgstr ""
+msgstr "Publié par"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/sf-content-display/sf-template-parts.php:1
 msgid "Posted by "
-msgstr ""
+msgstr "Publié par"
 
 #. Text in function
 #: neighborhood/includes/swift-framework/shortcodes.php:1
 msgid "Posts"
-msgstr ""
+msgstr "Articles"
 
 #. Text in echo
 #: neighborhood/archive.php:74
 msgid "Posts tagged with"
-msgstr ""
+msgstr "Articles avec le tag"
 
 #. Text in function
 #: neighborhood/woocommerce/loop/pagination.php:18
 msgid "Prev"
-msgstr ""
+msgstr "Préc"
 
 #. Text in function
 #: neighborhood/functions.php:549
@@ -1944,7 +1946,7 @@ msgstr ""
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats.php:1
 #: neighborhood/includes/swift-framework/sf-content-display/sf-post-formats-3.6.php:1
 msgid "Read more"
-msgstr ""
+msgstr "Lire plus"
 
 #. Text in echo
 #: neighborhood/woocommerce/checkout/form-checkout.php:259
@@ -1960,7 +1962,7 @@ msgstr "Clients enregistrés"
 #. Text in function
 #: neighborhood/functions.php:1396
 msgid "Reply"
-msgstr ""
+msgstr "Répondre"
 
 #. Text in echo
 #: neighborhood/includes/swift-framework/sf-shortcodes/interface.php:306
@@ -2171,7 +2173,7 @@ msgstr ""
 #: neighborhood/taxonomy-portfolio-category.php:53
 #: neighborhood/category.php:124 neighborhood/category.php:170
 msgid "Sorry, there are no posts to display."
-msgstr ""
+msgstr "Désolé, il n'y a aucun article à afficher."
 
 #. Text in echo
 #: neighborhood/includes/swift-framework/sf-shortcodes/interface.php:386
