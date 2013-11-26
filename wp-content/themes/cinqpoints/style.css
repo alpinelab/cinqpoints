@@ -195,12 +195,8 @@ form .woo-select,
 }
 
 /* Remove "need help ?" notice */
-.woocommerce .help-bar > span {
-  display: none !important;
-}
 .woocommerce .help-bar {
-  border: none !important;
-  padding: 0 !important;
+  display: none !important;
 }
 
 /* Remove products archive page header */
