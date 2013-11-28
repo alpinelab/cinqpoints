@@ -243,8 +243,9 @@ form .woo-select,
 }
 
 /* Customize TablePress tables */
-.dataTables_wrapper,
+.tablepress,
 .tablepress-table-description {
+  table-layout: fixed !important;
   width: 50% !important;
   margin: 0 auto 3em !important;
 }
@@ -252,19 +253,21 @@ form .woo-select,
 .tablepress tfoot th {
   background-color: white !important;
 }
-.dataTables_wrapper thead tr.row-1 th {
+.tablepress thead tr.row-1 th {
   border-bottom: solid 2px black !important;
 }
-.dataTables_wrapper tbody tr td {
+.tablepress tbody tr td {
   border-top: none !important;
 }
-.dataTables_wrapper th,
-.dataTables_wrapper td {
+.tablepress th,
+.tablepress td {
   text-align: center !important;
-  border-right: solid 2px black !important;
   padding: 2px;
 }
-
+.tablepress th:not(:last-child),
+.tablepress td:not(:last-child) {
+  border-right: solid 2px black !important;
+}
 
 /*********
  * Fonts *
