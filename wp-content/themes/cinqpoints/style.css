@@ -242,6 +242,30 @@ form .woo-select,
   display: none !important;
 }
 
+/* Customize TablePress tables */
+.dataTables_wrapper,
+.tablepress-table-description {
+  width: 50% !important;
+  margin: 0 auto 3em !important;
+}
+.tablepress thead th,
+.tablepress tfoot th {
+  background-color: white !important;
+}
+.dataTables_wrapper thead tr.row-1 th {
+  border-bottom: solid 2px black !important;
+}
+.dataTables_wrapper tbody tr td {
+  border-top: none !important;
+}
+.dataTables_wrapper th,
+.dataTables_wrapper td {
+  text-align: center !important;
+  border-right: solid 2px black !important;
+  padding: 2px;
+}
+
+
 /*********
  * Fonts *
  *********/
