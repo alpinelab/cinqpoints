@@ -27,14 +27,14 @@ global $woocommerce;
 		endif;
 	?>
 
-	<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'woocommerce' ); ?></span></h4>
-
 	<p class="form-row" id="shiptobilling">
 		<input id="shiptobilling-checkbox" class="input-checkbox" <?php checked($shiptobilling, 1); ?> type="checkbox" name="shiptobilling" value="1" />
 		<label for="shiptobilling-checkbox" class="checkbox"><?php _e( 'Ship to billing address?', 'woocommerce' ); ?></label>
 	</p>
 
 	<div class="shipping_address">
+	
+		<h4 class="lined-heading"><span><?php _e( 'Shipping Address', 'woocommerce' ); ?></span></h4>
 
 		<?php do_action('woocommerce_before_checkout_shipping_form', $checkout); ?>
 

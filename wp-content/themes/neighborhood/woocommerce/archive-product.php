@@ -144,6 +144,8 @@
 		
 			<div class="page-content <?php echo $content_class; ?>">
 						
+			<?php do_action( 'woocommerce_archive_description' ); ?>
+						
 			<?php if ( version_compare( WOOCOMMERCE_VERSION, "2.0.0" ) >= 0 ) {
 				
 				woocommerce_get_template( 'loop/result-count.php' );
@@ -173,8 +175,6 @@
                 </form>
 	            
 	        <?php } ?>
-			
-			<?php do_action( 'woocommerce_archive_description' ); ?>
 	
 			<?php if ( have_posts() ) : ?>
 				

@@ -6,7 +6,7 @@
 	Description: A Retina Responsive Multi-Purpose WordPress Theme - Designed & Developed by Swift Ideas ( www.swiftideas.net )
 	License: GNU General Public License version 3.0
 	License URI: http://www.gnu.org/licenses/gpl-3.0.html
-	Version: 1.3.4
+	Version: 1.4
 	Author: Swift Ideas
 	Author URI: www.swiftideas.net
 
@@ -73,7 +73,8 @@
 }
 
 @media only screen and (max-width: 979px) and (min-width: 768px) {
-		.span-third {
+	
+	.span-third {
 		width: 145px;
 	}
 	.span-twothirds {
@@ -6305,7 +6306,7 @@ ul.social-icons li a {
 	display: block;
 	width: 32px;
 	height: 32px;
-	text-indent: 100%;
+	text-indent: 110%;
 	white-space: nowrap;
 	overflow: hidden;
 	padding: 0;
@@ -7470,34 +7471,57 @@ nav.woocommerce-pagination ul li a.prev i {
 	margin-bottom: 30px;
 }
 .variations_form tr td {
-	padding: 10px 0;
+	padding: 0!important;
+	border: 0;
 }
 .variations_form .woo-select {
-	-moz-box-shadow: 0 1px 0 rgba(0,0,0,.1);
-	-webkit-box-shadow: 0 1px 0 rgba(0,0,0,.1);
-	box-shadow: 0 1px 0 rgba(0,0,0,.1);
 	padding: 8px 15px;
+	z-index: 1;
 }
-.woocommerce div.product form.cart .variations td, .woocommerce div.product form.cart .variations td > div {
+.woocommerce div.product form.cart .variations {
+	border: 0;
+}
+.woocommerce div.product form.cart .variations td {
 	position: relative;
 }
 .woocommerce div.product form.cart .variations select {
 	display: block;
 	vertical-align: top;
+	z-index: 2;
+	border: none;
+    outline: none;
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    padding: 6px 25px 6px 15px;
+    height: 42px;
 }
-.variations_form .woo-select:after {
+.woocommerce div.product form.cart .variations td > div {
+	position: relative;
+	margin-bottom: 10px;
+	height: auto;
+	overflow: hidden;
+}
+.woocommerce div.product form.cart .variations td.value > div:after {
 	content: "\f107";
 	font-family: FontAwesome;
 	font-weight: normal;
 	font-style: normal;
-	display: inline;
-	font-size: 12px;
+	font-size: 14px;
 	opacity: 0.7;
-	margin-left: -10px;
+	position: absolute;
+	top: 10px;
+	right: 12px;
+	pointer-events: none;
 }
 .variations_form .reset_variations {
 	display: block;
-	margin-top: 15px;
+	line-height: 40px;
 }
 .single_variation_wrap .single_variation {
 	margin-bottom: 10px;
@@ -7742,6 +7766,9 @@ nav.woocommerce-pagination ul li a.prev i {
 	clear: both;
 	margin-bottom: 50px;
 }
+.woocommerce div.product .entry-title {
+	display: none;
+}
 .type-product .related.products, .type-product .upsells.products {
 	clear: both;
 }
@@ -7776,6 +7803,9 @@ body .has-no-sidebar ul.products li.product {
 }
 body .has-one-sidebar ul.products li.product {
 	width: 140px;
+}
+body.woocommerce .has-one-sidebar .upsells.products ul.products li.product, body.woocommerce .has-one-sidebar .related.products ul.products li.product  {
+	width: 139px;
 }
 body .has-one-sidebar .products-standard.span8 ul.products li.product {
 	width: 193px;
@@ -8098,6 +8128,37 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	cursor: pointer;
 	font-weight: bold;
 }
+.returning-customer a {
+	border-bottom: 1px dotted #e3e3e3;
+}
+#login-form .modal-body form.login {
+	display: block!important;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+#login-form .modal-body form.login p.form-row-first, #login-form .modal-body form.login p.form-row-last {
+	width: 100%;
+	margin-bottom: 20px;
+	text-align: left!important;
+	margin-top: 0!important;
+}
+#login-form .modal-body form.login p.form-row {
+	width: 100%;
+	margin-bottom: 20px;
+	text-align: right;
+	margin-top: 10px;
+}
+#login-form .modal-body form.login p.form-row input[type="submit"] {
+	float: right!important;
+	margin-right: 0!important;
+	margin-left: 20px;
+	padding: 15px 40px;
+}
+#login-form .modal-body form.login p.form-row a.lost_password {
+	padding-top: 7px;
+	display: inline-block;
+}
 .woocommerce #account_details > .login, .my-account-login-wrap .login-wrap {
 	padding: 30px;
 	-webkit-box-sizing: border-box;
@@ -8151,7 +8212,7 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 .woocommerce #account_password-2_field label {
 	visibility: visible;
 }
-.woocommerce #account_details .login form p.form-row input[type="submit"], .my-account-login-wrap .login-wrap form.login p.form-row input[type="submit"], .woocommerce .my-account-login-wrap form input[type="submit"], .lost_reset_password p.form-row input[type="submit"], .track_order p.form-row input[type="submit"], .change_password_form p input[type="submit"], .woocommerce table.my_account_orders .order-actions .button, .woocommerce .widget_price_filter .price_slider_amount .button, .woocommerce.widget .buttons a, .woocommerce .wishlist_table tr td.product-add-to-cart a {
+.woocommerce #account_details .login form p.form-row input[type="submit"], .my-account-login-wrap .login-wrap form.login p.form-row input[type="submit"], .woocommerce .my-account-login-wrap form input[type="submit"], .lost_reset_password p.form-row input[type="submit"], .track_order p.form-row input[type="submit"], .change_password_form p input[type="submit"], .woocommerce table.my_account_orders .order-actions .button, .woocommerce .widget_price_filter .price_slider_amount .button, .woocommerce.widget .buttons a, .woocommerce .wishlist_table tr td.product-add-to-cart a, #login-form .modal-body form.login p.form-row input[type="submit"] {
 	margin-right: 20px;
 	float: left;
 	border: 0;
@@ -8186,38 +8247,75 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 	margin: 0 20px 0 0;
 	line-height: 40px;
 }
-.woocommerce form #billing .form-row {
+#order-details {
+	padding-right: 10px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.woocommerce form #customer_details .form-row {
 	display: block;
 	width: 100%;
 	float: none;
 	margin-bottom: 20px;
 }
-.woocommerce form #billing .form-row label {
+.woocommerce form #customer_details .form-row label {
 	float: left;
-	width: 20%;
+	width: 25%;
 	padding: 0;
 	margin: 0;
 	line-height: 38px;
+	font-weight: normal;
 }
-.woocommerce form #billing .form-row input, .woocommerce form #billing .form-row textarea {
+.woocommerce form #customer_details .form-row input {
 	float: right;
-	width: 80%;
+	width: 75%;
 }
-.woocommerce form #billing .form-row.notes {
+.woocommerce form #customer_details .form-row textarea {
+	float: right;
+	width: 75%;
+	padding: 10px;
+	min-height: 70px;
+	line-height: 20px;
+}
+.woocommerce-checkout .form-row .chzn-container {
+	width: 75%!important;
+	margin-top: 5px;
+}
+.woocommerce-checkout .form-row .chzn-container .chzn-results {
+	width: 100%;
+}
+.woocommerce form #order-details .form-row.notes {
 	padding-top: 40px;
 }
-.woocommerce form #billing #shiptobilling {
-	margin: 0 0 -38px 0;
-	float: right;
-	width: auto;
+.woocommerce .checkout #createaccount {
+	float: none!important;
+	width: auto!important;
 }
-.woocommerce form #billing #shiptobilling input {
-	float: none;
-	width: auto;
+.woocommerce .checkout label.checkbox[for="createaccount"] {
+	padding: 0;
+	margin: 0;
+	float: none!important;
+	width: auto!important;
 }
-.woocommerce form #billing #shiptobilling label {
-	float: none;
+.create-account {
+	padding-bottom: 20px;
+}
+.woocommerce .checkout #shiptobilling {
+	float: none!important;
+	width: 100%!important;
+	margin-bottom: 20px;
+}
+.woocommerce .checkout #shiptobilling input {
+	float: none!important;
+	width: auto!important;
+}
+.woocommerce .checkout #shiptobilling label {
+	float: none!important;
 	width: auto;
+	font-size: 1em;
+	line-height: auto!important;
 }
 .woocommerce form #billing .form-row .chzn-container input {
 	float: none;
@@ -8225,20 +8323,22 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 .woocommerce-checkout .form-row .chzn-container-single .chzn-search input {
 	padding: 11px 6px;
 }
-#billing .proceed {
-	margin-top: 25px;
-	padding-top: 15px;
-	border-top: 1px solid #e4e4e4;
-}
-#billing .proceed a {
-	float: right;
+.review-order-wrap {
+	border: 2px solid #e3e3e3;
+	padding: 45px 45px 30px;
 }
 #order_review_heading {
-	margin-bottom: 0;
+	margin-bottom: 15px;
+}
+#order-details {
+	padding-right: 30px;
+}
+#order-details p.form-row {
+	margin-bottom: 20px;
 }
 #order_review table.shop_table {
 	border-top: 0;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 #order_review table.shop_table th {
 	padding: 12px 0 20px;
@@ -8247,15 +8347,16 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 #order_review table.shop_table td {
 	border-color: rgba(0,0,0,0.05);
 }
-#order_review table.shop_table td.product-img {
-	width: 9%;
-}
 #order_review table.shop_table td.product-description {
-	width: 70%;
+	width: 80%;
+	padding: 15px 0 17px;
 }
-#order_review table.shop_table td.product-unitprice, #order_review table.shop_table td.product-quantity, #order_review table.shop_table td.product-subtotal {
-	width: 7%;
-	padding-top: 40px;
+td.product-description .quantity-count {
+	margin-bottom: 0;
+}
+#order_review table.shop_table td.product-subtotal {
+	width: 20%;
+	padding-top: 17px;
 }
 #order_review table.shop_table .product-quantity {
 	text-align: center;
@@ -8269,19 +8370,31 @@ ul.checkout-process li a.active, ul.checkout-process li p.active {
 }
 table.totals_table {
 	float: right;
-	width: 21%;
+	width: 30%;
 	margin-bottom: 30px;
+	border-bottom: 0;
+}
+#order_review table.totals_table {
+	width: 100%;
+	float: none;
+	margin-bottom: 20px;
 }
 table.totals_table tr th {
 	text-align: left;
-	padding: 6px 0;
+	padding: 2px 0;
+	font-weight: normal;
+}
+table.totals_table tr.total th, table.totals_table tr.total td {
+	padding: 12px 0 0;
+	letter-spacing: normal;
 }
 table.totals_table tr td {
 	text-align: right;
-	padding: 6px 0;
+	padding: 2px 0;
+	border-top: 0;
 }
 table.totals_table tr.blank td, table.totals_table tr.blank th {
-	padding: 12px 0;
+	padding: 6px 0;
 }
 table.totals_table tr.total {
 	margin-top: 20px;
@@ -8304,25 +8417,55 @@ table.totals_table tr.total td .amount {
 	border-top: 1px solid #e4e4e4;
 }
 .woocommerce #payment ul.payment_methods {
-	padding: 25px 0 5px;	
+	padding: 15px 0;	
 }
 .woocommerce #payment ul.payment_methods li {
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
 .woocommerce #payment ul.payment_methods li input {
-	margin-top: 4px;
+	margin-top: 3px;
+}
+.woocommerce #payment ul.payment_methods li label {
+	font-weight: normal;
+	margin-bottom: 0;
+}
+.woocommerce #payment ul.payment_methods li img, .woocommerce-page #payment ul.payment_methods li img {
+	margin: 5px 0;
 }
 .woocommerce #payment div.payment_box {
 	border-radius: 0;
 	box-shadow: none;
+	padding: 1em;
+}
+.woocommerce #payment div.payment_box fieldset {
+	padding: 0!important;
+}
+.woocommerce #payment div.payment_box fieldset .form-row {
+	width: 100%;
+	clear: both;
 }
 .woocommerce #payment div.form-row.place-order {
-	padding: 15px 0;
+	padding: 20px 0 10px;
 }
 .woocommerce #payment #place_order {
-	padding: 0 14px;
-	height: 40px;
-	line-height: 40px;
+	padding: 0 30px;
+	height: 46px;
+	line-height: 46px;
+}
+#order_review #payment {
+	margin: 0 -45px;
+	padding: 20px 45px 0;
+}
+#payment_heading {
+	margin-bottom: 0;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e3e3e3;
+}
+#order_review #payment #place_order {
+	padding: 0 30px;
+	height: 46px;
+	line-height: 46px;
+	width: 100%;
 }
 .woocommerce-checkout p.thank-you {
 	font-size: 32px;
@@ -8749,10 +8892,14 @@ div.product .woocommerce_tabs ul.tabs li a {
 	margin: 5px 6px 0 0;
 	float: left;
 }
+.woocommerce-checkout .woocommerce > form.login {
+	display: none;
+}
 .woocommerce-checkout h3#order_review_heading {
 	margin-top: 50px;
 }
 .woocommerce-checkout form.checkout {
+	margin-top: 20px;
 	margin-bottom: 50px;
 }
 .quantity input.qty {
@@ -8831,6 +8978,9 @@ div.product .woocommerce_tabs ul.tabs, .woocommerce div.product .woocommerce-tab
 }
 #tab-additional_information h2 {
 	display: none;
+}
+#tab-description p:last-child {
+	margin-bottom: 0;
 }
 div.product .woocommerce_tabs .panel, div.product .woocommerce-tabs .panel {
 	margin-bottom: 0px;

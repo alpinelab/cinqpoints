@@ -102,6 +102,11 @@ nav .menu ul.sub-menu {
   color: white !important;
 }
 
+/* Change Order Review box style */
+.review-order-wrap {
+  border: none !important;
+}
+
 /* Change login box style */
 .woocommerce #account_details .login {
   background-color: white !important;

@@ -183,8 +183,10 @@
 		<?php } ?>
 			
 			<?php
-				if ($ss_enable) { 
-					echo sf_super_search();
+				if ($ss_enable) {
+					if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+						echo sf_super_search();
+					}
 				}
 			?>
 			

@@ -21,9 +21,7 @@
 		</div>
 		<?php 
 			// BREADCRUMBS
-			if (!$remove_breadcrumbs) {
-				echo sf_breadcrumbs();
-			}
+			echo sf_breadcrumbs();
 		?>
 	</div>
 </div>

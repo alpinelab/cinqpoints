@@ -449,6 +449,7 @@ Custom jQuery functions.
 				button.addClass("product-added");
 				button.text(added_text);
 			});
+			
 			jQuery('.show-products-link').on('click', function(e) {
 				e.preventDefault();
 				var linkHref = jQuery(this).attr('href').replace('?', '');
@@ -492,24 +493,6 @@ Custom jQuery functions.
 	            if(e.which == 10 || e.which == 13) {
 	            	jQuery(".update-totals-button button").click();
 	            }
-	        });
-	        
-	        jQuery('.variations select').change( function() {
-	        	if (jQuery('#sf-included').hasClass('has-productzoom')) {
-	        		jQuery('.zoomContainer').remove();
-	        		setTimeout(function() {
-	        			jQuery('.product-slider-image').each(function() {
-	        				jQuery(this).data('zoom-image', jQuery(this).parent().find('a.zoom').attr('href'));
-	        			});
-	        			jQuery('#product-img-slider li:first').find('.product-slider-image').elevateZoom({
-	        			    zoomType: "inner",
-	        				cursor: "crosshair",
-	        				responsive: true,
-	        				zoomWindowFadeIn: 500,
-	        				zoomWindowFadeOut: 750
-	        			});
-	        		}, 500)
-	        	}
 	        });
 	        
 		},
@@ -595,6 +578,28 @@ Custom jQuery functions.
 					}
 				});
 				
+			});
+		},
+		variations: function() {
+			jQuery('.variations select').each( function() {
+				var variationSelect = jQuery(this);
+				variationSelect.live("change", function(){
+					if (jQuery('#sf-included').hasClass('has-productzoom')) {
+						jQuery('.zoomContainer').remove();
+						setTimeout(function() {
+							jQuery('.product-slider-image').each(function() {
+								jQuery(this).data('zoom-image', jQuery(this).parent().find('a.zoom').attr('href'));
+							});
+							jQuery('#product-img-slider li:first').find('.product-slider-image').elevateZoom({
+								zoomType: "inner",
+								cursor: "crosshair",
+								responsive: true,
+								zoomWindowFadeIn: 500,
+								zoomWindowFadeOut: 750
+							});
+						}, 500);
+					}
+				});
 			});
 		}
 	};
@@ -1547,6 +1552,7 @@ Custom jQuery functions.
 			map.init();
 			}
 			reloadFunctions.load();
+			woocommerce.variations();
 		}
 	};
 	

@@ -73,7 +73,7 @@
 ?>
 
 <div class="row">
-	<div class="page-heading span12 clearfix alt-bg <?php echo $page_title_bg; ?>">
+	<div class="page-heading span12 clearfix alt-bg <?php echo $default_page_heading_bg_alt; ?>">
 		<div class="heading-text">
 		<?php $allsearch = new WP_Query("s=$s&showposts=-1"); $key = esc_html($s, 1); $count = $allsearch->post_count; _e('', "swiftframework"); wp_reset_query(); ?>
 		<?php if ($count == 1) : ?>

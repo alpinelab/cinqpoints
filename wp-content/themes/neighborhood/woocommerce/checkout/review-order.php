@@ -16,15 +16,6 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 <div id="order_review">
 
 	<table class="shop_table">
-		<thead>
-			<tr>
-				<th class="product-img"><?php _e( 'Item', 'swiftframework' ); ?></th>
-				<th class="product-description"><?php _e( 'Description', 'swiftframework' ); ?></th>
-				<th class="product-unitprice"><?php _e( 'Unit Price', 'swiftframework' ); ?></th>
-				<th class="product-quantity"><?php _e( 'Quantity', 'swiftframework' ); ?></th>
-				<th class="product-subtotal"><?php _e( 'Subtotal', 'swiftframework' ); ?></th>
-			</tr>
-		</thead>
 		<tbody>
 			<?php
 				do_action( 'woocommerce_review_order_before_cart_contents' );
@@ -45,15 +36,8 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 						
 						if ($_product->exists() && $values['quantity']>0) :
 							echo '<tr class="' . esc_attr( apply_filters('woocommerce_checkout_table_item_class', 'checkout_table_item', $values, $cart_item_key ) ) . '">';
-							echo '<td class="product-img">';
 							
-							if ( ! $_product->is_visible() || ( ! empty( $_product->variation_id ) && ! $_product->parent_is_visible() ) )
-								echo $thumbnail;
-							else
-								printf('<a href="%s">%s</a>', esc_url( get_permalink( apply_filters('woocommerce_in_cart_product_id', $values['product_id'] ) ) ), $thumbnail );
-							
-							echo '</td>
-									<td class="product-description">';
+							echo '<td class="product-description">';
 									
 									if ( ! $_product->is_visible() || ( ! empty( $_product->variation_id ) && ! $_product->parent_is_visible() ) )
 										echo apply_filters( 'woocommerce_in_cart_product_title', $_product->get_title(), $values, $cart_item_key );
@@ -66,14 +50,10 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 	                   				// Backorder notification
 	                   				if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $values['quantity'] ) )
 	                   					echo '<p class="backorder_notification">' . __( 'Available on backorder', 'woocommerce' ) . '</p>';
+	                   				
+	                   				echo '<p class="quantity-count">'.__("Quantity:", "swiftframework").' '.apply_filters( 'woocommerce_checkout_item_quantity', $values['quantity'], $values, $cart_item_key ).'</p>';
 									
 							echo '</td>';
-							echo '<td class="product-unitprice">'.
-									apply_filters('woocommerce_cart_item_price_html', woocommerce_price( $product_price ), $values, $cart_item_key ) .
-									'</td>';		
-							echo '<td class="product-quantity">'.
-									apply_filters( 'woocommerce_checkout_item_quantity', $values['quantity'], $values, $cart_item_key ) .
-									'</td>';
 							echo '<td class="product-subtotal">' . apply_filters( 'woocommerce_checkout_item_subtotal', $woocommerce->cart->get_product_subtotal( $_product, $values['quantity'] ), $values, $cart_item_key ) . '</td>
 								</tr>';
 						endif;
@@ -276,6 +256,9 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 	<div class="clearfix"></div>
 
 	<div id="payment">
+		
+		<h4 id="payment_heading"><span><?php _e( 'Payment Method', 'swiftframework' ); ?></span></h4>
+		
 		<?php if ($woocommerce->cart->needs_payment()) : ?>
 		<ul class="payment_methods methods">
 			<?php

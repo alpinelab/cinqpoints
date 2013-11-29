@@ -14,7 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $woocommerce, $wp_query;
 
 $shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
-
+if (is_tax('product_cat')) {
+	$product_category = $wp_query->query_vars['product_cat'];
+	$product_category_link = get_term_link( $product_category, 'product_cat' );
+	
+	if ($product_category_link != "") {
+	$shop_page_url = $product_category_link;
+	} else {
+	$shop_page_url = "";
+	}
+}
 if ( ! woocommerce_products_will_display() )
 	return;
 ?>
@@ -38,6 +47,6 @@ if ( ! woocommerce_products_will_display() )
 	</p>
 	<p class="woocommerce-show-products">
 		<span><?php _e("View", "swiftframework"); ?> </span>
-		<a class="show-products-link" href="?show_products=24">24</a>/<a class="show-products-link" href="?show_products=48">48</a>/<a  class="show-products-link" href="?show_products=<?php echo $total;?>"><?php _e("All", "swiftframework"); ?></a>		
+		<a class="show-products-link" href="<?php echo $shop_page_url; ?>?show_products=24">24</a>/<a class="show-products-link" href="<?php echo $shop_page_url; ?>?show_products=48">48</a>/<a href="<?php echo $shop_page_url; ?>?show_products=<?php echo $total;?>"><?php _e("All", "swiftframework"); ?></a>
 	</p>
 </div>

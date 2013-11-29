@@ -846,6 +846,8 @@ jQuery(document).ready(function ($) {
       "Ribeye",
       "Ribeye+Marrow",
       "Righteous",
+      "Roboto",
+	  "Roboto+Condensed",
       "Rochester",
       "Rock+Salt",
       "Rokkitt:regular",

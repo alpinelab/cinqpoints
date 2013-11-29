@@ -241,7 +241,7 @@
 		if ($maintenance_mode) {
 		
 		    if ( !current_user_can( 'edit_themes' ) || !is_user_logged_in() ) {
-		        wp_die($custom_logo_output . '<p style="text-align:center">We are currently in maintenance mode, please check back shortly.</p>');
+		        wp_die($custom_logo_output . '<p style="text-align:center">'.__('We are currently in maintenance mode, please check back shortly.', 'swiftframework').'</p>');
 		    }
 	    
 	    }
@@ -927,6 +927,7 @@
 	/* LANGUAGE FLAGS
 	================================================== */
 	
+	if (! function_exists( 'language_flags' )) {
 	function language_flags() {
 		
 		$language_output = "";
@@ -953,6 +954,7 @@
 	    }
 	    
 	    return $language_output;
+	}
 	}
 	
 	
@@ -1084,6 +1086,11 @@
 	    $content = str_replace(']]>', ']]&gt;', $content);
 	    return $content;
 	}
+	function sf_add_formatting($content) {
+		$content = apply_filters('the_content', $content);
+		$content = str_replace(']]>', ']]&gt;', $content);
+		return $content;
+	}
 	
 	
 	/* SHORTCODE FIX
@@ -1188,111 +1195,114 @@
 	
 	/* REGISTER SIDEBARS
 	================================================== */
-	
-	if ( function_exists('register_sidebar')) {
-	
-		$options = get_option('sf_neighborhood_options');
-		if (isset($options['footer_layout'])) {
-		$footer_config = $options['footer_layout'];
-		} else {
-		$footer_config = 'footer-1';
+	if (!function_exists('sf_register_sidebars')) {
+		function sf_register_sidebars() {
+			if ( function_exists('register_sidebar')) {
+			
+				$options = get_option('sf_neighborhood_options');
+				if (isset($options['footer_layout'])) {
+				$footer_config = $options['footer_layout'];
+				} else {
+				$footer_config = 'footer-1';
+				}
+			    register_sidebar(array(
+			        'name' => 'Sidebar One',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			    register_sidebar(array(
+			        'name' => 'Sidebar Two',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+				register_sidebar(array(
+					'name' => 'Sidebar Three',
+					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+					'after_widget' => '</section>',
+					'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+					'after_title' => '</span></h4></div>',
+				));
+				register_sidebar(array(
+					'name' => 'Sidebar Four',
+					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+					'after_widget' => '</section>',
+					'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+					'after_title' => '</span></h4></div>',
+				));
+				register_sidebar(array(
+				    'name' => 'Sidebar Five',
+				    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+				    'after_widget' => '</section>',
+				    'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+				    'after_title' => '</span></h4></div>',
+				));
+				register_sidebar(array(
+				    'name' => 'Sidebar Six',
+				    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+				    'after_widget' => '</section>',
+				    'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+				    'after_title' => '</span></h4></div>',
+				));
+				register_sidebar(array(
+					'name' => 'Sidebar Seven',
+					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+					'after_widget' => '</section>',
+					'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+					'after_title' => '</span></h4></div>',
+				));
+				register_sidebar(array(
+					'name' => 'Sidebar Eight',
+					'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+					'after_widget' => '</section>',
+					'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+					'after_title' => '</span></h4></div>',
+				));
+			    register_sidebar(array(
+			        'name' => 'Footer Column 1',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			    register_sidebar(array(
+			        'name' => 'Footer Column 2',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			    register_sidebar(array(
+			        'name' => 'Footer Column 3',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			    if ($footer_config == "footer-1") {
+			    register_sidebar(array(
+			        'name' => 'Footer Column 4',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			    }
+			    register_sidebar(array(
+			        'id' => 'woocommerce-sidebar',
+			        'name' => 'WooCommerce Sidebar',
+			        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
+			        'after_widget' => '</section>',
+			        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
+			        'after_title' => '</span></h4></div>',
+			    ));
+			} 
 		}
-	    register_sidebar(array(
-	        'name' => 'Sidebar One',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	    register_sidebar(array(
-	        'name' => 'Sidebar Two',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-		register_sidebar(array(
-			'name' => 'Sidebar Three',
-			'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-			'after_widget' => '</section>',
-			'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-			'after_title' => '</span></h4></div>',
-		));
-		register_sidebar(array(
-			'name' => 'Sidebar Four',
-			'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-			'after_widget' => '</section>',
-			'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-			'after_title' => '</span></h4></div>',
-		));
-		register_sidebar(array(
-		    'name' => 'Sidebar Five',
-		    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-		    'after_widget' => '</section>',
-		    'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-		    'after_title' => '</span></h4></div>',
-		));
-		register_sidebar(array(
-		    'name' => 'Sidebar Six',
-		    'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-		    'after_widget' => '</section>',
-		    'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-		    'after_title' => '</span></h4></div>',
-		));
-		register_sidebar(array(
-			'name' => 'Sidebar Seven',
-			'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-			'after_widget' => '</section>',
-			'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-			'after_title' => '</span></h4></div>',
-		));
-		register_sidebar(array(
-			'name' => 'Sidebar Eight',
-			'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-			'after_widget' => '</section>',
-			'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-			'after_title' => '</span></h4></div>',
-		));
-	    register_sidebar(array(
-	        'name' => 'Footer Column 1',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	    register_sidebar(array(
-	        'name' => 'Footer Column 2',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	    register_sidebar(array(
-	        'name' => 'Footer Column 3',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	    if ($footer_config == "footer-1") {
-	    register_sidebar(array(
-	        'name' => 'Footer Column 4',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	    }
-	    register_sidebar(array(
-	        'id' => 'woocommerce-sidebar',
-	        'name' => 'WooCommerce Sidebar',
-	        'before_widget' => '<section id="%1$s" class="widget %2$s clearfix">',
-	        'after_widget' => '</section>',
-	        'before_title' => '<div class="widget-heading clearfix"><h4><span>',
-	        'after_title' => '</span></h4></div>',
-	    ));
-	} 
-	
+		add_action( 'after_setup_theme', 'sf_register_sidebars', 10);
+	}
 	
 	function sf_sidebars_array() {
 	 	$sidebars = array();

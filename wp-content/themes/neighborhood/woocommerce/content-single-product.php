@@ -34,6 +34,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 ?>
 
 <div itemscope itemtype="http://schema.org/Product" id="product-<?php the_ID(); ?>" <?php post_class(); ?>>
+	
+	<div class="entry-title" itemprop="name"><?php the_title(); ?></div>
 
 	<?php
 		/**
@@ -49,7 +51,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		
 		<div class="summary-top clearfix">
 			
-			<p itemprop="price" class="price"><?php echo $product->get_price_html(); ?></p>
+			<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+			
+				<p itemprop="price" class="price"><?php echo $product->get_price_html(); ?></p>
+				
+				<meta itemprop="priceCurrency" content="<?php echo get_woocommerce_currency(); ?>" />
+				
+				<?php if (!$catalog_mode) { ?><link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" /><?php } ?>
+			
+			</div>
 			
 			<?php
 				if ( comments_open() ) {
@@ -94,13 +104,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		
 		</div>
 		
-		<?php if (!$catalog_mode) { ?>
-		<link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" />
-		<?php } ?>	
-		
 		<?php if ($product_short_description != "") { ?>
 			<div class="product-short">
 				<?php echo do_shortcode($product_short_description); ?>
+			</div>
+		<?php } else { ?>
+			<div class="product-short">
+				<?php echo apply_filters( 'woocommerce_short_description', $post->post_excerpt ); ?>
 			</div>
 		<?php } ?>	
 					

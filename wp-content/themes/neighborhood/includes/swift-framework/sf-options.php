@@ -2080,7 +2080,7 @@ function setup_framework_options(){
     						array(
     							'id' => 'enable_product_zoom',
     							'type' => 'button_set',
-    							'title' => __('Enable image zoon on product images', Redux_TEXT_DOMAIN), 
+    							'title' => __('Enable image zoom on product images', Redux_TEXT_DOMAIN), 
     							'sub_desc' => __('Choose whether you would like to enable product image zoom functionality on the product detail page images.', Redux_TEXT_DOMAIN),
     							'desc' => '',
     							'options' => array('1' => 'On','0' => 'Off'),

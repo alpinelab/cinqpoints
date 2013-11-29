@@ -111,4 +111,6 @@ if ( $customer_orders ) : ?>
 
 </table>
 	
+<?php else: ?>
+<h3 class="no-orders"><?php _e("You haven't placed any orders yet.", "swiftframework"); ?></h3>
 <?php endif; ?>
