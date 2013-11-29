@@ -243,30 +243,17 @@ form .woo-select,
 }
 
 /* Customize TablePress tables */
-.tablepress,
-.tablepress-table-description {
-  table-layout: fixed !important;
-  width: 50% !important;
-  margin: 0 auto 3em !important;
+.tablepress {
+  margin-bottom: 3em !important;
 }
 .tablepress thead th,
 .tablepress tfoot th {
   background-color: white !important;
 }
-.tablepress thead tr.row-1 th {
-  border-bottom: solid 2px black !important;
-}
-.tablepress tbody tr td {
-  border-top: none !important;
-}
 .tablepress th,
 .tablepress td {
   text-align: center !important;
   padding: 2px;
-}
-.tablepress th:not(:last-child),
-.tablepress td:not(:last-child) {
-  border-right: solid 2px black !important;
 }
 
 /*********
