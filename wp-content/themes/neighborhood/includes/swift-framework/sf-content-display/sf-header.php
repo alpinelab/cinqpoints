@@ -562,6 +562,7 @@
 			$menu_full_output .= '<nav>'. "\n";			
 			}
 			$menu_full_output .= '<ul class="menu">'. "\n";
+			$menu_full_output .= '<li>' . do_shortcode("[social size='small' style='dark']") . "</li>\n";
 			$menu_full_output .= '<li class="menu-search parent"><a href="#"><i class="icon-search"></i></a>'. "\n";
 			$menu_full_output .= '<ul class="sub-menu">'. "\n";
 			$menu_full_output .= '<li><form method="get" class="search-form" action="'.home_url().'/"><input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" /></form></li>'. "\n";

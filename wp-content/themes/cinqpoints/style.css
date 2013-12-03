@@ -69,6 +69,11 @@ nav .menu ul.sub-menu {
   border-top: solid 1px black !important;
 }
 
+/* Center social icons vertically */
+nav .menu .social-icons {
+  padding: 10px 5px 14px !important;
+}
+
 /* Change alert messages color to white */
 .woocommerce-message,
 .woocommerce-info,
