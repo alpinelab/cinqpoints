@@ -189,6 +189,13 @@ form .woo-select,
   background-color: white !important;
   background-image: none !important;
   color: black !important;
+  text-transform: none !important;
+}
+.chzn-container-single {
+  border: solid 1px black !important;
+  margin: 4px -1px -1px -1px;
+}
+.chzn-container-single .chzn-drop {
   border: solid 1px black !important;
 }
 .chzn-container-single .chzn-single {
