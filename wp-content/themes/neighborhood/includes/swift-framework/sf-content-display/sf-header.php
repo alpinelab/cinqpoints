@@ -164,6 +164,85 @@
 		return $sf_ss_dropdown;
 	}
 	
+	function sf_custom_get_attribute_taxonomies() {
+		$transient_name = 'wc_attribute_taxonomies';
+		$attribute_taxonomies = "";
+		
+		if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+        
+	        if ( false === ( $attribute_taxonomies = get_transient( $transient_name ) ) ) {
+	
+	            global $wpdb;
+	
+	            $attribute_taxonomies = $wpdb->get_results( "SELECT * FROM " . $wpdb->prefix . "woocommerce_attribute_taxonomies" );
+	
+	            set_transient( $transient_name, $attribute_taxonomies );
+	        }
+        
+        }
+
+        return apply_filters( 'woocommerce_attribute_taxonomies', $attribute_taxonomies );
+	}
+	
+	function sf_custom_get_attribute_taxonomy_name($name) {
+		$taxonomy = $name;
+		$taxonomy = strtolower( stripslashes( strip_tags( $taxonomy ) ) );
+		$taxonomy = preg_replace( '/&.+?;/', '', $taxonomy ); // Kill entities
+		$taxonomy = str_replace( array( '.', '\'', '"' ), '', $taxonomy ); // Kill quotes and full stops.
+		$taxonomy = str_replace( array( ' ', '_' ), '-', $taxonomy ); // Replace spaces and underscores.
+		return 'pa_' . $taxonomy;
+	}
+	
+	function sf_supersearch_query() {
+		
+	    global $woocommerce, $_chosen_attributes;
+	
+	    if ( ! is_admin() ) {
+	
+	        unset( $_SESSION['min_price'] );
+	        unset( $_SESSION['max_price'] );
+	
+	        if ( isset( $_GET['min_price'] ) )
+	            $_SESSION['min_price'] = $_GET['min_price'];
+	
+	        if ( isset( $_GET['max_price'] ) )
+	            $_SESSION['max_price'] = $_GET['max_price'];
+	
+	        add_filter( 'loop_shop_post_in', 'woocommerce_price_filter' );
+	        	        
+            $_chosen_attributes = array();
+
+            $attribute_taxonomies = sf_custom_get_attribute_taxonomies();
+            if ( $attribute_taxonomies ) {
+                foreach ( $attribute_taxonomies as $tax ) {
+
+                    $attribute = sanitize_title( $tax->attribute_name );
+                    $taxonomy = sf_custom_get_attribute_taxonomy_name( $attribute );
+                    $name = 'filter_' . $attribute;
+                    $query_type_name = 'query_type_' . $attribute;
+
+                    if ( ! empty( $_GET[ $name ] ) && taxonomy_exists( $taxonomy ) ) {
+
+                        $_chosen_attributes[ $taxonomy ]['terms'] = explode( ',', $_GET[ $name ] );
+
+                        if ( empty( $_GET[ $query_type_name ] ) || ! in_array( strtolower( $_GET[ $query_type_name ] ), array( 'and', 'or' ) ) ) {
+                        	$_chosen_attributes[ $taxonomy ]['query_type'] = apply_filters( 'woocommerce_layered_nav_default_query_type', 'and' );
+                        } else {
+                        	$_chosen_attributes[ $taxonomy ]['query_type'] = strtolower( $_GET[ $query_type_name ] );
+						}
+                    }
+                }
+        	}
+
+        	add_filter('loop_shop_post_in', 'woocommerce_layered_nav_query' );
+	    
+	    }
+	    
+	}
+	
+	remove_action( 'init', 'woocommerce_layered_nav_init' );
+	add_action( 'init', 'sf_supersearch_query' );
+	
  	/* TOP BAR
  	================================================== */ 
 	function sf_top_bar() {
@@ -483,6 +562,7 @@
 			$menu_full_output .= '<nav>'. "\n";			
 			}
 			$menu_full_output .= '<ul class="menu">'. "\n";
+			$menu_full_output .= '<li>' . do_shortcode("[social size='small' style='dark']") . "</li>\n";
 			$menu_full_output .= '<li class="menu-search parent"><a href="#"><i class="icon-search"></i></a>'. "\n";
 			$menu_full_output .= '<ul class="sub-menu">'. "\n";
 			$menu_full_output .= '<li><form method="get" class="search-form" action="'.home_url().'/"><input type="text" placeholder="'.__("Search", "swiftframework").'" name="s" /></form></li>'. "\n";

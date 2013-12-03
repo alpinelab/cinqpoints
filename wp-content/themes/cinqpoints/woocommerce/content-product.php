@@ -51,14 +51,13 @@
 			
 			$image_html = "";
 			
-			if ($product->is_on_sale()) {
-				
-				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'woocommerce' ).'</span>', $post, $product);
-		
-			} else if (is_out_of_stock()) {
-				
+			if (is_out_of_stock()) {
+						
 				echo '<span class="out-of-stock-badge">' . __( 'Out of Stock', 'swiftframework' ) . '</span>';
-			
+		
+			} else if ($product->is_on_sale()) {
+				
+				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'woocommerce' ).'</span>', $post, $product);				
 			} else if (!$product->get_price()) {
 				
 				echo '<span class="free-badge">' . __( 'Free', 'swiftframework' ) . '</span>';

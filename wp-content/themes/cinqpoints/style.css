@@ -69,6 +69,11 @@ nav .menu ul.sub-menu {
   border-top: solid 1px black !important;
 }
 
+/* Center social icons vertically */
+nav .menu .social-icons {
+  padding: 10px 5px 14px !important;
+}
+
 /* Change alert messages color to white */
 .woocommerce-message,
 .woocommerce-info,
@@ -100,6 +105,11 @@ nav .menu ul.sub-menu {
 .woocommerce .checkout_coupon input.button:hover {
   background-color: black !important;
   color: white !important;
+}
+
+/* Change Order Review box style */
+.review-order-wrap {
+  border: none !important;
 }
 
 /* Change login box style */
@@ -184,6 +194,13 @@ form .woo-select,
   background-color: white !important;
   background-image: none !important;
   color: black !important;
+  text-transform: none !important;
+}
+.chzn-container-single {
+  border: solid 1px black !important;
+  margin: 4px -1px -1px -1px;
+}
+.chzn-container-single .chzn-drop {
   border: solid 1px black !important;
 }
 .chzn-container-single .chzn-single {

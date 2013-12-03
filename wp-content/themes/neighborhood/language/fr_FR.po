@@ -2696,3 +2696,23 @@ msgstr ""
 #: neighborhood/includes/swift-framework/page-builder/builder/shortcodes/testimonial.php:1
 msgid "testimonial_page"
 msgstr ""
+
+#. Text in echo
+#: neighborhood/woocommerce/checkout/form-checkout.php:40
+msgid "Returning customer?"
+msgstr "Déjà client ?"
+
+#. Text in echo
+#: neighborhood/woocommerce/checkout/form-checkout.php:40
+msgid "Login here"
+msgstr "Connectez-vous en cliquant ici"
+
+#. Text in echo
+#: neighborhood/woocommerce/checkout/form-checkout.php:95
+msgid "Your Order"
+msgstr "Votre commande"
+
+#. Text in echo
+#: neighborhood/woocommerce/checkout/review-order.php:260
+msgid "Payment Method"
+msgstr "Moyen de Paiement"

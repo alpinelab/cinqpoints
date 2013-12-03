@@ -146,7 +146,7 @@
 						<?php } ?>
 						</div>
 						
-						<?php } else { ?>
+						<?php } else if ($footer_config == "footer-8") { ?>
 						
 						<div class="span3">
 						<?php if ( function_exists('dynamic_sidebar') ) { ?>
@@ -164,7 +164,16 @@
 						<?php } ?>
 						</div>
 						
+						<?php } else { ?>
+												
+						<div class="span12">
+						<?php if ( function_exists('dynamic_sidebar') ) { ?>
+							<?php dynamic_sidebar('Footer Column 1'); ?>
 						<?php } ?>
+						</div>
+						
+						<?php } ?>
+						
 					</div>
 				</div>	
 			

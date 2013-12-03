@@ -82,7 +82,7 @@
 			$meta_query = array();
 			$meta_query[] = $woocommerce->query->visibility_meta_query();
 			$meta_query[] = $woocommerce->query->stock_status_meta_query();
-			  
+			
 			$args = array(
 				'no_found_rows' => 1,
 				'post_status'   => 'publish',
@@ -95,14 +95,14 @@
 			);
 		} else {
 			$args = array(
-					'post_type' => 'product',
-					'post_status' => 'publish',
-					'product_cat' => $category,
-					'ignore_sticky_posts'   => 1,
-					'posts_per_page' => $item_count,
-					'meta_key' 		=> 'total_sales',
-					'orderby' 		=> 'meta_value'
-				);	    
+				'post_type' => 'product',
+				'post_status' => 'publish',
+				'product_cat' => $category,
+				'ignore_sticky_posts'   => 1,
+				'posts_per_page' => $item_count,
+				'meta_key' 		=> 'total_sales',
+				'orderby' 		=> 'meta_value'
+			);	    
 		}
 		
 		// OUTPUT PRODUCTS    

@@ -4,10 +4,10 @@
  *
  * @author Your Inspiration Themes
  * @package YITH WooCommerce Wishlist
- * @version 1.0.0
+ * @version 1.0.6
  */
  
-global $wpdb, $yith_wcwl, $woocommerce, $catalog_mode;
+global $wpdb, $yith_wcwl, $woocommerce, $sf_catalog_mode;
 
 $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' );
 $myaccount_page_url = "";
@@ -93,12 +93,12 @@ $woocommerce->show_messages() ?>
 	    <table class="shop_table cart wishlist_table" cellspacing="0">
 	    	<thead>
 	    		<tr>
-	    			<th class="product-thumbnail"><span class="nobr"><?php _e( 'Item', 'yit' ) ?></span></th>
-	    			<th class="product-name"><span class="nobr"><?php _e( 'Product Name', 'yit' ) ?></span></th>
-	    			<th class="product-price"><span class="nobr"><?php _e( 'Unit Price', 'yit' ) ?></span></th>
-	    			<th class="product-stock-status"><span class="nobr"><?php _e( 'Stock Status', 'yit' ) ?></span></th>
-	                <?php if (!$catalog_mode) { ?>
-	                <th class="product-add-to-bag"><span class="nobr"><?php _e( 'Actions', 'yit' ) ?></span></th>
+	    			<th class="product-thumbnail"><span class="nobr"><?php _e( 'Item', 'swiftframework' ) ?></span></th>
+	    			<th class="product-name"><span class="nobr"><?php _e( 'Product Name', 'swiftframework' ) ?></span></th>
+	    			<?php if( get_option( 'yith_wcwl_price_show' ) == 'yes' ) { ?><th class="product-price"><span class="nobr"><?php _e( 'Unit Price', 'swiftframework' ) ?></span></th><?php } ?>
+	    			<?php if( get_option( 'yith_wcwl_stock_show' ) == 'yes' ) { ?><th class="product-stock-status"><span class="nobr"><?php _e( 'Stock Status', 'swiftframework' ) ?></span></th><?php } ?>
+	                <?php if (!$sf_catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
+	                <th class="product-add-to-bag"><span class="nobr"><?php _e( 'Actions', 'swiftframework' ) ?></span></th>
 	                <?php } ?>
 	    			<th class="product-remove"></th>
 	    		</tr>
@@ -129,14 +129,21 @@ $woocommerce->show_messages() ?>
 	                        <td class="product-name">
 	                            <a href="<?php echo esc_url( get_permalink( apply_filters( 'woocommerce_in_cart_product', $values['prod_id'] ) ) ) ?>"><?php echo apply_filters( 'woocommerce_in_cartproduct_obj_title', $product_obj->get_title(), $product_obj ) ?></a>
 	                        </td>
+	                        <?php if( get_option( 'yith_wcwl_price_show' ) == 'yes' ) { ?>
 	                        <td class="product-price">
 	                            <?php
-	                            if( get_option( 'woocommerce_display_cart_prices_excluding_tax' ) == 'yes' )
-	                                { echo apply_filters( 'woocommerce_cart_item_price_html', woocommerce_price( $product_obj->get_price_excluding_tax() ), $values, '' ); }
-	                            else
-	                                { echo apply_filters( 'woocommerce_cart_item_price_html', woocommerce_price( $product_obj->get_price() ), $values, '' ); }    
+	                            if( $product_obj->price != '0' ) {
+	                                if( get_option( 'woocommerce_tax_display_cart' ) == 'excl' )
+	                                    { echo apply_filters( 'woocommerce_cart_item_price_html', woocommerce_price( $product_obj->get_price_excluding_tax() ), $values, '' ); }
+	                                else
+	                                    { echo apply_filters( 'woocommerce_cart_item_price_html', woocommerce_price( $product_obj->get_price() ), $values, '' ); }
+	                            } else {
+	                                echo apply_filters( 'yith_free_text', __( 'Free!', 'yit' ) );
+	                            }
 	                            ?>
 	                        </td>
+	                        <?php } ?>
+	                        <?php if( get_option( 'yith_wcwl_stock_show' ) == 'yes' ) { ?>
 	                        <td class="product-stock-status">
 	                            <?php
 	                            $availability = $product_obj->get_availability();
@@ -144,19 +151,20 @@ $woocommerce->show_messages() ?>
 	                            
 	                            if( $stock_status == 'out-of-stock' ) {
 	                                $stock_status = "Out";
-	                                echo '<span class="wishlist-out-of-stock">' . __( 'Out of Stock', 'yit' ) . '</span>';   
+	                                echo '<span class="wishlist-out-of-stock">' . __( 'Out of Stock', 'swiftframework' ) . '</span>';   
 	                            } else {
 	                                $stock_status = "In";
-	                                echo '<span class="wishlist-in-stock">' . __( 'In Stock', 'yit' ) . '</span>';
+	                                echo '<span class="wishlist-in-stock">' . __( 'In Stock', 'swiftframework' ) . '</span>';
 	                            }
 	                            ?>
 	                        </td>
-	                        <?php if (!$catalog_mode) { ?>
+	                        <?php } ?>
+	                        <?php if (!$sf_catalog_mode && get_option( 'yith_wcwl_add_to_cart_show' ) == 'yes') { ?>
 	                        <td class="product-add-to-cart">
 	                            <?php echo YITH_WCWL_UI::add_to_cart_button( $values['prod_id'], $availability['class'] ) ?>
 	                        </td>
 	                        <?php } ?>
-	                        <td class="product-remove"><div><a href="javascript:void(0)" onclick="remove_item_from_wishlist( '<?php echo esc_url( $yith_wcwl->get_remove_url( $values['ID'] ) )?>', 'yith-wcwl-row-<?php echo $values['ID'] ?>');" class="remove" title="<?php _e( 'Remove this product', 'yit' ) ?>">&times;</a></td>
+	                        <td class="product-remove"><div><a href="javascript:void(0)" onclick="remove_item_from_wishlist( '<?php echo esc_url( $yith_wcwl->get_remove_url( $values['ID'] ) )?>', 'yith-wcwl-row-<?php echo $values['ID'] ?>');" class="remove" title="<?php _e( 'Remove this product', 'swiftframework' ) ?>"><i class="ss-delete"></i></a></td>
 	                    </tr>
 	                    <?php
 	                    endif;
@@ -175,8 +183,7 @@ $woocommerce->show_messages() ?>
 	            <?php endif ?>
 	        </tbody>
 	     </table>
-	     <?php
-	     do_action( 'yith_wcwl_after_wishlist' );
+	     <?php do_action( 'yith_wcwl_after_wishlist' );   
 	     
 	     yith_wcwl_get_template( 'share.php' );
 	     

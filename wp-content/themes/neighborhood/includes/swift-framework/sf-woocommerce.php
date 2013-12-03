@@ -35,8 +35,8 @@
         	$product_item_text = __('0 items', 'swiftframework');
         } else {
         	$product_item_text = __('1 item', 'swiftframework');
-			}
-
+        }
+        
         return $product_item_text;
 	}
 	
@@ -95,7 +95,7 @@
 	
 	
 	/* ADD TO CART HEADER RELOAD
-	================================================== */ 
+	================================================== */
 	add_filter('add_to_cart_fragments', 'sf_woo_header_add_to_cart_fragment'); 
 	function sf_woo_header_add_to_cart_fragment( $fragments ) {
 		global $woocommerce;
@@ -290,7 +290,7 @@
 		      		<div class="accordion-inner">
 		      			<?php 
 		      				if ($enable_pb_product_pages) {
-		       					echo do_shortcode($product_description);
+		       					echo do_shortcode(sf_add_formatting($product_description));
 		       				} else {
 		       					the_content();
 		       				}
