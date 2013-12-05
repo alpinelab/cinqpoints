@@ -74,6 +74,15 @@ nav .menu .social-icons {
   padding: 10px 5px 14px !important;
 }
 
+/* Style social icons for mobile */
+#logo .visible-phone.social-networks-links {
+  float: right !important;
+  clear: right !important;
+}
+#logo .visible-phone.social-networks-links a:first-child {
+  max-width: 100% !important;
+}
+
 /* Change alert messages color to white */
 .woocommerce-message,
 .woocommerce-info,

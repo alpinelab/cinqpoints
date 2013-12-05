@@ -512,6 +512,7 @@
 		$logo_output .= '<a href="'.$woocommerce->cart->get_cart_url().'" class="visible-phone mobile-cart-link"><i class="sf-cart"></i></a>'. "\n";
 		}
 		$logo_output .= '<a href="#" class="visible-phone mobile-search-link"><i class="icon-search"></i></a>'. "\n";
+		$logo_output .= '<div class="visible-phone social-networks-links">' . do_shortcode("[social size='small' style='dark']") . "</div>\n";
 		$logo_output .= '</div>'. "\n";
 		
 		
