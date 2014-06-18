@@ -3392,10 +3392,15 @@ class SitePress{
     function deleted_post_actions($post_id){
         global $wpdb;
 
-		$post = get_post();
-		if(!isset($post)) $post = get_post($post_id);
-		$post_id = $post->ID;
-		if($post == null) return;
+		if ( !isset( $post_id ) || !$post_id ) {
+			$post = get_post();
+			$post_id = $post->ID;
+		} else {
+			$post = get_post( $post_id );
+		}
+		if ( $post == null ) {
+			return;
+		}
 
 		$post_type = $post->post_type;
 
