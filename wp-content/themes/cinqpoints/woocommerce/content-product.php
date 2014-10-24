@@ -6,7 +6,7 @@
 	 *
 	 * @author 		WooThemes
 	 * @package 	WooCommerce/Templates
-	 * @version     1.6.4
+	 * @version     2.1.0
 	 */
 	
 	if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -22,7 +22,7 @@
 		$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
 	
 	// Ensure visibility
-	if ( ! $product->is_visible() )
+	if ( ! $product || ! $product->is_visible() )
 		return;
 	
 	// Increase loop count
@@ -37,15 +37,31 @@
 	
 	$options = get_option('sf_neighborhood_options');
 	$product_overlay_transition = $options['product_overlay_transition'];
+	$overlay_transition_type = "";
+	
+	if (isset($options['overlay_transition_type'])) {
+		$overlay_transition_type = $options['overlay_transition_type'];
+	}
+	
+	if (is_singular('portfolio')) {
+	$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
+	}
 ?>
 <li <?php post_class( $classes ); ?>>
 
 	<?php do_action( 'woocommerce_before_shop_loop_item' ); ?>
 
-	<?php if ($product_overlay_transition) { ?>
-	<figure class="product-transition">			
+	<?php if ($product_overlay_transition) {
+		if ($overlay_transition_type == "slideleft") { ?>
+		<figure class="product-transition-alt">	
+	<?php } else if ($overlay_transition_type == "fade") { ?>
+		<figure class="product-transition-fade">	
 	<?php } else { ?>
-	<figure>
+		<figure class="product-transition">					
+	<?php }
+	?>
+	<?php } else { ?>
+	<figure class="no-transition">
 	<?php } ?>
 		<?php
 			
@@ -57,7 +73,8 @@
 		
 			} else if ($product->is_on_sale()) {
 				
-				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'.__( 'Sale!', 'woocommerce' ).'</span>', $post, $product);				
+				echo apply_filters('woocommerce_sale_flash', '<span class="onsale">'. __( 'Sale!', 'swiftframework' ).'</span>', $post, $product);		
+						
 			} else if (!$product->get_price()) {
 				
 				echo '<span class="free-badge">' . __( 'Free', 'swiftframework' ) . '</span>';
@@ -78,7 +95,7 @@
 				$image_html = wp_get_attachment_image( get_post_thumbnail_id(), 'shop_single' );					
 			}
 		?>
-
+		
 		<a href="<?php the_permalink(); ?>">
 			
 			<?php
@@ -95,10 +112,10 @@
 						
 						foreach ( $attachment_ids as $attachment_id ) {
 							
-							if ( get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
+							if ( sf_get_post_meta( $attachment_id, '_woocommerce_exclude_image', true ) )
 								continue;
 							
-							echo '<div class="product-image">'.wp_get_attachment_image( $attachment_id, 'shop_single' ).'</div>';	
+							echo '<div class="product-image second-image">'.wp_get_attachment_image( $attachment_id, 'shop_single' ).'</div>';	
 							
 							$img_count++;
 							
@@ -109,7 +126,7 @@
 					} else {
 					
 						echo '<div class="product-image">'.$image_html.'</div>';					
-						echo '<div class="product-image">'.$image_html.'</div>';
+						echo '<div class="product-image second-image">'.$image_html.'</div>';
 						
 					}
 				
@@ -135,7 +152,7 @@
 				
 						foreach ( $attachments as $key => $attachment ) {
 				
-							if ( get_post_meta( $attachment->ID, '_woocommerce_exclude_image', true ) == 1 )
+							if ( sf_get_post_meta( $attachment->ID, '_woocommerce_exclude_image', true ) == 1 )
 								continue;
 				
 							echo '<div class="product-image">'.wp_get_attachment_image( $attachment->ID, 'shop_single' ).'</div>';	
@@ -149,7 +166,7 @@
 					} else {
 					
 						echo '<div class="product-image">'.$image_html.'</div>';					
-						echo '<div class="product-image">'.$image_html.'</div>';
+						echo '<div class="product-image second-image">'.$image_html.'</div>';
 						
 					}
 					
@@ -166,6 +183,15 @@
 	</figure>
 	
 	<div class="product-details">
+		<?php
+			/**
+			 * woocommerce_before_shop_loop_item_title hook
+			 *
+			 * @hooked woocommerce_show_product_loop_sale_flash - 10
+			 * @hooked woocommerce_template_loop_product_thumbnail - 10
+			 */
+			do_action( 'woocommerce_before_shop_loop_item_title' );
+		?>
 		<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 		<?php
 			$size = sizeof( get_the_terms( $post->ID, 'product_cat' ) );

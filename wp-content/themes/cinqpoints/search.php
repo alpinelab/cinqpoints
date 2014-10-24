@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<?php 
+<?php
 
 	$options = get_option('sf_neighborhood_options');
 	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
@@ -8,7 +8,7 @@
 	$left_sidebar = $options['archive_sidebar_left'];
 	$right_sidebar = $options['archive_sidebar_right'];
 	$blog_type = $options['archive_display_type'];
-	
+
 	$page_wrap_class = '';
 	if ($sidebar_config == "left-sidebar") {
 	$page_wrap_class = 'has-left-sidebar has-one-sidebar row';
@@ -19,9 +19,9 @@
 	} else {
 	$page_wrap_class = 'has-no-sidebar';
 	}
-	
+
 	$list_class = $item_class = '';
-	
+
 	if ($blog_type == "mini") {
 		if ($sidebar_config == "both-sidebars") {
 		$item_class = "span6";
@@ -48,7 +48,7 @@
 		$item_class = "span12";
 		}
 	}
-	
+
 	if ($blog_type == "masonry") {
 	$list_class .= 'masonry-items';
 	$item_class .= ' recent-post';
@@ -57,17 +57,17 @@
 	} else {
 	$list_class .= 'standard-items';
 	}
-	
-	
-	
+
+
+
 	if ($blog_type == "masonry") {
 	global $include_isotope;
 	$include_isotope = true;
 	}
-	
+
 	global $has_blog;
 	$has_blog = true;
-	
+
 	sf_set_sidebar_global($sidebar_config);
 
 ?>
@@ -79,10 +79,10 @@
 		<?php if ($count == 1) : ?>
 			<?php printf(__('<h1>%1$s result for <span>%2$s</span></h1>', 'swiftframework'), $count, $key ); ?>
 		<?php else : ?>
-			<?php printf(__('<h1>%1$s results for <span>%2$s</span></h1>', 'swiftframework'), $count, $key ); ?>	
+			<?php printf(__('<h1>%1$s results for <span>%2$s</span></h1>', 'swiftframework'), $count, $key ); ?>
 		<?php endif; ?>
 		</div>
-		<?php 
+		<?php
 			// BREADCRUMBS
 			echo sf_breadcrumbs();
 		?>

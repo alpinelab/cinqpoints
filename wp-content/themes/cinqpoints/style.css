@@ -41,7 +41,7 @@ h4.lined-heading:before {
 }
 
 /* Remove flags from language switcher */
-#header-languages img {
+.aux-languages img {
   display: none !important;
 }
 
@@ -237,6 +237,11 @@ form .woo-select,
 /* Make some space after product description */
 .single-product .product-main {
   margin-bottom: 50px;
+}
+
+/* Hide product single accordion */
+.single-product #product-accordion {
+  display: none !important;
 }
 
 /* Make some space around the home slider */

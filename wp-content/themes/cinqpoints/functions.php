@@ -19,9 +19,4 @@
     unload_textdomain('woocommerce');
     $woocommerce->load_plugin_textdomain();
   }
-
-  wp_register_script('fix-search-form', get_stylesheet_directory_uri() . '/fix-search-form.js' , array('jquery'), '1.0');
-  wp_enqueue_script('fix-search-form');
-  $local_variables = array('home_url' => icl_get_home_url());
-  wp_localize_script('fix-search-form', 'vars', $local_variables);
 ?>
