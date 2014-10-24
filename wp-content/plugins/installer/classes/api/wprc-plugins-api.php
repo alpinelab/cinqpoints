@@ -237,7 +237,7 @@ class WPRC_Plugins_API extends WPRC_Extensions_API
     public function renderAdditionalSearchUI($extension_type = false)
     {
 		$extension_type = $extension_type ? $extension_type : $this->extension_type;
-        parent::renderAdditionalSearchUI($extension_type);
+		parent::renderAdditionalSearchUI($extension_type);
     } 
 }
 ?>

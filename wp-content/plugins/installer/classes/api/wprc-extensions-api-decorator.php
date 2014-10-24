@@ -4,6 +4,7 @@ class WPRC_Extensions_API_Decorator extends WPRC_Extensions_API
 	/**
 	 * Concrete extensions api object
 	 */
+	private $extension_type=null;
 	private $api = null;
 
 	/**
@@ -49,7 +50,7 @@ class WPRC_Extensions_API_Decorator extends WPRC_Extensions_API
 	 */
 	public function renderAdditionalSearchUI( $extension_type = false )
 	{
-		$this->api->renderAdditionalSearchUI( $extension_type );
+		$this->api->renderAdditionalSearchUI( $this->extension_type );
 	}
 
 	/**

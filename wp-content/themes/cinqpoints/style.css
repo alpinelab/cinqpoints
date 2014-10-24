@@ -1,0 +1,337 @@
+/*
+ * LICENSE & DETAILS
+ * ==================================================
+ *
+ * Theme Name: Cinqpoints
+ * Theme URI: http://www.cinqpoints.com
+ * Description: A Retina Responsive Multi-Purpose WordPress Theme - Based on Neighborhood by Swift Ideas
+ * License: GNU General Public License version 3.0
+ * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * Template: neighborhood
+ * Version: 1.0
+ * Author: Alpine Lab
+ * Author URI: www.alpine-lab.com
+ *
+ * All files, unless otherwise stated, are released under the GNU General Public License
+ * version 3.0 (http://www.gnu.org/licenses/gpl-3.0.html)
+ *
+ * ==================================================
+ */
+
+/* --------------------------------------------
+ * NEIGHBORHOOD CSS IMPORT
+ * -------------------------------------------- */
+
+@import url("../neighborhood/style.css");
+
+
+/* --------------------------------------------
+ * CHILD THEME CSS
+ * -------------------------------------------- */
+
+/* Remove welcome message */
+.tb-welcome {
+  display: none !important;
+}
+
+/* Remove black lines around titles */
+h4.spb_heading:before,
+h4.lined-heading:before {
+  border: none !important;
+}
+
+/* Remove flags from language switcher */
+.aux-languages img {
+  display: none !important;
+}
+
+/* Change main nav border to be bottom and black (instead of top and gray) */
+#main-nav {
+  border-top: none !important;
+}
+#main-nav .container {
+  border-bottom: solid 1px black !important;
+}
+
+/* Remove drop shadows under products images */
+figure.product-transition, /* archive page */
+#product-img-slider { /* single page */
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove drop shadows around shopping cart pop menu */
+nav .menu ul.sub-menu {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  border-top: solid 1px black !important;
+}
+
+/* Center social icons vertically */
+nav .menu .social-icons {
+  padding: 10px 5px 14px !important;
+}
+
+/* Style social icons for mobile */
+#logo .visible-phone.social-networks-links {
+  float: right !important;
+  clear: right !important;
+}
+#logo .visible-phone.social-networks-links a:first-child {
+  max-width: 100% !important;
+}
+
+/* Change alert messages color to white */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  background-color: white !important;
+  border: solid 1px black !important;
+  color: black !important;
+}
+.woocommerce-message:before,
+.woocommerce-error:before,
+.woocommerce-info:before {
+  color: black !important;
+}
+
+/* Change coupon button style on checkout page */
+.woocommerce .checkout_coupon input.button {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  background: none !important;
+  border: none !important;
+  text-shadow: none !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+  font-weight: normal !important;
+}
+.woocommerce .checkout_coupon input.button:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+/* Change Order Review box style */
+.review-order-wrap {
+  border: none !important;
+}
+
+/* Change login box style */
+.woocommerce #account_details .login {
+  background-color: white !important;
+  color: black !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.woocommerce #account_details div.login {
+  border: solid 1px black !important;
+}
+.woocommerce #account_details .login h4.lined-heading span {
+  background-color: white !important;
+}
+
+/* Customize categories list in footer */
+#footer .widget.widget_nav_menu .widget-heading {
+  display: none !important;
+}
+#footer .widget.widget_nav_menu .menu {
+  float: right !important;
+}
+#footer .widget.widget_nav_menu .menu-item {
+  border: none !important;
+  float: left !important;
+  margin-left: 3em !important;
+}
+#footer .widget.widget_nav_menu .menu-item a::before {
+  content: none !important;
+}
+
+/* Change shopping cart buttons style */
+.woocommerce .quantity,
+.woocommerce .quantity .minus,
+.woocommerce .quantity .plus,
+.woocommerce .quantity input.qty,
+.woocommerce table.shop_table tr td.product-remove .remove,
+.woocommerce .shipping-calculator-form .update-totals-button button,
+.woocommerce .coupon input.apply-coupon {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border: none !important;
+}
+.woocommerce .quantity .minus:hover,
+.woocommerce .quantity .plus:hover,
+.woocommerce table.shop_table tr td.product-remove .remove:hover,
+.woocommerce .shipping-calculator-form .update-totals-button button:hover,
+.woocommerce .coupon input.apply-coupon:hover {
+  background-color: black !important;
+  color: white !important;
+}
+input[name="calc_shipping_postcode"] {
+  display: none !important;
+}
+.woocommerce .shipping-calculator-form .form-row-left {
+  width: 25% !important;
+}
+.woocommerce .shipping-calculator-form .update-totals-button {
+  width: 40% !important;
+}
+
+/* Change forms elements to be white with a black border */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select,
+form .woo-select,
+.chzn-container-single,
+.chzn-container-single .chzn-single,
+.chzn-container-single .chzn-drop {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  background-image: none !important;
+  color: black !important;
+  text-transform: none !important;
+}
+.chzn-container-single {
+  border: solid 1px black !important;
+  margin: 4px -1px -1px -1px;
+}
+.chzn-container-single .chzn-drop {
+  border: solid 1px black !important;
+}
+.chzn-container-single .chzn-single {
+  border: none !important;
+}
+.chzn-container .chzn-results .highlighted {
+  background-color: black !important;
+  background-image: none !important;
+}
+
+/* Remove "need help ?" notice */
+.woocommerce .help-bar {
+  display: none !important;
+}
+
+/* Remove products archive page header */
+.woocommerce-shop-page .woocommerce-count-wrap,
+.woocommerce-shop-page .woocommerce-ordering {
+  display: none !important;
+}
+.woocommerce-shop-page .products {
+  border-top: none !important;
+}
+
+/* Make some space after product description */
+.single-product .product-main {
+  margin-bottom: 50px;
+}
+
+/* Hide product single accordion */
+.single-product #product-accordion {
+  display: none !important;
+}
+
+/* Make some space around the home slider */
+.home .home-slider-wrap {
+  margin-top: 50px;
+}
+
+/* Change ribbons to be full angles */
+/* and finally, hide it completely */
+.woocommerce .free-badge,
+.woocommerce .wc-new-badge {
+  padding-top: 25px;
+  top: -8px !important;
+  right: -45px !important;
+  background-color: black !important;
+  display: none !important;
+}
+
+/* Change product listing fonts because now, everything is lowercase */
+.woocommerce .product-details h3 {
+  font-size: 1.2em !important;
+}
+.woocommerce .product-details .posted_in {
+  font-size: 0.8em !important;
+}
+
+/* Hide not working "If you're already logged in, proceed to next step" button */
+.checkout-pane .already-logged-in {
+  display: none !important;
+}
+
+/* Customize TablePress tables */
+.tablepress {
+  margin-bottom: 3em !important;
+}
+.tablepress thead th,
+.tablepress tfoot th {
+  background-color: white !important;
+}
+.tablepress th,
+.tablepress td {
+  text-align: center !important;
+  padding: 2px;
+}
+
+/*********
+ * Fonts *
+ *********/
+
+/* Force fonts */
+html, body,
+h1, h2, h3, h4, h5, h6,
+form input[type="submit"], form button,
+a, nav .menu li {
+  font-family: 'cinqpoints', sans-serif !important;
+  text-transform: lowercase !important;
+}
+p, label {
+  font-family: 'Avenir Light', sans-serif !important;
+  text-transform: lowercase !important;
+}
+
+/* Override selection color */
+*::selection {
+  color: white;
+  background: black;
+}
+*::-moz-selection {
+  color: white;
+  background: black;
+}
+
+/* Generated by Font Squirrel (http://www.fontsquirrel.com) on November 19, 2013 */
+@font-face {
+    font-family: 'Avenir Light';
+    src: url('fonts/avenirltstd-roman-webfont.eot');
+    src: url('fonts/avenirltstd-roman-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/avenirltstd-roman-webfont.woff') format('woff'),
+         url('fonts/avenirltstd-roman-webfont.ttf') format('truetype'),
+         url('fonts/avenirltstd-roman-webfont.svg#avenir_lt_std55_roman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'cinqpoints';
+    src: url('fonts/cinqpoints-webfont.eot');
+    src: url('fonts/cinqpoints-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/cinqpoints-webfont.woff') format('woff'),
+         url('fonts/cinqpoints-webfont.ttf') format('truetype'),
+         url('fonts/cinqpoints-webfont.svg#avenir_lt_stdroman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
