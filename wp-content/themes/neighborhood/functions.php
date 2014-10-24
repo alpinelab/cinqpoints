@@ -47,6 +47,19 @@
 	include(SF_WIDGETS_PATH . '/widget-infocus.php');
 	
 	
+	/* CHECK WOOCOMMERCE IS ACTIVE
+	================================================== */ 
+	if ( ! function_exists( 'sf_woocommerce_activated' ) ) {
+		function sf_woocommerce_activated() {
+			if ( class_exists( 'woocommerce' ) ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	
+	
 	/* SWIFT FRAMEWORK
 	================================================== */ 
 	require_once(SF_FRAMEWORK_PATH . '/swift-framework.php');
@@ -107,6 +120,7 @@
 	    wp_register_style('fontawesome-css', SF_LOCAL_PATH . '/css/font-awesome.min.css', array(), NULL, 'screen');  
 	    wp_register_style('main-css', get_stylesheet_directory_uri() . '/style.css', array(), NULL, 'screen');  
 	    wp_register_style('responsive-css', SF_LOCAL_PATH . '/css/responsive.css', array(), NULL, 'screen');  
+		//wp_register_style('sf-rtl', SF_LOCAL_PATH . '/rtl.css', array(), NULL, 'all');
 	
 	    wp_enqueue_style('bootstrap');  
 	    wp_enqueue_style('bootstrap-responsive');  
@@ -116,7 +130,7 @@
 	    if ($enable_responsive) {
 	    	wp_enqueue_style('responsive-css');  
 	    }
-	
+		//wp_enqueue_style('sf-rtl');
 	}
 	
 	add_action('wp_enqueue_scripts', 'sf_enqueue_styles', 99);  
@@ -149,7 +163,7 @@
 	   	
 	    wp_enqueue_script('sf-fitvids');
 	    
-	    if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+	    if ( sf_woocommerce_activated() ) {
 	    	if (!is_account_page()) {
 	    		wp_enqueue_script('sf-viewjs');
 	    	}
@@ -241,7 +255,7 @@
 		if ($maintenance_mode) {
 		
 		    if ( !current_user_can( 'edit_themes' ) || !is_user_logged_in() ) {
-		        wp_die($custom_logo_output . '<p style="text-align:center">'.__('We are currently in maintenance mode, please check back shortly.', 'swiftframework').'</p>');
+		        wp_die($custom_logo_output . '<p style="text-align:center">'.__('We are currently in maintenance mode, please check back shortly.', 'swiftframework').'</p>', get_bloginfo( 'name' ));
 		    }
 	    
 	    }
@@ -381,48 +395,12 @@
 	    ?>
 	    	    
 	    <style type="text/css" media="screen">
-	        #menu-posts-portfolio .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/portfolio.png) no-repeat 6px 7px!important;
-	        	background-size: 17px 15px;
-	        }
-	        #menu-posts-portfolio:hover .wp-menu-image, #menu-posts-portfolio.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/portfolio_rollover.png) no-repeat 6px 7px!important;
-	        }
-	        #menu-posts-team .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/team.png) no-repeat 6px 11px!important;
-	        	background-size: 18px 9px;
-	        }
-	        #menu-posts-team:hover .wp-menu-image, #menu-posts-team.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/team_rollover.png) no-repeat 6px 11px!important;
-	        }
-	        #menu-posts-clients .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/clients.png) no-repeat 7px 6px!important;
-	        	background-size: 15px 16px;
-	        }
-	        #menu-posts-clients:hover .wp-menu-image, #menu-posts-clients.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/clients_rollover.png) no-repeat 7px 6px!important;
-	        }
-	        #menu-posts-testimonials .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/testimonials.png) no-repeat 8px 7px!important;
-	        	background-size: 15px 14px;
-	        }
-	        #menu-posts-testimonials:hover .wp-menu-image, #menu-posts-testimonials.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/testimonials_rollover.png) no-repeat 8px 7px!important;
-	        }
-	        #menu-posts-jobs .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/jobs.png) no-repeat 7px 8px!important;
-	        	background-size: 16px 14px;
-	        }
-	        #menu-posts-jobs:hover .wp-menu-image, #menu-posts-jobs.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/jobs_rollover.png) no-repeat 7px 8px!important;
-	        }
-	        #menu-posts-faqs .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/faqs.png) no-repeat 7px 7px!important;
-	        	background-size: 15px 16px;
-	        }
-	        #menu-posts-faqs:hover .wp-menu-image, #menu-posts-faqs.wp-has-current-submenu .wp-menu-image {
-	            background: url(<?php echo get_template_directory_uri(); ?>/images/wp/faqs_rollover.png) no-repeat 7px 7px!important;
-	        }
+	    	
+	    	/* REVSLIDER HIDE ACTIVATION */
+	    	a[name="activateplugin"] + div, a[name="activateplugin"] + div + div, a[name="activateplugin"] + div + div + div, a[name="activateplugin"] + div + div + div + div {
+	    		display: none;
+	    	}
+	    	
 	        #menu-posts-slide .wp-menu-image img {
 	        	width: 16px;
 	        }
@@ -718,7 +696,7 @@
 		$attribute_taxonomies = apply_filters( 'woocommerce_attribute_taxonomies', $attribute_taxonomies );
 		
 		$attribute_array['product_cat'] = __('Product Category', 'swiftframework');
-		$attribute_array['price'] = __('Price', 'swiftframework');
+		$attribute_array['price'] = __('Price', 'swiftframework');
 				
 		if ( $attribute_taxonomies ) {
 			foreach ( $attribute_taxonomies as $tax ) {
@@ -739,7 +717,7 @@
 				
 		if (function_exists('getTweets')) {
 						
-			$tweets = getTweets($count, $twitterID);
+			$tweets = getTweets($twitterID, $count);
 					
 			if(is_array($tweets)){
 						
@@ -747,7 +725,7 @@
 										
 					$content .= '<li>';
 				
-				    if ($tweet['text']) {
+				    if(is_array($tweet) && isset($tweet['text']) && $tweet['text']){
 				    	
 				    	$content .= '<div class="tweet-text">';
 				    	
@@ -764,7 +742,7 @@
 				        */
 				
 				        // i. User_mentions must link to the mentioned user's profile.
-				        if(is_array($tweet['entities']['user_mentions'])){
+				        if(isset($tweet['entities']['user_mentions']) && is_array($tweet['entities']['user_mentions'])){
 				            foreach($tweet['entities']['user_mentions'] as $key => $user_mention){
 				                $the_tweet = preg_replace(
 				                    '/@'.$user_mention['screen_name'].'/i',
@@ -774,7 +752,7 @@
 				        }
 				
 				        // ii. Hashtags must link to a twitter.com search with the hashtag as the query.
-				        if(is_array($tweet['entities']['hashtags'])){
+				        if(isset($tweet['entities']['hashtags']) && is_array($tweet['entities']['hashtags'])){
 				            foreach($tweet['entities']['hashtags'] as $key => $hashtag){
 				                $the_tweet = preg_replace(
 				                    '/#'.$hashtag['text'].'/i',
@@ -785,11 +763,21 @@
 				
 				        // iii. Links in Tweet text must be displayed using the display_url
 				        //      field in the URL entities API response, and link to the original t.co url field.
-				        if(is_array($tweet['entities']['urls'])){
+				        if(isset($tweet['entities']['urls']) && is_array($tweet['entities']['urls'])){
 				            foreach($tweet['entities']['urls'] as $key => $link){
 				                $the_tweet = preg_replace(
 				                    '`'.$link['url'].'`',
 				                    '<a href="'.$link['url'].'" target="_blank">'.$link['url'].'</a>',
+				                    $the_tweet);
+				            }
+				        }
+				        
+				        // Custom code to link to media
+				        if(isset($tweet['entities']['media']) && is_array($tweet['entities']['media'])){
+				            foreach($tweet['entities']['media'] as $key => $media){
+				                $the_tweet = preg_replace(
+				                    '`'.$media['url'].'`',
+				                    '<a href="'.$media['url'].'" target="_blank">'.$media['url'].'</a>',
 				                    $the_tweet);
 				            }
 				        }
@@ -807,9 +795,9 @@
 				        //    The Tweet timestamp must always be linked to the Tweet permalink.
 				        
 				       	$content .= '<div class="twitter_intents">'. "\n";
-				        $content .= '<a class="reply" href="https://twitter.com/intent/tweet?in_reply_to='.$tweet['id_str'].'"><i class="icon-reply"></i></a>'. "\n";
-				        $content .= '<a class="retweet" href="https://twitter.com/intent/retweet?tweet_id='.$tweet['id_str'].'"><i class="icon-retweet"></i></a>'. "\n";
-				        $content .= '<a class="favorite" href="https://twitter.com/intent/favorite?tweet_id='.$tweet['id_str'].'"><i class="icon-star"></i></a>'. "\n";
+				        $content .= '<a class="reply" href="https://twitter.com/intent/tweet?in_reply_to='.$tweet['id_str'].'"><i class="fa-reply"></i></a>'. "\n";
+				        $content .= '<a class="retweet" href="https://twitter.com/intent/retweet?tweet_id='.$tweet['id_str'].'"><i class="fa-retweet"></i></a>'. "\n";
+				        $content .= '<a class="favorite" href="https://twitter.com/intent/favorite?tweet_id='.$tweet['id_str'].'"><i class="fa-star"></i></a>'. "\n";
 				        
 				        $date = strtotime($tweet['created_at']); // retrives the tweets date and time in Unix Epoch terms
 				        $blogtime = current_time('U'); // retrives the current browser client date and time in Unix Epoch terms
@@ -987,7 +975,7 @@
 		
 		if (function_exists('getTweets')) {
 						
-			$tweets = getTweets($count, $twitterID);
+			$tweets = getTweets($twitterID, $count);
 		
 			if(is_array($tweets)){
 						
@@ -1041,6 +1029,16 @@
 				                    $the_tweet);
 				            }
 				        }
+				        
+				        // Custom code to link to media
+				        if(isset($tweet['entities']['media']) && is_array($tweet['entities']['media'])){
+				            foreach($tweet['entities']['media'] as $key => $media){
+				                $the_tweet = preg_replace(
+				                    '`'.$media['url'].'`',
+				                    '<a href="'.$media['url'].'" target="_blank">'.$media['url'].'</a>',
+				                    $the_tweet);
+				            }
+				        }
 				
 				        $content .= $the_tweet;
 						
@@ -1055,9 +1053,9 @@
 				        //    The Tweet timestamp must always be linked to the Tweet permalink.
 				        
 				       	$content .= '<div class="twitter_intents">'. "\n";
-				        $content .= '<a class="reply" href="https://twitter.com/intent/tweet?in_reply_to='.$tweet['id_str'].'"><i class="icon-reply"></i></a>'. "\n";
-				        $content .= '<a class="retweet" href="https://twitter.com/intent/retweet?tweet_id='.$tweet['id_str'].'"><i class="icon-retweet"></i></a>'. "\n";
-				        $content .= '<a class="favorite" href="https://twitter.com/intent/favorite?tweet_id='.$tweet['id_str'].'"><i class="icon-star"></i></a>'. "\n";
+				        $content .= '<a class="reply" href="https://twitter.com/intent/tweet?in_reply_to='.$tweet['id_str'].'"><i class="fa-reply"></i></a>'. "\n";
+				        $content .= '<a class="retweet" href="https://twitter.com/intent/retweet?tweet_id='.$tweet['id_str'].'"><i class="fa-retweet"></i></a>'. "\n";
+				        $content .= '<a class="favorite" href="https://twitter.com/intent/favorite?tweet_id='.$tweet['id_str'].'"><i class="fa-star"></i></a>'. "\n";
 				        
 				        $date = strtotime($tweet['created_at']); // retrives the tweets date and time in Unix Epoch terms
 				        $blogtime = current_time('U'); // retrives the current browser client date and time in Unix Epoch terms
@@ -1136,7 +1134,7 @@
 	//If a menu item is a page then add the template name to it as a css class 
 	function mbudm_add_page_type_to_menu($classes, $item) {
 	    if($item->object == 'page'){
-	        $template_name = get_post_meta( $item->object_id, '_wp_page_template', true );
+	        $template_name = sf_get_post_meta( $item->object_id, '_wp_page_template', true );
 	        $new_class =str_replace(".php","",$template_name);
 	        array_push($classes, $new_class);
 	    }   
@@ -1366,11 +1364,11 @@
 		}
 		if ($custom_logo) {		
 		echo '<style type="text/css">
-		    .login h1 a { background-image:url('. $custom_logo .') !important; height: 95px!important; background-size: auto!important; }
+		    .login h1 a { background-image:url('. $custom_logo .') !important; height: 95px!important; width: 100%!important; background-size: auto!important; }
 		</style>';
 		} else {
 		echo '<style type="text/css">
-		    .login h1 a { background-image:url('. get_template_directory_uri() .'/images/custom-login-logo.png) !important; height: 95px!important; background-size: auto!important; }
+		    .login h1 a { background-image:url('. get_template_directory_uri() .'/images/custom-login-logo.png) !important; height: 95px!important; width: 100%!important; background-size: auto!important; }
 		</style>';
 		}
 	}
@@ -1464,8 +1462,8 @@
 	    $pagenavi_options['page_text'] = '%PAGE_NUMBER%';
 	    $pagenavi_options['first_text'] = ('First Page');
 	    $pagenavi_options['last_text'] = ('Last Page');
-	    $pagenavi_options['next_text'] = __("Next <i class='icon-angle-right'></i>", "swiftframework");
-	    $pagenavi_options['prev_text'] = __("<i class='icon-angle-left'></i> Previous", "swiftframework");
+	    $pagenavi_options['next_text'] = __("Next <i class='fa-angle-right'></i>", "swiftframework");
+	    $pagenavi_options['prev_text'] = __("<i class='fa-angle-left'></i> Previous", "swiftframework");
 	    $pagenavi_options['dotright_text'] = '...';
 	    $pagenavi_options['dotleft_text'] = '...';
 	    $pagenavi_options['num_pages'] = 5; //continuous block of page numbers

@@ -163,7 +163,7 @@ img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon im
 	margin-top: 0!important;
 }
 #TB_window {
-	z-index: 9999;
+	z-index: 100050;
 }
 .spb_element_wrapper {
 	border: 1px solid #e3e3e3;

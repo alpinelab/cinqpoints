@@ -87,9 +87,9 @@
 		$video = $media_video = "";
 					
 		if ($use_thumb_content) {
-		$media_video = get_post_meta($postID, 'sf_thumbnail_video_url', true);
+		$media_video = sf_get_post_meta($postID, 'sf_thumbnail_video_url', true);
 		} else {
-		$media_video = get_post_meta($postID, 'sf_detail_video_url', true);
+		$media_video = sf_get_post_meta($postID, 'sf_detail_video_url', true);
 		}
 		
 		$video = video_embed($media_video, $media_width, $video_height);
@@ -147,7 +147,7 @@
 		if (function_exists('get_the_post_format_url')) {
 
 			$link = get_the_post_format_url();
-			$link = '<a href="'.esc_url($link).'" target="_blank" class="link-post-link"><i class="icon-link"></i>'.$link.'</a>';
+			$link = '<a href="'.esc_url($link).'" target="_blank" class="link-post-link"><i class="fa-link"></i>'.$link.'</a>';
 
 		}
 		
@@ -211,7 +211,7 @@
 		$post_categories = get_the_category_list(', ');
 		$post_comments = get_comments_number();
 		$post_permalink = get_permalink();
-		$custom_excerpt = get_post_meta($postID, 'sf_custom_excerpt', true);
+		$custom_excerpt = sf_get_post_meta($postID, 'sf_custom_excerpt', true);
 		$post_excerpt = '';
 		if ($content_output == "excerpt") {
 			if ($custom_excerpt != '') {
@@ -277,15 +277,15 @@
 		}
 		
 		
-		$thumb_type = get_post_meta($postID, 'sf_thumbnail_type', true);
+		$thumb_type = sf_get_post_meta($postID, 'sf_thumbnail_type', true);
 		$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
-		$thumb_video = get_post_meta($postID, 'sf_thumbnail_video_url', true);
+		$thumb_video = sf_get_post_meta($postID, 'sf_thumbnail_video_url', true);
 		$thumb_gallery = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=blog-image' );
-		$thumb_link_type = get_post_meta($postID, 'sf_thumbnail_link_type', true);
-		$thumb_link_url = get_post_meta($postID, 'sf_thumbnail_link_url', true);
+		$thumb_link_type = sf_get_post_meta($postID, 'sf_thumbnail_link_type', true);
+		$thumb_link_url = sf_get_post_meta($postID, 'sf_thumbnail_link_url', true);
 		$thumb_lightbox_thumb = rwmb_meta( 'sf_thumbnail_image', 'type=image&size=large' );
 		$thumb_lightbox_image = rwmb_meta( 'sf_thumbnail_link_image', 'type=image&size=large' );
-		$thumb_lightbox_video_url = get_post_meta($postID, 'sf_thumbnail_link_video_url', true);
+		$thumb_lightbox_video_url = sf_get_post_meta($postID, 'sf_thumbnail_link_video_url', true);
 		
 		foreach ($thumb_image as $detail_image) {
 			$thumb_img_url = $detail_image['url'];
@@ -323,7 +323,7 @@
 			$item_icon = "facetime-video";
 		} else {
 			$link_config = 'href="'.$post_permalink.'" class="link-to-post"';
-			$item_icon = "file-alt";
+			$item_icon = "file-o";
 		}	
 		
 		// THUMBNAIL MEDIA TYPE SETUP
@@ -344,10 +344,10 @@
 						
 			foreach ( $thumb_gallery as $image )
 			{
-			    $item_figure .= "<li><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></li>";
+			    $item_figure .= "<li><a ".$link_config."><img src='{$image['url']}' width='{$image['width']}' height='{$image['height']}' alt='{$image['alt']}' /></a></li>";
 			}
 															
-			$item_figure .= '</ul><div class="open-item"><a '.$link_config.'></a></div></div>';
+			$item_figure .= '</ul></div>';
 			
 		} else {
 		
@@ -360,7 +360,7 @@
 				
 				if ($blog_type != "standard") {
 				$item_figure .= '<div class="overlay"><div class="thumb-info">';
-				$item_figure .= '<i class="icon-'.$item_icon.'"></i>';
+				$item_figure .= '<i class="fa-'.$item_icon.'"></i>';
 				$item_figure .= '</div></div>';
 				}
 							
@@ -378,7 +378,7 @@
 		if ($blog_type == "masonry") {
 			
 			if ($post_format == "quote") {
-				$post_item .= '<div class="quote-display"><i class="icon-quote-left"></i></div>';
+				$post_item .= '<div class="quote-display"><i class="fa-quote-left"></i></div>';
 			} else {
 				$post_item .= $item_figure;
 			}
@@ -399,7 +399,7 @@
 			}
 			
 			if ($show_read_more == "yes") {
-			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="icon-angle-right"></i></a>';
+			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="fa-angle-right"></i></a>';
 			}
 		
 			$post_item .= '</div>';
@@ -410,10 +410,10 @@
 			$post_item .= '<span class="post-date" itemprop="datePublished">'.$post_date.'</span>';
 			$post_item .= '<div class="comments-likes">';
 			if ( comments_open() ) {
-			$post_item .= '<a href="'.$post_permalink.'#comment-area"><i class="icon-comments"></i><span>'. $post_comments .'</span></a> ';
+			$post_item .= '<a href="'.$post_permalink.'#comment-area"><i class="fa-comments"></i><span>'. $post_comments .'</span></a> ';
 			}
 			if (function_exists( 'lip_love_it_link' )) {
-			$post_item .= lip_love_it_link(get_the_ID(), '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+			$post_item .= lip_love_it_link(get_the_ID(), '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 			}
 			$post_item .= '</div>';				
 			$post_item .= '</div>';
@@ -439,10 +439,10 @@
 			
 			$post_item .= '<div class="comments-likes">';
 			if ( comments_open() ) {
-				$post_item .= '<a href="'.$post_permalink.'#comment-area"><i class="icon-comments"></i><span>'. $post_comments .'</span></a> ';
+				$post_item .= '<a href="'.$post_permalink.'#comment-area"><i class="fa-comments"></i><span>'. $post_comments .'</span></a> ';
 			}
 			if (function_exists( 'lip_love_it_link' )) {
-				$post_item .= lip_love_it_link(get_the_ID(), '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+				$post_item .= lip_love_it_link(get_the_ID(), '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 			}
 			$post_item .= '</div>';
 			}
@@ -455,7 +455,7 @@
 			}
 			
 			if ($show_read_more == "yes") {
-			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="icon-angle-right"></i></a>';
+			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="fa-angle-right"></i></a>';
 			}
 			
 			$post_item .= '</div>';
@@ -468,14 +468,14 @@
 			if ($sidebars == "no-sidebars") {
 			$post_item .= '<div class="standard-post-author span1">';
 			if(function_exists('get_avatar')) {
-			$post_item .= '<div class="author-avatar">'. get_avatar(get_the_author_meta('ID'), '164') .'</div>';
+			$post_item .= '<div class="author-avatar"><a href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ).'">'. get_avatar(get_the_author_meta('ID'), '164') .'</a></div>';
 			}
 			$post_item .= '<span class="standard-post-author-name" itemprop="author">'.__("Posted by", "swiftframework").' '.$post_author.'</span>';
 			$post_item .= '</div>';
 			} else if ($sidebars == "right-sidebar" || $sidebars == "left-sidebar" || $sidebars == "one-sidebar") {
 			$post_item .= '<div class="standard-post-author span1">';
 			if(function_exists('get_avatar')) {
-			$post_item .= '<div class="author-avatar">'. get_avatar(get_the_author_meta('ID'), '164') .'</div>';
+			$post_item .= '<div class="author-avatar"><a href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ).'">'. get_avatar(get_the_author_meta('ID'), '164') .'</a></div>';
 			}
 			$post_item .= '<span class="standard-post-author-name" itemprop="author">'.__("Posted by", "swiftframework").' '.$post_author.'</span>';
 			$post_item .= '</div>';
@@ -484,7 +484,7 @@
 			$post_item .= '<div class="standard-post-content '.$standard_post_width.'">'; // open standard-post-content
 		
 			if ($post_format == "quote") {
-				$post_item .= '<div class="quote-display"><i class="icon-quote-left"></i></div>';
+				$post_item .= '<div class="quote-display"><i class="fa-quote-left"></i></div>';
 			} else {
 				$post_item .= $item_figure;
 				if ($show_title) {
@@ -505,7 +505,7 @@
 			}
 			
 			if ($show_read_more == "yes") {
-			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="icon-angle-right"></i></a>';
+			$post_item .= '<a class="read-more" href="'.$post_permalink.'">'.__("Read more", "swiftframework").'<i class="fa-angle-right"></i></a>';
 			}
 		
 			$post_item .= '</div>'; // close standard-post-content
@@ -515,7 +515,7 @@
 				if ($sidebars == "both-sidebars") {
 				$post_item .= '<div class="standard-post-author">';
 				if(function_exists('get_avatar')) {
-				$post_item .= '<div class="author-avatar">'. get_avatar(get_the_author_meta('ID'), '164') .'</div>';
+				$post_item .= '<div class="author-avatar"><a href="'.get_author_posts_url( get_the_author_meta( 'ID' ) ).'">'. get_avatar(get_the_author_meta('ID'), '164') .'</a></div>';
 				}
 				$post_item .= '<span class="standard-post-author-name" itemprop="author">'.__("Posted by", "swiftframework").' '.$post_author.'</span>';
 				$post_item .= '</div>';
@@ -524,11 +524,11 @@
 				$post_item .= '<div class="comments-likes">';
 				
 				if ( comments_open() ) {
-					$post_item .= '<div class="comments-wrapper"><a href="'.$post_permalink.'#comment-area"><i class="icon-comments"></i><span>'. $post_comments .'</span></a></div>';
+					$post_item .= '<div class="comments-wrapper"><a href="'.$post_permalink.'#comment-area"><i class="fa-comments"></i><span>'. $post_comments .'</span></a></div>';
 				}
 				
 				if (function_exists( 'lip_love_it_link' )) {
-					$post_item .= lip_love_it_link(get_the_ID(), '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+					$post_item .= lip_love_it_link(get_the_ID(), '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 				}
 				
 				$post_item .= '</div>';

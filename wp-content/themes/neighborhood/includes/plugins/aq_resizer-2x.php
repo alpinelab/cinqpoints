@@ -4,8 +4,9 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 	//screen is 2x so double the size of images
 	$width = $width * 2;
 	$height = $height * 2;
-		
 	
+	$debug_mode = false;
+			
 	//validate inputs
 	if(!$url OR !$width ) return false;
 	
@@ -27,14 +28,24 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 	}
 		
 	//check if $img_url is local
-	//if(strpos( $url, home_url() ) === false) return false;
+	if(strpos( $url, home_url() ) === false) {
+		$image = array (
+			0 => $url,
+			1 => $width,
+			2 => $height
+		);
+		return $image;
+	}
 	
 	//define path of image
 	$rel_path = str_replace( $upload_url, '', $url);
 	$img_path = $upload_dir . $rel_path;
 	
 	//check if img path exists, and is an image indeed
-	if( !file_exists($img_path) OR !getimagesize($img_path) ) return false;
+	if( !file_exists($img_path) OR !getimagesize($img_path) ) {
+		if ($debug_mode) { echo 'file does not exist'."\n"; }
+		return false;
+	}
 	
 	//get image info
 	$info = pathinfo($img_path);
@@ -60,8 +71,12 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 	//if orig size is smaller
 	if($width >= $orig_w) {
 		
+		if ($debug_mode) { echo 'orig size is smaller'."\n"; }
+		
 		if(!$dst_h) :
 			//can't resize, so return original url
+			if ($debug_mode) { echo 'cant resize'."\n"; }
+			
 			$img_url = $url;
 			$dst_w = $orig_w;
 			$dst_h = $orig_h;
@@ -77,12 +92,16 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 				if(function_exists('wp_get_image_editor')) {
 		
 					$editor = wp_get_image_editor($img_path);
-		
+					
+					if ($debug_mode) { var_dump($editor); }
+					
 					if ( is_wp_error( $editor ) || is_wp_error( $editor->resize( $width, $height, $crop ) ) )
 						return false;
 		
 					$resized_file = $editor->save();
-		
+					
+					if ($debug_mode) { var_dump($resized_file); }
+					
 					if(!is_wp_error($resized_file)) {
 						$resized_rel_path = str_replace( $upload_dir, '', $resized_file['path']);
 						$img_url = $upload_url . $resized_rel_path;
@@ -98,25 +117,39 @@ function aq_resize( $url, $width, $height = null, $crop = null, $single = true )
 	}
 	//else check if cache exists
 	elseif(file_exists($destfilename) && getimagesize($destfilename)) {
+		
+		if ($debug_mode) { echo 'cache exists'."\n"; }
+		
 		$img_url = "{$upload_url}{$dst_rel_path}-{$suffix}.{$ext}";
 	} 
 	//else, we resize the image and return the new resized image url
 	else {
-
+		
+		if ($debug_mode) { echo 'else - before resize'."\n"; }
+		
 		if(function_exists('wp_get_image_editor')) {
 			$editor = wp_get_image_editor($img_path);
 			
-			if ( is_wp_error( $editor ) || is_wp_error( $editor->resize( $width, $height, $crop ) ) )
+			if ($debug_mode) { var_dump($editor); }
+			
+			if ( is_wp_error( $editor ) || is_wp_error( $editor->resize( $width, $height, $crop ) ) ) {
+				if ($debug_mode) { echo 'image editor error'."\n"; }
 				return false;
-
+			}
+			
 			$resized_file = $editor->save();
-
+			
+			if ($debug_mode) { var_dump($resized_file); }
+			
 			if(!is_wp_error($resized_file)) {
 				$resized_rel_path = str_replace( $upload_dir, '', $resized_file['path']);
 				$img_url = $upload_url . $resized_rel_path;
 			} else {
+				if ($debug_mode) { echo 'error with resized file'."\n"; }
 				return false;
 			}
+		} else {
+			if ($debug_mode) { echo 'no image editor function'."\n"; }
 		}
 	}
 	

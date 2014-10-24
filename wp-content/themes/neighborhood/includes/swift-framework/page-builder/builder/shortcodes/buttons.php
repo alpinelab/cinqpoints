@@ -21,7 +21,7 @@
 	            'type'	=> '',
 	            'href' => '',
 	            'shadow'		=> 'yes',
-	            'title' => __('Text on the button', "swift_page_builder"),
+	            'title' => __('Text on the button', 'swift-framework-admin'),
 	            'position' => 'cta_align_right',
 	            'alt_background'	=> 'none',
 	            'width' => '1/1',
@@ -42,7 +42,7 @@
 			$width = spb_translateColumnWidthToSpan($width);
 	        $el_class = $this->getExtraClass($el_class);
 	        
-	        $sidebar_config = get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
+	        $sidebar_config = sf_get_post_meta(get_the_ID(), 'sf_sidebar_config', true);
 	        
 	        $sidebars = '';
 	        if (($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar")) {
@@ -79,9 +79,9 @@
 	        if ($button_style == "arrow") {
 	        
 		        if ($position == "cta_align_left") {
-		        	$button = '<a class="impact-text-arrow arrow-left" href="'.$href.'" target="'.$target.'"><i class="icon-angle-left"></i></a>';
+		        	$button = '<a class="impact-text-arrow arrow-left" href="'.$href.'" target="'.$target.'"><i class="fa-angle-left"></i></a>';
 		        } else { 
-		        	$button = '<a class="impact-text-arrow arrow-right" href="'.$href.'" target="'.$target.'"><i class="icon-angle-right"></i></a>';
+		        	$button = '<a class="impact-text-arrow arrow-right" href="'.$href.'" target="'.$target.'"><i class="fa-angle-right"></i></a>';
 		        }
 	        
 	        }

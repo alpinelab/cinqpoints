@@ -4,7 +4,7 @@
  *
  * @author 		WooThemes
  * @package 	WooCommerce/Templates
- * @version     2.0.3
+ * @version     2.1.0
  */
 global $woocommerce, $product;
 
@@ -63,15 +63,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				</div>
 			<?php endif;
 			
-			$add_review_text = '<i class="icon-pencil"></i>' . __( 'Write a review', 'swiftframework' );
+			$add_review_text = __( 'Write a review', 'swiftframework' );
 			
-			echo '<p class="add_review"><a href="#review_form" class="inline sf-roll-button" data-toggle="modal" title="' . __( 'Add Your Review', 'woocommerce' ) . '"><span>' . $add_review_text . '</span><span>' . $add_review_text . '</span></a></p>';
+			echo '<p class="add_review"><a href="#review_form" class="inline sf-button accent" data-toggle="modal" title="' . __( 'Add Your Review', 'woocommerce' ) . '"><span class="text">' . $add_review_text . '</span></a></p>';
 	
-			$title_reply = __( 'Add a review', 'woocommerce' );
+			$title_reply = __( 'Add a review', 'swiftframework' );
 	
 		else :
 	
-			$title_reply = __( 'Be the first to review', 'woocommerce' ).' &ldquo;'.$post->post_title.'&rdquo;';
+			$title_reply = __( 'Be the first to review', 'swiftframework' ).' &ldquo;'.$post->post_title.'&rdquo;';
 	
 			echo '<p class="noreviews">'.__( 'There are no reviews yet, would you like to <a href="#review_form" class="inline" data-toggle="modal">submit yours</a>?', 'swiftframework' ).'</p>';
 	
@@ -81,8 +81,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			
 		echo '</div><div id="review_form" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="review-modal" aria-hidden="true">';
 		
-		echo '<div class="modal-header">
-		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		echo '<div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa-times"></i></button>
 		  <h2>'.__("Write a review", "swiftframework").'</h3>
 		</div>';
 		
@@ -98,7 +100,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				'email'  => '<p class="comment-form-email"><label for="email">' . __( 'Email', 'woocommerce' ) . '</label> ' . '<span class="required">*</span>' .
 				            '<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30" aria-required="true" /></p>',
 			),
-			'label_submit' => __( 'Submit Review', 'woocommerce' ),
+			'label_submit' => __( 'Submit Review', 'swiftframework' ),
 			'logged_in_as' => '',
 			'comment_field' => ''
 		);
@@ -116,11 +118,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	
 		}
 	
-		$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . __( 'Your Review', 'woocommerce' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>' . $woocommerce->nonce_field('comment_rating', true, false);
-	
+		$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . __( 'Your Review', 'woocommerce' ) . '</label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea>' . wp_nonce_field( 'woocommerce-comment_rating', '_wpnonce', true, false ) . '</p>';
+		
 		comment_form( apply_filters( 'woocommerce_product_review_comment_form_args', $comment_form ) );
 	
-		echo '</div></div>';
+		echo '</div></div></div></div>';
 	
 	} else {
 		

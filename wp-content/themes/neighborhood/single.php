@@ -9,9 +9,9 @@
 	$default_left_sidebar = $options['default_left_sidebar'];
 	$default_right_sidebar = $options['default_right_sidebar'];
 	
-	$show_page_title = get_post_meta($post->ID, 'sf_page_title', true);
-	$page_title_one = get_post_meta($post->ID, 'sf_page_title_one', true);
-	$page_title_bg = get_post_meta($post->ID, 'sf_page_title_bg', true);
+	$show_page_title = sf_get_post_meta($post->ID, 'sf_page_title', true);
+	$page_title_one = sf_get_post_meta($post->ID, 'sf_page_title_one', true);
+	$page_title_bg = sf_get_post_meta($post->ID, 'sf_page_title_bg', true);
 	
 	if ($show_page_title == "") {
 		$show_page_title = $default_show_page_heading;
@@ -20,15 +20,15 @@
 		$page_title_bg = $default_page_heading_bg_alt;
 	}
 	
-	$full_width_display = get_post_meta($post->ID, 'sf_full_width_display', true);
-	$show_author_info = get_post_meta($post->ID, 'sf_author_info', true);
-	$show_social = get_post_meta($post->ID, 'sf_social_sharing', true);
-	$show_related =  get_post_meta($post->ID, 'sf_related_articles', true);
-	$remove_breadcrumbs = get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
+	$full_width_display = sf_get_post_meta($post->ID, 'sf_full_width_display', true);
+	$show_author_info = sf_get_post_meta($post->ID, 'sf_author_info', true);
+	$show_social = sf_get_post_meta($post->ID, 'sf_social_sharing', true);
+	$show_related =  sf_get_post_meta($post->ID, 'sf_related_articles', true);
+	$remove_breadcrumbs = sf_get_post_meta($post->ID, 'sf_no_breadcrumbs', true);
 	
-	$sidebar_config = get_post_meta($post->ID, 'sf_sidebar_config', true);
-	$left_sidebar = get_post_meta($post->ID, 'sf_left_sidebar', true);
-	$right_sidebar = get_post_meta($post->ID, 'sf_right_sidebar', true);
+	$sidebar_config = sf_get_post_meta($post->ID, 'sf_sidebar_config', true);
+	$left_sidebar = sf_get_post_meta($post->ID, 'sf_left_sidebar', true);
+	$right_sidebar = sf_get_post_meta($post->ID, 'sf_right_sidebar', true);
 	
 	if ($sidebar_config == "") {
 		$sidebar_config = $default_sidebar_config;
@@ -84,16 +84,17 @@
 		
 		$media_type = $media_image = $media_video = $media_gallery = '';
 				 
-		$use_thumb_content = get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
+		$use_thumb_content = sf_get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
 		$post_format = get_post_format($post->ID);
 		if ( $post_format == "" ) {
 			$post_format = 'standard';
 		}
 		if ($use_thumb_content) {
-		$media_type = get_post_meta($post->ID, 'sf_thumbnail_type', true);
+		$media_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 		} else {
-		$media_type = get_post_meta($post->ID, 'sf_detail_type', true);
+		$media_type = sf_get_post_meta($post->ID, 'sf_detail_type', true);
 		}
+		$media_slider = sf_get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
 		
 		if ((($sidebar_config == "left-sidebar") || ($sidebar_config == "right-sidebar") || ($sidebar_config == "both-sidebars")) && !$full_width_display) {
 		$media_width = 770;
@@ -201,10 +202,10 @@
 						<?php } ?>
 						<div class="comments-likes">
 						<?php if (function_exists( 'lip_love_it_link' )) {
-							echo lip_love_it_link(get_the_ID(), '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+							echo lip_love_it_link(get_the_ID(), '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 						} ?>				
 						<?php if ( comments_open() ) { ?>
-							<div class="comments-wrapper"><i class="icon-comments"></i><span><?php comments_number('0', '1', '%'); ?></span></div>
+							<div class="comments-wrapper"><i class="fa-comments"></i><span><?php comments_number('0', '1', '%'); ?></span></div>
 						<?php } ?>
 						</div>
 					</div>
@@ -214,13 +215,13 @@
 					<div class="share-links clearfix">
 						<div class="share-text"><?php _e("Share:", "swiftframework"); ?></div>
 						<ul>
-						    <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="product_share_facebook"><i class="icon-facebook"></i></a></li>
-						    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="product_share_twitter"><i class="icon-twitter"></i></a></li>   
+						    <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="product_share_facebook"><i class="fa-facebook"></i></a></li>
+						    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="product_share_twitter"><i class="fa-twitter"></i></a></li>   
 						    <li><a href="https://plus.google.com/share?url={URL}" onclick="javascript:window.open(this.href,
-						      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="icon-google-plus"></i></a></li>
-						    <li><a href="http://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php if(function_exists('the_post_thumbnail')) echo wp_get_attachment_url(get_post_thumbnail_id()); ?>&description=<?php echo get_the_title(); ?>"><i class="icon-pinterest"></i></a></li>
-							<li><a href="mailto:?subject=<?php the_title(); ?>&body=<?php echo strip_tags(get_the_excerpt()); ?> <?php the_permalink(); ?>" class="product_share_email"><i class="icon-envelope"></i></a></li>
-						    <li><a class="permalink item-link" href="<?php the_permalink(); ?>"><i class="icon-link"></i></a></li>
+						      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa-google-plus"></i></a></li>
+						    <li><a href="http://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php if(function_exists('the_post_thumbnail')) echo wp_get_attachment_url(get_post_thumbnail_id()); ?>&description=<?php echo get_the_title(); ?>"><i class="fa-pinterest"></i></a></li>
+							<li><a href="mailto:?subject=<?php the_title(); ?>&body=<?php echo strip_tags(get_the_excerpt()); ?> <?php the_permalink(); ?>" class="product_share_email"><i class="fa-envelope"></i></a></li>
+						    <li><a class="permalink item-link" href="<?php the_permalink(); ?>"><i class="fa-link"></i></a></li>
 						</ul>						
 					</div>
 					
@@ -251,7 +252,7 @@
 						while ($related_posts_query->have_posts()) {
 							$related_posts_query->the_post();
 							$thumb_image = "";
-							$thumb_image = get_post_meta($post->ID, 'sf_thumbnail_image', true);
+							$thumb_image = sf_get_post_meta($post->ID, 'sf_thumbnail_image', true);
 							if (!$thumb_image) {
 								$thumb_image = get_post_thumbnail_id();
 							}
@@ -266,7 +267,7 @@
 								<figure>
 									<a href="<?php the_permalink(); ?>">
 										<div class="overlay"><div class="thumb-info">
-											<i class="icon-file-alt"></i>
+											<i class="fa-file-o"></i>
 										</div></div>
 										<img src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>" />
 									</a>
@@ -284,8 +285,8 @@
 				<?php } ?>
 				
 				<div class="pagination-wrap blog-pagination clearfix">
-					<div class="nav-previous"><?php next_post_link('%link', __('<i class="icon-angle-left"></i> <span class="nav-text">%title</span>', 'swiftframework'), FALSE); ?></div>
-					<div class="nav-next"><?php previous_post_link('%link', __('<span class="nav-text">%title</span><i class="icon-angle-right"></i>', 'swiftframework'), FALSE); ?></div>
+					<div class="nav-previous"><?php next_post_link('%link', __('<i class="fa-angle-left"></i> <span class="nav-text">%title</span>', 'swiftframework'), FALSE); ?></div>
+					<div class="nav-next"><?php previous_post_link('%link', __('<span class="nav-text">%title</span><i class="fa-angle-right"></i>', 'swiftframework'), FALSE); ?></div>
 				</div>
 				
 				<?php if ( comments_open() ) { ?>

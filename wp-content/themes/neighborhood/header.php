@@ -37,6 +37,12 @@
 				}
 			}
 			
+			if (isset($options['mobile_header_tabletland'])) {
+				if ($options['mobile_header_tabletland']) {
+					$page_class .= 'mh-tabletland ';
+				}
+			}
+			
 			
 			if ($enable_page_shadow) { 
 			$page_class .= "page-shadow ";
@@ -71,7 +77,7 @@
 			global $post;
 			$extra_page_class = "";
 			if ($post) {
-			$extra_page_class = get_post_meta($post->ID, 'sf_extra_page_class', true);
+			$extra_page_class = sf_get_post_meta($post->ID, 'sf_extra_page_class', true);
 			}
 		?>
 		
@@ -89,34 +95,47 @@
 		<?php if (isset($options['custom_favicon'])) { ?><link rel="shortcut icon" href="<?php echo $options['custom_favicon']; ?>" /><?php } ?>
 		
 		<?php
-			$custom_fonts = $google_font_one = $google_font_two = $google_font_three = "";
-
+			$custom_fonts = $google_font_one = $google_font_two = $google_font_three = $google_font_subset = $subset_output = "";
+			
 			$body_font_option = $options['body_font_option'];
 			if (isset($options['google_standard_font'])) {
-			$google_standard_font = explode(':', $options['google_standard_font']);
-			$google_font_one = str_replace("+", " ", $google_standard_font[0]);
+			$google_font_one = $options['google_standard_font'];
 			}
 			$headings_font_option = $options['headings_font_option'];
 			if (isset($options['google_heading_font'])) {
-			$google_heading_font = explode(':', $options['google_heading_font']);
-			$google_font_two = str_replace("+", " ", $google_heading_font[0]);
+			$google_font_two = $options['google_heading_font'];
 			}
-			
 			$menu_font_option = $options['menu_font_option'];
 			if (isset($options['google_menu_font'])) {
-			$google_menu_font = explode(':', $options['google_menu_font']);
-			$google_font_three = str_replace("+", " ", $google_menu_font[0]);
+			$google_font_three = $options['google_menu_font'];
 			}
 			
+			if (isset($options['google_font_subset'])) {
+			$google_font_subset = $options['google_font_subset'];
+				$s = 0;
+				if (is_array($google_font_subset)) {
+					foreach ($google_font_subset as $subset) {
+						if ($subset == "none") {
+							break;
+						}
+						if ($s > 0) {
+						$subset_output .= ','.$subset;
+						} else {
+						$subset_output = ':'.$subset;
+						}
+						$s++;
+					}
+				}
+			}
 			    
 			if ($body_font_option == "google" && $google_font_one != "") {
-				$custom_fonts .= "'".$google_font_one."', ";
+				$custom_fonts .= "'".$google_font_one.$subset_output."', ";
 			}
 			if ($headings_font_option == "google" && $google_font_two != "") {
-				$custom_fonts .= "'".$google_font_two."', ";
+				$custom_fonts .= "'".$google_font_two.$subset_output."', ";
 			}
 			if ($menu_font_option == "google" && $google_font_three != "") {
-				$custom_fonts .= "'".$google_font_three."', ";
+				$custom_fonts .= "'".$google_font_three.$subset_output."', ";
 			}
 			
 			$fontdeck_js = $options['fontdeck_js'];
@@ -170,11 +189,6 @@
 	<!--// OPEN BODY //-->
 	<body <?php body_class($page_class.' '.$is_responsive.' '.$extra_page_class); ?>>
 		
-		<!--// NO JS ALERT //-->
-		<noscript>
-			<div class="no-js-alert"><?php _e("Please enable JavaScript to view this website.", "swiftframework"); ?></div>
-		</noscript>	
-		
 		<!--// OPEN #container //-->
 		<?php if ($page_layout == "fullwidth") { ?>
 		<div id="container">
@@ -183,10 +197,8 @@
 		<?php } ?>
 			
 			<?php
-				if ($ss_enable) {
-					if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-						echo sf_super_search();
-					}
+				if ($ss_enable && sf_woocommerce_activated()) {
+					echo sf_super_search();
 				}
 			?>
 			
@@ -223,8 +235,8 @@
 			<div id="main-container" class="clearfix">
 				
 				<?php if (is_page()) {
-						$show_posts_slider = get_post_meta($post->ID, 'sf_posts_slider', true);
-						$rev_slider_alias = get_post_meta($post->ID, 'sf_rev_slider_alias', true);
+						$show_posts_slider = sf_get_post_meta($post->ID, 'sf_posts_slider', true);
+						$rev_slider_alias = sf_get_post_meta($post->ID, 'sf_rev_slider_alias', true);
 						if ($show_posts_slider) {
 							sf_swift_slider();
 						} else if ($rev_slider_alias != "") { ?>

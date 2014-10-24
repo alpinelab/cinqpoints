@@ -45,6 +45,7 @@ function portfolio_register() {
         'show_ui' => true,
         'show_in_menu' => true,
         'show_in_nav_menus' => false,
+        'menu_icon' => 'dashicons-format-image',
         'rewrite' => false,
         'supports' => array('title', 'editor', 'thumbnail'),
         'has_archive' => true,

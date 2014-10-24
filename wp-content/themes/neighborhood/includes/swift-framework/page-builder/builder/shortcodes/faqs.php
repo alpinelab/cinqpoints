@@ -24,7 +24,7 @@ class SwiftPageBuilderShortcode_faqs extends SwiftPageBuilderShortcode {
        	
        	$items_nav .= '<ul class="faqs-nav clearfix">';
        	foreach ($cats as $cat) {
-       		$items_nav .= '<li><a href="#'.$cat->slug.'"><i class="icon-list"></i>'.$cat->name.'<span class="count">'.$cat->count.'</span></a></li>';
+       		$items_nav .= '<li><a href="#'.$cat->slug.'"><i class="fa-list"></i>'.$cat->name.'<span class="count">'.$cat->count.'</span></a></li>';
        	}
        	$items_nav .= '</ul>';
        	
@@ -64,7 +64,7 @@ class SwiftPageBuilderShortcode_faqs extends SwiftPageBuilderShortcode {
 							
 			endwhile;
 			
-			$items .= '<div class="spb_divider go_to_top_icon1 spb_content_element "><a class="animate-top" href="#"><i class="icon-arrow-up"></i></a></div>';
+			$items .= '<div class="spb_divider go_to_top_icon1 spb_content_element "><a class="animate-top" href="#"><i class="fa-arrow-up"></i></a></div>';
 			$items .= '</ul>';
 			
 			
@@ -88,7 +88,7 @@ class SwiftPageBuilderShortcode_faqs extends SwiftPageBuilderShortcode {
 }
 
 SPBMap::map( 'faqs', array(
-    "name"		=> __("FAQs", "swift_page_builder"),
+    "name"		=> __("FAQs", 'swift-framework-admin'),
     "base"		=> "faqs",
     "class"		=> "",
     "icon"      => "spb-icon-faqs",
@@ -97,10 +97,10 @@ SPBMap::map( 'faqs', array(
     "params"	=> array(
         array(
             "type" => "textfield",
-            "heading" => __("Extra class name", "swift_page_builder"),
+            "heading" => __("Extra class name", 'swift-framework-admin'),
             "param_name" => "el_class",
             "value" => "",
-            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", "swift_page_builder")
+            "description" => __("If you wish to style particular content element differently, then use this field to add a class name and then refer to it in your css file.", 'swift-framework-admin')
         )
     )
 ) );

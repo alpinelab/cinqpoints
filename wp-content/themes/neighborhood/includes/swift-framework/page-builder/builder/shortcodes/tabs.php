@@ -13,10 +13,10 @@
 	    public function content( $atts, $content = null ) {
 	        $title = '';
 	        extract(shortcode_atts(array(
-	            'title' => __("Tab", "swift_page_builder")
+	            'title' => __("Tab", 'swift-framework-admin')
 	        ), $atts));
 	        $output = '';
-	        $output .= "\n\t\t\t" . '<div id="'.sanitize_title($title).'" class="tab-pane">';
+	        $output .= "\n\t\t\t" . '<div id="'.preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $title)))).'" class="tab-pane">';
 	        $output .= "\n\t\t\t\t" . spb_js_remove_wpautop($content);
 	        $output .= "\n\t\t\t" . '</div> ' . $this->endBlockComment('.spb_tab');
 	        return $output;
@@ -24,7 +24,7 @@
 	
 	    public function contentAdmin($atts, $content) {
 	        $title = '';
-	        $defaults = array( 'title' => __('Tab', 'swift_page_builder') );
+	        $defaults = array( 'title' => __('Tab', 'swift-framework-admin') );
 	        extract( shortcode_atts( $defaults, $atts ) );
 	
 	        return '<div id="tab-'. sanitize_title( $title ) .'" class="row-fluid spb_column_container spb_sortable_container not-column-inherit">'. do_shortcode($content) . SwiftPageBuilder::getInstance()->getLayout()->getContainerHelper() . '</div>';
@@ -45,13 +45,13 @@
 	            if ( $param['param_name'] != 'content' ) {
 	                //$shortcode_attributes[$param['param_name']] = $param['value'];
 	                if ( is_string($param['value']) ) {
-	                    $shortcode_attributes[$param['param_name']] = __($param['value'], "swift_page_builder");
+	                    $shortcode_attributes[$param['param_name']] = __($param['value'], 'swift-framework-admin');
 	                } else {
 	                    $shortcode_attributes[$param['param_name']] = $param['value'];
 	                }
 	            } else if ( $param['param_name'] == 'content' && $content == NULL ) {
 	                //$content = $param['value'];
-	                $content = __($param['value'], "swift_page_builder");
+	                $content = __($param['value'], 'swift-framework-admin');
 	            }
 	        }
 	        extract(shortcode_atts(
@@ -134,9 +134,9 @@
 	        $tabs_nav .= '<ul class="nav nav-tabs">';
 	        foreach ( $tab_titles as $tab ) {
 	        	if ($tab_count == 0) {
-	            $tabs_nav .= '<li class="active"><a href="#'. sanitize_title( $tab[0] ) .'" data-toggle="tab">' . $tab[0] . '</a></li>';
+	            $tabs_nav .= '<li class="active"><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';
 	        	} else {
-	            $tabs_nav .= '<li><a href="#'. sanitize_title( $tab[0] ) .'" data-toggle="tab">' . $tab[0] . '</a></li>';        	
+	            $tabs_nav .= '<li><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';        	
 	        	}
 	        	$tab_count++;
 	        }

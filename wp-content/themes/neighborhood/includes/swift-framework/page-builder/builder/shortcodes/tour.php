@@ -23,13 +23,13 @@
 	            if ( $param['param_name'] != 'content' ) {
 	                //$shortcode_attributes[$param['param_name']] = $param['value'];
 	                if ( is_string($param['value']) ) {
-	                    $shortcode_attributes[$param['param_name']] = __($param['value'], "swift_page_builder");
+	                    $shortcode_attributes[$param['param_name']] = __($param['value'], 'swift-framework-admin');
 	                } else {
 	                    $shortcode_attributes[$param['param_name']] = $param['value'];
 	                }
 	            } else if ( $param['param_name'] == 'content' && $content == NULL ) {
 	                //$content = $param['value'];
-	                $content = __($param['value'], "swift_page_builder");
+	                $content = __($param['value'], 'swift-framework-admin');
 	            }
 	        }
 	        extract(shortcode_atts(
@@ -116,9 +116,9 @@
 	        $tabs_nav .= '<ul class="nav nav-tabs">';
 	        foreach ( $tab_titles as $tab ) {
 	        	if ($tab_count == 0) {
-	            $tabs_nav .= '<li class="active"><a href="#'. sanitize_title( $tab[0] ) .'" data-toggle="tab">' . $tab[0] . '</a></li>';
+	            $tabs_nav .= '<li class="active"><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';
 	        	} else {
-	            $tabs_nav .= '<li><a href="#'. sanitize_title( $tab[0] ) .'" data-toggle="tab">' . $tab[0] . '</a></li>';        	
+	            $tabs_nav .= '<li><a href="#'. preg_replace("#[[:punct:]]#", "", (strtolower(str_replace(' ', '-', $tab[0])))) .'" data-toggle="tab">' . $tab[0] . '</a></li>';        	
 	        	}
 	        	$tab_count++;
 	        }

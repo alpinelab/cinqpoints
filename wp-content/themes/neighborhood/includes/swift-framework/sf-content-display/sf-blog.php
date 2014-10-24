@@ -38,14 +38,31 @@
 		$paged = 1;
 		}
 		    		
-		$blog_args = array(
-			'post_type' => 'post',
-			'post_status' => 'publish',
-			'paged' => $paged,
-			'category_name' => $category_slug,
-			'posts_per_page' => $item_count,
-			'cat' => '"'.$exclude_categories.'"'
+		$blog_args = array();
+		$category_array = explode(",", $category_slug);
+		if (isset($category_array) && $category_array[0] != "") {
+			$blog_args = array(
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => $paged,
+				'posts_per_page' => $item_count,
+				'tax_query' => array(
+							array(
+								'taxonomy' => 'category',
+								'field' => 'slug',
+								'terms' => $category_array
+							)
+						)
+				
 			);
+		} else {
+			$blog_args = array(
+				'post_type' => 'post',
+				'post_status' => 'publish',
+				'paged' => $paged,
+				'posts_per_page' => $item_count,
+			);
+		}
 			    		
 		$blog_items = new WP_Query( $blog_args );
 		
@@ -139,10 +156,10 @@
 		$blog_aux_output .= '<ul class="blog-aux-options '.$width.'">'; // open .blog-aux-options
 		
 		// CATEGORIES
-		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="categories"><i class="icon-list"></i>'.__("Categories", "swiftframework").'</a>';
+		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="categories"><i class="fa-list"></i>'.__("Categories", "swiftframework").'</a>';
 		
 		// TAGS
-		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="tags"><i class="icon-tags"></i>'.__("Tags", "swiftframework").'</a>';
+		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="tags"><i class="fa-tags"></i>'.__("Tags", "swiftframework").'</a>';
 		
 		// SEARCH FORM
 		$blog_aux_output .= '<li><form method="get" class="search-form" action="'. home_url().'/">';
@@ -150,11 +167,11 @@
 		$blog_aux_output .= '</form></li>';
 		
 		// ARCHIVES
-		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="archives"><i class="icon-list"></i>'.__("Archives", "swiftframework").'</a>';
+		$blog_aux_output .= '<li><a href="#" class="blog-slideout-trigger" data-aux="archives"><i class="fa-list"></i>'.__("Archives", "swiftframework").'</a>';
 		
 		// RSS LINK
 		if ($rss_feed_url != "") {
-		$blog_aux_output .= '<li><a href="'.$rss_feed_url.'" class="rss-link" target="_blank"><i class="icon-rss"></i>'.__("RSS", "swiftframework").'</a>';
+		$blog_aux_output .= '<li><a href="'.$rss_feed_url.'" class="rss-link" target="_blank"><i class="fa-rss"></i>'.__("RSS", "swiftframework").'</a>';
 		}
 		
 		$blog_aux_output .= '</ul>'; // close .blog-aux-options

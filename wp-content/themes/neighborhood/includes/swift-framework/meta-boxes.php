@@ -48,9 +48,9 @@
 	}
 	if (isset($options['default_product_right_sidebar'])) {
 	$default_product_right_sidebar = $options['default_product_right_sidebar'];
-	}
+	}	
 	
-	if ($default_product_sidebar_config = "") {
+	if ($default_product_sidebar_config == "") {
 		$default_product_sidebar_config = "no-sidebars";
 	}
 	if ($default_product_left_sidebar == "") {
@@ -725,7 +725,7 @@
 				'name' => 'Product Short Description',
 				'desc' => "You can optionally write a short description here, which shows above the variations/shopping bag options.",
 				'id'   => "{$prefix}product_short_description",
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'std'  => "",
 				'cols' => '40',
 				'rows' => '8',
@@ -736,7 +736,7 @@
 				'name' => 'Product Description',
 				'desc' => "You can optionally write a product description here, which shows under the description accordion heading if you have the page builder enabled for product pages.",
 				'id'   => "{$prefix}product_description",
-				'type' => 'textarea',
+				'type' => 'wysiwyg',
 				'std'  => "",
 				'cols' => '40',
 				'rows' => '8',
@@ -814,22 +814,19 @@
 			    'id' 	=> "{$prefix}heading_sidebar",
 			    'type' 	=> 'section'
 			),
-			
+						
 			// SIDEBAR CONFIG
 			array(
 				'name' => 'Sidebar configuration',
 				'id'   => "{$prefix}sidebar_config",
 				'type' => 'select',
-				// Array of 'key' => 'value' pairs for select box
 				'options' => array(
 					'no-sidebars'		=> 'No Sidebars',
 					'left-sidebar'		=> 'Left Sidebar',
 					'right-sidebar'		=> 'Right Sidebar',
 					'both-sidebars'		=> 'Both Sidebars'
 				),
-				// Select multiple values, optional. Default is false.
 				'multiple' => false,
-				// Default value, can be string (single value) or array (for both single and multiple values)
 				'std'  => $default_product_sidebar_config,
 				'desc' => 'Choose the sidebar configuration for the detail page of this portfolio item.',
 			),
@@ -1330,7 +1327,7 @@
 		// Check for page template
 		$checked_templates = array( $template_file );
 	
-		$template = get_post_meta( $post_id, '_wp_page_template', true );
+		$template = sf_get_post_meta( $post_id, '_wp_page_template', true );
 		if ( in_array( $template, $checked_templates ) )
 			return true;
 	

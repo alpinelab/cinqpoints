@@ -37,10 +37,10 @@
 		$output = '';
 		
 		$options = get_option('sf_neighborhood_options');
-		$posts_slider_type = get_post_meta($post->ID, 'sf_posts_slider_type', true);
-		$posts_category = get_post_meta($post->ID, 'sf_posts_slider_category', true);
-		$portfolio_category = get_post_meta($post->ID, 'sf_posts_slider_portfolio_category', true);
-		$count = get_post_meta($post->ID, 'sf_posts_slider_count', true);
+		$posts_slider_type = sf_get_post_meta($post->ID, 'sf_posts_slider_type', true);
+		$posts_category = sf_get_post_meta($post->ID, 'sf_posts_slider_category', true);
+		$portfolio_category = sf_get_post_meta($post->ID, 'sf_posts_slider_portfolio_category', true);
+		$count = sf_get_post_meta($post->ID, 'sf_posts_slider_count', true);
 		
 		$args = array();
 		
@@ -90,13 +90,13 @@
 				$post_permalink = get_permalink();
 				$post_author = get_the_author_link();
 				$post_date = get_the_date();
-				$post_client = get_post_meta($post->ID, 'sf_portfolio_client', true);
+				$post_client = sf_get_post_meta($post->ID, 'sf_portfolio_client', true);
 				$post_categories = get_the_category_list(', ');
 				if ($posts_slider_type == "portfolio") {
 				$post_categories = get_the_term_list($post->ID, 'portfolio-category', '', ', ');
 				}
 				$post_comments = get_comments_number();
-				$custom_excerpt = get_post_meta($post->ID, 'sf_custom_excerpt', true);
+				$custom_excerpt = sf_get_post_meta($post->ID, 'sf_custom_excerpt', true);
 				$post_excerpt = '';
 				if ($custom_excerpt != '') {
 				$post_excerpt = custom_excerpt($custom_excerpt, 20);
@@ -104,7 +104,7 @@
 				$post_excerpt = excerpt(20);
 				}
 				$posts_slider_image = rwmb_meta('sf_posts_slider_image', 'type=image&size=full');
-				$caption_position = get_post_meta($post->ID, 'sf_caption_position', true);
+				$caption_position = sf_get_post_meta($post->ID, 'sf_caption_position', true);
 				
 				$accent_color = get_option('accent_color', '#fb3c2d');
 				$secondary_accent_color = get_option('secondary_accent_color', '#2e2e36');
@@ -144,15 +144,15 @@
 					}
 					$output .= '</div>';
 					if ( comments_open() ) {
-						$output .= '<div class="comment-chart chart" data-percent="1" data-count="'.$post_comments.'" data-barcolor="'.$secondary_accent_color.'"><span>0</span><i class="icon-comments"></i></div>'. "\n";
+						$output .= '<div class="comment-chart chart" data-percent="1" data-count="'.$post_comments.'" data-barcolor="'.$secondary_accent_color.'"><span>0</span><i class="fa-comments"></i></div>'. "\n";
 					}
 					if (function_exists( 'lip_get_love_count' )) {
-					$output .= '<div class="loveit-chart chart" data-percent="1" data-count="'.lip_get_love_count($post->ID).'" data-barcolor="'.$accent_color.'"><span>0</span><i class="icon-heart"></i></div>'. "\n";
+					$output .= '<div class="loveit-chart chart" data-percent="1" data-count="'.lip_get_love_count($post->ID).'" data-barcolor="'.$accent_color.'"><span>0</span><i class="fa-heart"></i></div>'. "\n";
 					}
 					$output .= '</div>'. "\n";
 					$output .= '</div>'. "\n";
 					$output .= '<div class="flex-caption-headline clearfix">'. "\n";
-					$output .= '<h4><a href="'.$post_permalink.'"><span>'. $post_title .'</span><i class="icon-angle-right"></i></a></h4>'. "\n";
+					$output .= '<h4><a href="'.$post_permalink.'"><span>'. $post_title .'</span><i class="fa-angle-right"></i></a></h4>'. "\n";
 					$output .= '</div></div></div>'. "\n";
 					$output .= '<img src="'.$image[0].'" width="'.$image[1].'" height="'.$image[2].'" alt="'.$post_title.'" />'. "\n";
 				} else {
@@ -161,10 +161,10 @@
 					$output .= '<div class="excerpt">'. $post_excerpt .'</div>'. "\n";
 					$output .= '<div class="cl-charts">'. "\n";
 					if ( comments_open() ) {
-						$output .= '<div class="comment-chart fw-chart chart" data-percent="1" data-count="'.$post_comments.'" data-barcolor="'.$secondary_accent_alt_color.'"><span>0</span><i class="icon-comments"></i></div>'. "\n";
+						$output .= '<div class="comment-chart fw-chart chart" data-percent="1" data-count="'.$post_comments.'" data-barcolor="'.$secondary_accent_alt_color.'"><span>0</span><i class="fa-comments"></i></div>'. "\n";
 					}
 					if (function_exists( 'lip_get_love_count' )) {
-					$output .= '<div class="loveit-chart fw-chart chart" data-percent="1" data-count="'.lip_get_love_count($post->ID).'" data-barcolor="'.$accent_color.'"><span>0</span><i class="icon-heart"></i></div>'. "\n";
+					$output .= '<div class="loveit-chart fw-chart chart" data-percent="1" data-count="'.lip_get_love_count($post->ID).'" data-barcolor="'.$accent_color.'"><span>0</span><i class="fa-heart"></i></div>'. "\n";
 					}	
 					$output .= '</div>'. "\n";
 					$output .= '<div class="details clearfix">'. "\n";

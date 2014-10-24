@@ -41,7 +41,7 @@
 					$post_permalink = get_post_permalink($infocus_post);
 					
 					$thumb_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full', $post_id);
-					$thumb_video = get_post_meta($post_id, 'sf_thumbnail_video_url', true);
+					$thumb_video = sf_get_post_meta($post_id, 'sf_thumbnail_video_url', true);
 					
 					foreach ($thumb_image as $detail_image) {
 						$thumb_img_url = $detail_image['url'];
@@ -62,7 +62,7 @@
 					<a href="<?php echo $post_permalink; ?>" class="infocus-image">
 						<div class="overlay">
 							<div class="thumb-info">
-								<i class="icon-file-alt"></i>
+								<i class="fa-file-o"></i>
 							</div>
 						</div>
 						<img src="<?php echo $image[0]; ?>" width="<?php echo $image[1]; ?>" height="<?php echo $image[2]; ?>" />
@@ -74,7 +74,7 @@
 					<h5><a href="<?php echo $post_permalink; ?>" title="<?php echo $post_title; ?>"><?php echo $post_title; ?></a></h5>
 					<div class="comments-likes">
 					<?php if (function_exists( 'lip_love_it_link' )) {
-						echo lip_love_it_link($post_id, '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+						echo lip_love_it_link($post_id, '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 					} ?>
 					</div>
 				</div>

@@ -24,19 +24,29 @@
 	    return $plugins;  
 	} 
 	
-	function custom_mce_styles( $init ) {
-	    $init['theme_advanced_buttons2_add_before'] = 'styleselect';
-	    $init['theme_advanced_styles'] = 'Impact Text=impact-text';
-	    return $init;
+	function sf_custom_mce_styles( $args ) {
+				
+		$style_formats = array (
+		    array( 'title' => 'Impact Text', 'selector' => 'p', 'classes' => 'impact-text' ),
+		);
+		
+		$args['style_formats'] = json_encode( $style_formats );
+		
+		return $args;
 	}
 	 
-	add_filter( 'tiny_mce_before_init', 'custom_mce_styles'  );
-	 
-	function sf_mce_css() {
-	    return get_template_directory_uri() . '/css/editor-style.css';
+	add_filter('tiny_mce_before_init', 'sf_custom_mce_styles');
+	
+	function sf_mce_add_buttons( $buttons ){
+	    array_splice( $buttons, 1, 0, 'styleselect' );
+	    return $buttons;
 	}
-	 
-	add_filter( 'mce_css', 'sf_mce_css' );
+	add_filter( 'mce_buttons_2', 'sf_mce_add_buttons' );
+	
+	function sf_add_editor_styles() {
+	    add_editor_style( '/css/editor-style.css' );
+	}
+	add_action( 'init', 'sf_add_editor_styles' );
 	
 	
 	
@@ -93,12 +103,44 @@
 		), $atts));
 		
 		if ($cont == "yes") {
-			return '<div class="sf-icon-cont cont-'.$size.' sf-icon-float-'.$float.'"><i class="icon-'.$image.' sf-icon icon-'.$size.'"></i></div>';
+			return '<div class="sf-icon-cont cont-'.$size.' sf-icon-float-'.$float.'"><i class="fa-'.$image.' sf-icon icon-'.$size.'"></i></div>';
 		} else {
-			return '<i class="icon-'.$image.' sf-icon sf-icon-float-'.$float.' icon-'.$size.'"></i>';	
+			return '<i class="fa-'.$image.' sf-icon sf-icon-float-'.$float.' icon-'.$size.'"></i>';	
 		}		
 	}
 	add_shortcode('icon', 'sf_icon');
+	
+	
+	/* IMAGE BANNER SHORTCODE
+	================================================== */
+	function sf_imagebanner($atts, $content = null) {
+		extract(shortcode_atts(array(
+			"image"			=> "",
+			"animation" 	=> "fade-in",
+			"contentpos"	=> "center",
+			"textalign"	=> "center",
+			"extraclass"	=> ""
+		), $atts));
+		
+		$image_banner = "";
+		
+		$image_banner .= '<div class="sf-image-banner '.$extraclass.'">';	
+		
+		$image_banner .= '<div class="image-banner-content sf-animation content-'.$contentpos.' text-'.$textalign.'" data-animation="'.$animation.'" data-delay="200">';	
+		$image_banner .= do_shortcode($content);
+		$image_banner .= '</div>';
+		
+		$image_banner .= '<img src="'.$image.'" alt="" />';
+		
+		$image_banner .= '</div>';	
+		
+		global $sf_has_imagebanner;
+		$sf_has_imagebanner = true;
+			
+		return $image_banner;
+		
+	}
+	add_shortcode('sf_imagebanner', 'sf_imagebanner');
 	
 
 	/* COLUMN SHORTCODES
@@ -607,6 +649,11 @@
 		$pinterest = $options['pinterest_username'];
 		$instagram = $options['instagram_username'];
 		$yelp = $options['yelp_url'];
+		$xing = "";
+		
+		if (isset($options['xing_url'])) {
+		$xing = $options['xing_url'];
+		}
 		
 		$social_icons = '';
 		
@@ -660,6 +707,9 @@
 			if ($yelp) {
 				$social_icons .= '<li class="yelp"><a href="'.$yelp.'/" target="_blank">Yelp</a></li>'."\n";
 			}
+			if ($xing) {
+				$social_icons .= '<li class="xing"><a href="'.$xing.'/" target="_blank">Xing</a></li>'."\n";
+			}
 		
 		} else {
 		
@@ -712,6 +762,9 @@
 				}
 				if ($id == "yelp") {
 					$social_icons .= '<li class="yelp"><a href="'.$yelp.'" target="_blank">Yelp</a></li>'."\n";
+				}
+				if ($id == "xing") {
+					$social_icons .= '<li class="xing"><a href="'.$xing.'/" target="_blank">Xing</a></li>'."\n";
 				}
 			}
 		}
@@ -845,7 +898,7 @@
 		
 		$chart_output .= '<div class="chart-shortcode chart-'.$size.' chart-'.$align.'" data-linewidth="'.$linewidth.'" data-percent="0" data-animatepercent="'.$percentage.'" data-size="'.$size.'" data-barcolor="'.$barcolour.'" data-trackcolor="'.$trackcolour.'">';
 		if ($content != "") {
-			if (strpos($content, 'icon') !== false) {
+			if (strpos($content, 'fa') !== false) {
 			    $chart_output .= '<span><i class="'.$content.'"></i></span>';
 			} else {
 			$chart_output .= '<span>'.$content.'</span>';

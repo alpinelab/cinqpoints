@@ -193,7 +193,7 @@
 			<footer id="copyright" class="<?php echo $copyright_class; ?>">
 				<div class="container">
 					<p class="twelve columns"><?php echo do_shortcode(stripslashes($copyright_text)); ?><?php echo $swiftideas_backlink; ?></p>
-					<div class="beam-me-up three columns offset-by-one"><a href="#"><?php echo do_shortcode(stripslashes($go_top_text)); ?><i class="icon-arrow-up"></i></a></div>
+					<div class="beam-me-up three columns offset-by-one"><a href="#"><?php echo do_shortcode(stripslashes($go_top_text)); ?><i class="fa-arrow-up"></i></a></div>
 				</div>
 			<!--// CLOSE #copyright //-->
 			</footer>
@@ -205,7 +205,7 @@
 		
 		<?php
 			// INCLUDED FUNCTIONALITY SETUP
-			global $post, $has_portfolio, $has_blog, $has_products, $include_maps, $include_isotope, $include_carousel, $include_parallax, $has_progress_bar, $has_chart, $has_team;
+			global $post, $has_portfolio, $has_blog, $has_products, $include_maps, $include_isotope, $include_carousel, $include_parallax, $has_progress_bar, $has_chart, $has_team, $sf_has_imagebanner;
 				
 			$sf_inc_class = "";
 			
@@ -219,12 +219,14 @@
 				$sf_inc_class .= "has-products ";
 			}
 			
-			$content = $post->post_content;
-			
-			if (function_exists('has_shortcode')) {
-				if (has_shortcode( $content, 'product_category' ) || has_shortcode( $content, 'featured_products' ) || has_shortcode( $content, 'products' ) || has_shortcode( $content, 'recent_products' ) || has_shortcode( $content, 'product' )) {
-					$sf_inc_class .= "has-products ";
-					$include_isotope = true;
+			if ($post) {
+				$content = $post->post_content;
+				
+				if (function_exists('has_shortcode')) {
+					if (has_shortcode( $content, 'product_category' ) || has_shortcode( $content, 'featured_products' ) || has_shortcode( $content, 'products' ) || has_shortcode( $content, 'recent_products' ) || has_shortcode( $content, 'product' )) {
+						$sf_inc_class .= "has-products ";
+						$include_isotope = true;
+					}
 				}
 			}
 			
@@ -245,6 +247,9 @@
 			}
 			if ($has_team) {
 				$sf_inc_class .= "has-team ";
+			}
+			if ($sf_has_imagebanner) {
+				$sf_inc_class .= "has-imagebanner ";
 			}
 			
 			$options = get_option('sf_neighborhood_options');

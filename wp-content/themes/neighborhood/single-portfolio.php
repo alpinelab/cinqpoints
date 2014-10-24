@@ -1,15 +1,19 @@
 <?php get_header(); ?>
 	
 <?php
+	
+	global $sidebars;
+	$sidebars = 'no-sidebars';
+	
 	$options = get_option('sf_neighborhood_options');
 	$default_show_page_heading = $options['default_show_page_heading'];
 	$default_page_heading_bg_alt = $options['default_page_heading_bg_alt'];
 	
-	$portfolio_data = get_post_meta( $post->ID, 'portfolio', true );
+	$portfolio_data = sf_get_post_meta( $post->ID, 'portfolio', true );
 	$current_item_id = $post->ID;	
-	$show_page_title = get_post_meta($post->ID, 'sf_page_title', true);
-	$page_title_one = get_post_meta($post->ID, 'sf_page_title_one', true);
-	$page_title_bg = get_post_meta($post->ID, 'sf_page_title_bg', true);
+	$show_page_title = sf_get_post_meta($post->ID, 'sf_page_title', true);
+	$page_title_one = sf_get_post_meta($post->ID, 'sf_page_title_one', true);
+	$page_title_bg = sf_get_post_meta($post->ID, 'sf_page_title_bg', true);
 	
 	if ($show_page_title == "") {
 		$show_page_title = $default_show_page_heading;
@@ -35,7 +39,7 @@
 		</div>
 	<?php } ?>
 		
-	<div class="inner-page-wrap row clearfix">
+	<div class="inner-page-wrap has-no-sidebar row clearfix">
 			
 		<!-- OPEN article -->
 		<article <?php post_class('portfolio-article span12 clearfix'); ?> id="<?php the_ID(); ?>" itemscope itemtype="http://schema.org/CreativeWork">
@@ -44,21 +48,21 @@
 				
 				$media_type = $media_image = $media_video = $media_gallery = '';
 				 
-				$use_thumb_content = get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
-				$hide_details = get_post_meta($post->ID, 'sf_hide_details', true);
+				$use_thumb_content = sf_get_post_meta($post->ID, 'sf_thumbnail_content_main_detail', true);
+				$hide_details = sf_get_post_meta($post->ID, 'sf_hide_details', true);
 				
 				if ($use_thumb_content) {
-				$media_type = get_post_meta($post->ID, 'sf_thumbnail_type', true);
+				$media_type = sf_get_post_meta($post->ID, 'sf_thumbnail_type', true);
 				$media_image = rwmb_meta('sf_thumbnail_image', 'type=image&size=full');
-				$media_video = get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
+				$media_video = sf_get_post_meta($post->ID, 'sf_thumbnail_video_url', true);
 				$media_gallery = rwmb_meta( 'sf_thumbnail_gallery', 'type=image&size=thumb-image-onecol' );
 				} else {
-				$media_type = get_post_meta($post->ID, 'sf_detail_type', true);
+				$media_type = sf_get_post_meta($post->ID, 'sf_detail_type', true);
 				$media_image = rwmb_meta('sf_detail_image', 'type=image&size=full');
-				$media_video = get_post_meta($post->ID, 'sf_detail_video_url', true);
+				$media_video = sf_get_post_meta($post->ID, 'sf_detail_video_url', true);
 				$media_gallery = rwmb_meta( 'sf_detail_gallery', 'type=image&size=thumb-image-onecol' );
-				$media_slider = get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
-				$custom_media = get_post_meta($post->ID, 'sf_custom_media', true);
+				$media_slider = sf_get_post_meta($post->ID, 'sf_detail_rev_slider_alias', true);
+				$custom_media = sf_get_post_meta($post->ID, 'sf_custom_media', true);
 				}
 				
 				foreach ($media_image as $detail_image) {
@@ -130,11 +134,11 @@
 			<section class="article-body-wrap">
 				
 				<?php 
-					$item_client = get_post_meta($post->ID, 'sf_portfolio_client', true);
+					$item_client = sf_get_post_meta($post->ID, 'sf_portfolio_client', true);
 					$item_date = get_the_date();
 					$item_categories = get_the_term_list($post->ID, 'portfolio-category', '', ', ');
-					$item_link = get_post_meta($post->ID, 'sf_portfolio_external_link', true);
-					$show_social = get_post_meta($post->ID, 'sf_social_sharing', true);
+					$item_link = sf_get_post_meta($post->ID, 'sf_portfolio_external_link', true);
+					$show_social = sf_get_post_meta($post->ID, 'sf_social_sharing', true);
 				?>
 				
 				<?php if (!$hide_details) { ?>
@@ -146,7 +150,7 @@
 					<span class="date"><?php _e("Date: ", "swiftframework"); ?><span><?php echo $item_date; ?></span></span>
 					<span class="tags-wrap"><?php _e("Category: ", "swiftframework"); ?><span class="tags"><?php echo $item_categories; ?></span></span>
 					<?php if ($item_link) { ?>
-					<a class="item-link" href="<?php echo $item_link; ?>" target="_blank"><?php _e("View Project", "swiftframework"); ?><i class="icon-angle-right"></i></a>
+					<a class="item-link" href="<?php echo $item_link; ?>" target="_blank"><?php _e("View Project", "swiftframework"); ?><i class="fa-angle-right"></i></a>
 					<?php } ?>
 				</div>
 				
@@ -164,16 +168,16 @@
 					<div class="share-text"><?php _e("Share:", "swiftframework"); ?></div>
 					<div class="comments-likes">
 					<?php if (function_exists( 'lip_love_it_link' )) {
-						echo lip_love_it_link(get_the_ID(), '<i class="icon-heart"></i>', '<i class="icon-heart"></i>', false);
+						echo lip_love_it_link(get_the_ID(), '<i class="fa-heart"></i>', '<i class="fa-heart"></i>', false);
 					} ?>
 					</div>
 					<ul>
-					    <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="product_share_facebook"><i class="icon-facebook"></i></a></li>
-					    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="product_share_twitter"><i class="icon-twitter"></i></a></li>   
+					    <li><a href="http://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>" target="_blank" class="product_share_facebook"><i class="fa-facebook"></i></a></li>
+					    <li><a href="https://twitter.com/share?url=<?php the_permalink(); ?>" target="_blank" class="product_share_twitter"><i class="fa-twitter"></i></a></li>   
 					    <li><a href="https://plus.google.com/share?url=<?php the_permalink(); ?>" onclick="javascript:window.open(this.href,
-					      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="icon-google-plus"></i></a></li>
-						<li><a href="mailto:?subject=<?php the_title(); ?>&body=<?php echo strip_tags(get_the_excerpt()); ?> <?php the_permalink(); ?>" class="product_share_email"><i class="icon-envelope"></i></a></li>
-					    <li><a class="permalink item-link" href="<?php the_permalink(); ?>"><i class="icon-link"></i></a></li>
+					      '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><i class="fa-google-plus"></i></a></li>
+						<li><a href="mailto:?subject=<?php the_title(); ?>&body=<?php echo strip_tags(get_the_excerpt()); ?> <?php the_permalink(); ?>" class="product_share_email"><i class="fa-envelope"></i></a></li>
+					    <li><a class="permalink item-link" href="<?php the_permalink(); ?>"><i class="fa-link"></i></a></li>
 					</ul>						
 				</div>
 				
@@ -183,8 +187,8 @@
 			
 			
 			<div class="pagination-wrap portfolio-pagination clearfix">
-				<div class="nav-previous"><?php next_post_link(__('<i class="icon-angle-left"></i> <span class="nav-text">%link</span>', 'swiftframework'), '%title'); ?></div>
-				<div class="nav-next"><?php previous_post_link(__('<span class="nav-text">%link</span><i class="icon-angle-right"></i>', 'swiftframework'), '%title'); ?></div>
+				<div class="nav-previous"><?php next_post_link(__('<i class="fa-angle-left"></i> <span class="nav-text">%link</span>', 'swiftframework'), '%title'); ?></div>
+				<div class="nav-next"><?php previous_post_link(__('<span class="nav-text">%link</span><i class="fa-angle-right"></i>', 'swiftframework'), '%title'); ?></div>
 			</div>	
 				
 		<!-- CLOSE article -->
