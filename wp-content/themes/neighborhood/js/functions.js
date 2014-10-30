@@ -7,7 +7,7 @@ Custom jQuery functions.
 ================================================== */
 
 // Use SF namespace for all swift framework functions
-;var SF = {};
+var SF = {};
 
 (function(){
 	
@@ -160,7 +160,7 @@ Custom jQuery functions.
 				var attrValue = jQuery(this).attr('data-attr_value');
 				if (attrValue !== "") {
 					if (attr === "product_cat") {
-						if (queryString == "") {
+						if (queryString === "") {
 							queryString += "?product_cat=" + attrValue;
 						} else {
 							queryString += "&product_cat=" + attrValue;
@@ -508,7 +508,7 @@ Custom jQuery functions.
 					loadingIndicator.fadeIn(50);
 				},
 				success: function(response) {
-				    if (response == 0) {
+				    if (response === 0) {
 				    	response = "";
 			        } else {
 			        	results.html(response);
@@ -538,15 +538,16 @@ Custom jQuery functions.
 			
 			jQuery('.show-products-link').on('click', function(e) {
 				e.preventDefault();
-				var linkHref = jQuery(this).attr('href').replace('?', '');
-				var currentQuery = document.location.search;
+				var linkHref = jQuery(this).attr('href').replace('?', ''),
+					currentURL = document.location.href.replace(/\/page\/\d+/, ''),
+					currentQuery = document.location.search;
 				
 				if (currentQuery.indexOf('?show') >= 0) {				
 					window.location = jQuery(this).attr('href');
 				} else if (currentQuery.indexOf('?') >= 0) {
-					window.location = currentQuery + '&' + linkHref;
+					window.location = currentURL + '&' + linkHref;
 				} else {
-					window.location = document.location + '?' + linkHref;
+					window.location = currentURL + '?' + linkHref;
 				}
 			});
 						
@@ -590,7 +591,7 @@ Custom jQuery functions.
 						if (jQuery('#container').width() <= 1024 && product.find('figure > figcaption').is(":visible")) {
 							productImageHeight = productImageHeight + 20;
 						}
-						if (!productImageHeight || productImageHeight == 0) {
+						if (!productImageHeight || productImageHeight === 0) {
 						productImageHeight = 270;
 						}
 						products.find('li.type-product').each(function() {
@@ -620,29 +621,32 @@ Custom jQuery functions.
 			var carousel = products.find('ul.products');
 			
 			carousel.each(function() {
-				var carouselWrap = carousel.parent().parent(),
+				var thisCarousel = jQuery(this),
+					carouselItems = thisCarousel.find("> li").length,
+					carouselWrap = thisCarousel.parent().parent(),
 					carouselPrev = carouselWrap.find('.prev'),
 					carouselNext = carouselWrap.find('.next'),
 					carouselColumns = parseInt(carouselWrap.attr("data-columns"), 10),
-					itemCount = carousel.children().length;
+					itemCount = thisCarousel.children().length;
 				
-				if (carouselColumns > itemCount) {
-					carouselWrap.addClass('carousel-disabled');
+				if (carouselItems <= carouselColumns) {
+					thisCarousel.parents('.product-carousel').addClass('carousel-disabled');
+					thisCarousel.find('> li:first').css('margin-left', '0');
 					return;
 				}
 				
-				if (isMobileAlt & jQuery(window).width() <= 480) {
+				if (isMobileAlt && jQuery(window).width() <= 480) {
 					carouselColumns = 2;
-				} else if (isMobileAlt & jQuery(window).width() <= 320) {
+				} else if (isMobileAlt && jQuery(window).width() <= 320) {
 					carouselColumsn = 1;
 				}
 				
-				jQuery(this).imagesLoaded(function () {
-					jQuery(this).carouFredSel({
+				thisCarousel.imagesLoaded(function () {
+					thisCarousel.carouFredSel({
 						items				: carouselColumns,
 						scroll : {
 							visible			: {
-												width: carousel.find("> li:first").width(),
+												width: thisCarousel.find("> li:first").width(),
 												min: 1,
 												max: carouselColumns
 											},
@@ -677,8 +681,9 @@ Custom jQuery functions.
 			
 			carousel.each(function() {
 				
-				var carouselItem = carousel.find('li'),
-					carouselWrap = carousel.parent().parent(),
+				var thisCarousel = jQuery(this),
+					carouselItem = thisCarousel.find('li'),
+					carouselWrap = thisCarousel.parent().parent(),
 					itemWidth = carouselItem.width() + carouselItem.css('margin-left'),
 					visible = parseInt(carouselWrap.attr("data-columns"), 10);
 				
@@ -692,7 +697,7 @@ Custom jQuery functions.
 					visible = 2;
 				}
 				
-				carousel.trigger("configuration", {
+				thisCarousel.trigger("configuration", {
 					items : {
 						width : itemWidth
 					},
@@ -765,15 +770,16 @@ Custom jQuery functions.
 			
 			jQuery('#product-img-nav').flexslider({
 				animation: "slide",
-				directionNav: false,
+				directionNav: true,
 				controlNav: false,
 				animationLoop: false,
 				slideshow: false,
 				itemWidth: 70,
-				itemMargin: 30,
+				itemMargin: 20,
 				asNavFor: '#product-img-slider'
 			});
-
+		
+      var currentImage = "";
 			jQuery('#product-img-slider').flexslider({
 				animation: "slide",
 				controlNav: false,
@@ -784,10 +790,10 @@ Custom jQuery functions.
 				start: function(productSlider) {
 					if (hasProductZoom) {
 						if (productSlider.slides) {
-							var currentImage = productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image');
+							currentImage = productSlider.slides.eq(productSlider.currentSlide).find('.product-slider-image');
 							SF.woocommerce.productZoom(currentImage);
 						} else {
-							var currentImage = jQuery('#product-img-slider').find('.product-slider-image');
+							currentImage = jQuery('#product-img-slider').find('.product-slider-image');
 							SF.woocommerce.productZoom(currentImage);
 						}
 					}
@@ -1166,10 +1172,16 @@ Custom jQuery functions.
 			var carousel = jQuery('.carousel-items');
 			
 			carousel.each(function() {
-				var carouselInstance = jQuery('#'+jQuery(this).attr('id'));
-				var carouselPrev = carouselInstance.parent().parent().find('.prev');
-				var carouselNext = carouselInstance.parent().parent().find('.next');
-				var carouselColumns = parseInt(carouselInstance.attr("data-columns"), 10);
+				var carouselInstance = jQuery('#'+jQuery(this).attr('id')),
+					carouselItems = carouselInstance.find("> li").length,
+					carouselPrev = carouselInstance.parent().parent().find('.prev'),
+					carouselNext = carouselInstance.parent().parent().find('.next'),
+					carouselColumns = parseInt(carouselInstance.attr("data-columns"), 10);
+								
+				if (carouselItems <= carouselColumns) {
+					carouselInstance.find('> li:first').css('margin-left', '0');
+					return;
+				}
 				
 				carouselInstance.imagesLoaded(function () {
 					jQuery(this).carouFredSel({

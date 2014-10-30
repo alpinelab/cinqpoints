@@ -1,18 +1,18 @@
 <wpml-config>
 	<custom-fields>
 		<custom-field action="copy">_backorders</custom-field>
-		<custom-field action="copy">_crosssell_ids</custom-field>
+		<custom-field action="translate">_crosssell_ids</custom-field>
 		<custom-field action="copy">_default_attributes</custom-field>
 		<custom-field action="copy">_download_limit</custom-field>
 		<custom-field action="copy">_downloadable</custom-field>
 		<custom-field action="copy">_featured</custom-field>
-		<custom-field action="copy">_file_path</custom-field>
 		<custom-field action="copy">_manage_stock</custom-field>
 		<custom-field action="copy">_sale_price_dates_from</custom-field>
 		<custom-field action="copy">_sale_price_dates_to</custom-field>
 		<custom-field action="copy">_sku</custom-field>
 		<custom-field action="copy">_stock</custom-field>
 		<custom-field action="copy">_stock_status</custom-field>
+		<custom-field action="copy">_sold_individually</custom-field>
 		<custom-field action="copy">_subscription_length</custom-field>
 		<custom-field action="copy">_subscription_period</custom-field>
 		<custom-field action="copy">_subscription_period_interval</custom-field>
@@ -22,7 +22,7 @@
 		<custom-field action="copy">_subscription_trial_period</custom-field>
 		<custom-field action="copy">_tax_class</custom-field>
 		<custom-field action="copy">_tax_status</custom-field> 
-		<custom-field action="copy">_upsell_ids</custom-field>
+		<custom-field action="translate">_upsell_ids</custom-field>
 		<custom-field action="copy">_virtual</custom-field>
 		<custom-field action="copy">_visibility</custom-field>
 		<custom-field action="copy">_weight</custom-field>
@@ -33,11 +33,19 @@
 		<custom-field action="copy">total_sales</custom-field>
 		<custom-field action="translate">_product_url</custom-field>
 		<custom-field action="translate">_button_text</custom-field>
-                <custom-field action="translate">_purchase_note</custom-field>
+        <custom-field action="translate">_purchase_note</custom-field>
+        <custom-field action="copy">_override_tab_layout</custom-field>
+        <custom-field action="translate">_product_tabs</custom-field>
+        <custom-field action="ignore">_wcml_custom_prices_status</custom-field>
+        <custom-field action="copy">_per_product_pricing_active</custom-field>
+        <custom-field action="copy">_pricing_rules</custom-field>
 	</custom-fields>
 	<custom-types>
 		<custom-type translate="1">product</custom-type>
 		<custom-type translate="0">product_variation</custom-type>
+        <custom-type translate="0">shop_coupon</custom-type>
+        <custom-type translate="0">shop_order</custom-type>        
+        <custom-type translate="1">wc_product_tab</custom-type>
 	</custom-types>
 	<taxonomies>
 		<taxonomy translate="1">product_cat</taxonomy>
@@ -81,5 +89,11 @@
 			<key name="subject" />
 			<key name="heading" />
 		</key>		
+        <key name="woocommerce_demo_store_notice"/>
+        <key name="woocommerce_price_thousand_sep"/>
+        <key name="woocommerce_price_decimal_sep"/>
+        <key name="woocommerce_price_display_suffix" />
+        <key name="woocommerce_email_from_name"/>
+        <key name="woocommerce_email_from_address" />
 	</admin-texts>
 </wpml-config>

@@ -11,69 +11,65 @@
 <?php else: ?>
     <tbody>
         <tr>
+            <?php if($is_downloable): ?>
             <th></th>
+            <?php endif; ?>
             <?php foreach($template_data['all_variations_ids'] as $variation_id): ?>
                 <th>
-                    <?php echo $template_data['regular_price'][$variation_id]['label']; ?>
+                    <?php echo $template_data['all_file_paths'][$variation_id]['label']; ?>
                 </th>
             <?php endforeach; ?>
         </tr>
 
         <?php if(isset($template_data['empty_translation'])): ?>
             <tr>
-                <td><?php _e('Please save translation before translate variations prices','wpml-wcml'); ?></td>
+                <td><?php _e('Please save translation before translate variations file paths','wpml-wcml'); ?></td>
             </tr>
-        <?php else: ?>
-             <?php $texts = array('regular_price','sale_price'); ?>
-            <?php foreach($texts as $text): ?>
+        <?php elseif(isset($template_data['not_downloaded'])): ?>
                 <tr>
-                    <td>
-                        <?php if($text == 'regular_price'): ?>
-                            <?php _e('Regular price','wpml-wcml'); ?>
-                        <?php else: ?>
-                            <?php _e('Sale price','wpml-wcml'); ?>
-                        <?php endif; ?>
-                    </td>
-                    <?php foreach($template_data['all_variations_ids'] as $variation_id): ?>
-                        <?php if(isset($template_data[$text][$variation_id]['not_translated'])): ?>
-                            <td></td>
-                        <?php else: ?>
-                            <?php if($template_data[$text][$variation_id]['label'] == ''): ?>
-                                <td></td>
-                            <?php continue; endif; ?>
-                            <?php if($template_data['original']): ?>
-                                <td><input class="wcml_price" type="text" value="<?php echo $template_data[$text][$variation_id]['value']?>" readonly="readonly" /></td>
-                            <?php else: ?>
-                                <td><input class="wcml_price" type="text" name="<?php echo $text; ?>_<?php echo $lang ?>[<?php echo $variation_id ?>]" value="<?php echo $template_data[$text][$variation_id]['value']?>" placeholder="<?php esc_attr_e('Enter translation', 'wpml-wcml') ?>" <?php echo $woocommerce_wpml->settings['currency_converting_option'] == '1'?'readonly="readonly"':''; ?>/></td>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                <td><?php _e('Variations are not downloadable','wpml-wcml'); ?></td>
                 </tr>
-            <?php endforeach; ?>
-            <?php if(isset($template_data['all_file_paths'])): ?>
+        <?php else: ?>
+            <?php if($is_downloable): ?>
                 <tr>
                     <td><?php _e('Download URL','wpml-wcml'); ?></td>
                     <?php foreach($template_data['all_variations_ids'] as $variation_id): $file_paths = ''; ?>
-                        <?php if($template_data['regular_price'][$variation_id]['label'] == '' || isset($template_data['regular_price'][$variation_id]['not_translated'])){
+                        <?php if(isset($template_data['all_file_paths'][$variation_id]['not_translated'])){
                             echo '<td></td>';
                             continue;
                         }
-                        if(isset($template_data['all_file_paths'][$variation_id])):
-                            $file_paths_array = unserialize($template_data['all_file_paths'][$variation_id]['value']);
+                        if(get_post_meta($variation_id,'_downloadable',true) == 'yes'): ?>
+                            <td>
+                            <?php if(version_compare(preg_replace('#-(.+)$#', '', $woocommerce->version), '2.1', '<')){
+                                $file_paths_array = maybe_unserialize($template_data['all_file_paths'][$variation_id]['value']);
+                            if($file_paths_array)
                             foreach($file_paths_array as $trn_file_paths){
                                 $file_paths = $file_paths ? $file_paths . "\n" .$trn_file_paths : $trn_file_paths;
                             }
-                            ?>
-                            <td>
-                                <?php if($template_data['original']): ?>
+                                 if($template_data['original']): ?>
                                     <textarea value="<?php echo $file_paths; ?>" class="wcml_file_paths_textarea" disabled="disabled"><?php echo $file_paths; ?></textarea>
                                 <?php else: ?>
                                     <textarea value="<?php echo $file_paths; ?>" name='<?php echo 'variations_file_paths['.$variation_id.']'; ?>' class="wcml_file_paths_textarea" placeholder="<?php esc_attr_e('Enter translation', 'wpml-wcml') ?>"><?php echo $file_paths; ?></textarea>
                                     <button type="button" class="button-secondary wcml_file_paths"><?php _e('Choose a file', 'wpml-wcml') ?></button>
+                                <?php endif;
+                            }else{
+                                for($i=0;$i<$template_data['all_file_paths']['count'];$i++): ?>
+                                    <?php if($template_data['original']): ?>
+                                        <input type="text" value="<?php echo $template_data['all_file_paths'][$variation_id][$i]['label']; ?>" class="" disabled="disabled">
+                                        <input type="text" value="<?php echo $template_data['all_file_paths'][$variation_id][$i]['value']; ?>" class="" disabled="disabled">
+                                    <?php else: ?>
+                                        <div>
+                                            <input type="text" value="<?php echo isset($template_data['all_file_paths'][$variation_id][$i])?$template_data['all_file_paths'][$variation_id][$i]['label']:''; ?>" name='<?php echo 'variations_file_paths['.$variation_id.']['.$i.'][name]'; ?>' class="wcml_file_paths_name" placeholder="<?php esc_attr_e('Enter translation for name', 'wpml-wcml') ?>">
+                                            <input type="text" value="<?php echo isset($template_data['all_file_paths'][$variation_id][$i])?$template_data['all_file_paths'][$variation_id][$i]['value']:''; ?>" name='<?php echo 'variations_file_paths['.$variation_id.']['.$i.'][file]'; ?>' class="wcml_file_paths_file" placeholder="<?php esc_attr_e('Enter translation', 'wpml-wcml') ?>"/>
+                                            <button type="button" class="button-secondary wcml_file_paths_button"><?php _e('Choose a file', 'wpml-wcml') ?></button>
+                                        </div>
                                 <?php endif; ?>
+                                <?php endfor; ?>
+                            <?php }
+                            ?>
                             </td>
                         <?php else: ?>
-                            <td></td>
+                            <td><?php _e('Variation is not downloadable','wpml-wcml'); ?></td>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </tr>

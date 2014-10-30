@@ -50,6 +50,15 @@ $j(document).ready(function() {
 			display: 'block'
 		});
 	});
+	
+	$j('.font-icon-grid').on('click', 'li', function() {
+		var selection = $j(this),
+			iconName = selection.find('i').attr('class');
+		    		
+		$j('.font-icon-grid li').removeClass('selected');
+		selection.addClass('selected');
+		selection.parent().parent().find('input').val(iconName);
+	});
   
 });
 

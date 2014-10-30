@@ -166,7 +166,7 @@
 					} else {
 					
 						echo '<div class="product-image">'.$image_html.'</div>';					
-						echo '<div class="product-image">'.$image_html.'</div>';
+						echo '<div class="product-image second-image">'.$image_html.'</div>';
 						
 					}
 					

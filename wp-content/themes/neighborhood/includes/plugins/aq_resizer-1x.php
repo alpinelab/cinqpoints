@@ -1,7 +1,5 @@
 <?php
 
-
-
 function aq_resize( $url, $width, $height = null, $crop = null, $single = true ) {
 	
 	//validate inputs

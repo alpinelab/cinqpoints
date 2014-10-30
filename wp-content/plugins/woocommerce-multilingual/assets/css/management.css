@@ -95,6 +95,13 @@
     width: 900px;
     overflow: hidden;
 }
+.wcml-section-content .wcml-section-content-inner{
+    margin: 0 0 20px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #ededed;
+    float: left;
+    width: 100%;
+}
 .wcml-section:last-child {
     border: none;
     margin: 0;
@@ -111,14 +118,16 @@
             font-size: 20px;
         }
 
-        .wcml-section-header .icon-question-sign {
+        .wcml-section-header .icon-question-sign,
+        th .icon-question-sign{
             color: #ccc;
             cursor: pointer;
             vertical-align: middle;
             font-size: 12px;
         }
 
-        .wcml-section-header .icon-question-sign:hover {
+        .wcml-section-header .icon-question-sign:hover,
+        th .icon-question-sign:hover{
             color: #007cbd;
             -webkit-transition: all 0.15s linear;
             -moz-transition: all 0.15s linear;
@@ -158,7 +167,6 @@
     margin: 0;
     margin-right: 5px;
 }
-
 .wcml_products_translation{
     table-layout: fixed;
     width: auto;
@@ -175,7 +183,10 @@
         border-bottom: 0;
         position: absolute;
         left: 0;
-        width: 220px;
+        width: 217px;
+     }
+.wcml_products_translation>tbody>tr{
+    border-bottom: 1px solid #e1e1e1;
      }
 
     .wcml_products_translation .prod_images,
@@ -246,9 +257,16 @@
     vertical-align: middle;
     line-height: 20px;
 }
+.trbl_variables_products .spinner,
 .wcml_spinner{
     margin: 0;
     float: none;
+}
+.wcml_products .spinner{
+    display: block;
+    float: left;
+    margin: 0 5px;
+    display: none;
 }
 .wcml_cat_block{
     display: none;
@@ -290,7 +308,7 @@
     left: 30px;
     right: 30px;
     bottom: 30px;
-    z-index: 160000;
+    z-index: 10000;
     background-color: #f1f1f1;
     padding: 10px;
     padding-top: 35px;
@@ -308,12 +326,21 @@
     min-height: 360px;
     background: #000;
     opacity: .7;
-    z-index: 159900;
+    z-index: 9999;
 }
 .wp-editor-container{
     background-color: #fff;
 }
-
+.wcml_editor_buttons{
+    float: left;
+    width: 100%;
+}
+.wcml_editor_buttons h3{
+    float: left;
+}
+.wcml_editor_buttons .button-secondary{
+    margin-top: 15px;
+}
 /* Woocommerce styles*/
 .inside {
     margin: 0;
@@ -462,6 +489,7 @@
 }
 .wcml_editor_translation{
     overflow: hidden;
+    margin-top: 15px;
 }
 .wcml_line{
     border-bottom: 1px solid #555;
@@ -560,10 +588,34 @@ textarea[disabled] {
 .languages_currencies_table input[type="submit"]{
     margin-top: 10px;
 }
-.wp-core-ui .button-secondary.save_currency,.wp-core-ui .button-secondary.cancel_currency,.currency_code input,.currency_value input{
+.wp-core-ui .save_currency,.wp-core-ui .cancel_currency,.currency_code select,.currency_value input{
     display: none;
 }
+.wp-core-ui .save_currency{
+    color: #51a351;
+    font-size: 18px;
+    cursor: pointer;
+}
+.wp-core-ui .cancel_currency{
+    color: #9d261d;
+    font-size: 18px;
+    cursor: pointer;
+}
+.wp-core-ui .button-secondary.save_currency{
+    background: #1e8cbe;
+    border-color: #0074a2;
+    -webkit-box-shadow: inset 0 1px 0 rgba(120,200,230,.6);
+    box-shadow: inset 0 1px 0 rgba(120,200,230,.6);
+    color: #fff;
+}
+.currency_value{
+    float: left;
+    margin-right: 3px;
 
+}
+.currency_value input[type=text]{
+    width: 45px;
+}
 .currency-actions {
     text-align: right;
 }
@@ -575,9 +627,40 @@ textarea[disabled] {
 .edit-mode .currency_action_update,
 .edit-mode .currency_action_delete {
     display: block;
-    margin: 2px 0;
+    margin: 2px 1px;
+    float: left;
+}
+.currency_changed,
+.currency_value span,
+.currency_position span{
+    font-size: 10px;
+    font-style: italic;
+    color: #9A9A9A;
 }
 
+.currency_position{
+    margin-top:0px;
+}
+
+.wcml_currency_options_popup{
+    position: absolute;
+    background: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 10px 10px 5px #888888;
+    border: 1px solid #777;
+    border-radius: 5px;
+    z-index: 999;
+    min-width:400px;
+    display:none;
+    margin-left:230px;
+}
+.currency_code .wcml_currency_options_popup tr{height:auto;}
+.currency_code .wcml_currency_options_popup select{display: inline;}
+
+
+.currency_code .code_val{
+    display: block;
+}
 .currency-actions button {
     margin: 0 0 4px 0;
 }
@@ -588,7 +671,11 @@ textarea[disabled] {
     vertical-align: middle;
     margin: 0 5px 0 0;
 }
-
+table.widefat.currency_table{
+    float: left;
+    width: 250px;
+    border-right: none;
+}
 .currency_table .icon-trash,
 .currency_table .icon-edit {
     font-size: 16px;
@@ -601,7 +688,7 @@ textarea[disabled] {
 .currency_table .icon-edit {
     color: #333;
 }
-.prod_images,.prod_variations{
+.prod_images,.prod_variations,.custom_fields_block{
     display: none;
 }
 .prod_images img{
@@ -614,10 +701,11 @@ textarea[disabled] {
 .prod_image_show,.prod_image_hide,.prod_variations_show,.prod_variations_hide{
     cursor: pointer;
 }
+.currency_value .wcml-error,
 .wcml-error{
+    font-size: 10px;
     color: red;
     display: inline-block;
-    margin: 4px 0 0;
 }
 .troubleshoot_link_block{
     float: right;
@@ -676,16 +764,211 @@ textarea[disabled] {
 .wcml_duplicate_product_notice td{border-bottom: none !important;}
 
 /* Icons */
-[class^="icon-woo"] {
+.wcml_products [class^="icon-woo"] {
     width: 24px;
     height: 24px;
     background-position: center center;
     display: inline-block;
 }
-.icon-woo-simple { background-image: url('../images/icon-woo-simple.png'); }
-.icon-woo-downloadable { background-image: url('../images/icon-woo-downloadable.png'); }
-.icon-woo-external { background-image: url('../images/icon-woo-external.png'); }
-.icon-woo-grouped { background-image: url('../images/icon-woo-grouped.png'); }
-.icon-woo-variable { background-image: url('../images/icon-woo-variable.png'); }
-.icon-woo-virtual { background-image: url('../images/icon-woo-virtual.png'); }
+.wcml_products .icon-woo-simple { background-image: url('../images/icon-woo-simple.png'); }
+.wcml_products .icon-woo-downloadable { background-image: url('../images/icon-woo-downloadable.png'); }
+.wcml_products .icon-woo-external { background-image: url('../images/icon-woo-external.png'); }
+.wcml_products .icon-woo-grouped { background-image: url('../images/icon-woo-grouped.png'); }
+.wcml_products .icon-woo-variable { background-image: url('../images/icon-woo-variable.png'); }
+.wcml_products .icon-woo-virtual { background-image: url('../images/icon-woo-virtual.png'); }
+.wcml_products .children_icon{ margin-left: 20px }
 /* Icons END */
+
+.wcml_product_status_text,.prod_parent_text {
+    font-style: italic;
+    color: #9A9A9A;
+}
+.wcml_no_found_text{
+    text-align: center;
+}
+#multi-currency-per-language-details{
+    float: left;
+    width: 100%;
+}
+/* on/off buttons */
+.currency_languages{
+    position: relative;
+    text-align: center;
+}
+.currency_languages ul{
+    list-style:none;
+    width:43px;
+    height:20px;
+    float: left;
+    display: block;
+    margin: 0;
+}
+.currency_languages .wcml_onof_buttons{
+    display: inline-block;
+}
+.currency_languages ul li{
+    float: left;
+    line-height: 16px;
+    font-size: 8px;
+    padding: 1px 3px 0;
+    background: #E5E5E5;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F3F3F3), to(#E5E5E5));
+    text-shadow: 0 1px 0 #FFF;
+    border-left: 1px solid #D5D5D5;
+    border-top: 1px solid #D5D5D5;
+    border-bottom: 1px solid #D5D5D5;
+    -webkit-box-shadow: 0 1px 0 #FFF inset, 0 0 5px rgba(0, 0, 0, .1) inset, 0 1px 1px rgba(0, 0, 0, .3);
+    margin: 0;
+}
+
+.currency_languages ul li:first-child{
+    -webkit-border-radius:5px 0 0 5px;
+}
+.currency_languages ul li:last-child{
+    -webkit-border-radius:0 5px 5px 0;
+}
+
+.currency_languages ul li a{
+    text-decoration: none;
+    font-family:Helvetica, Arial;
+    text-transform:uppercase;
+    color:#a1a1a1;
+}
+
+.currency_languages .on{
+    background: #21759b;
+    background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#21759b), to(#21759b));
+    text-shadow:0 -1px 0 #21759b, 0 0 7px #FFF;
+    border-right:1px solid #21759b;
+    border-top:1px solid #21759b;
+    border-bottom:1px solid #21759b;
+    -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, .7) inset, 0 1px 0 #21759b;
+}
+
+.currency_languages ul li:not(.on):active{
+    background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#ddd), to(#f1f1f1));
+}
+
+table.widefat.currency_lang_table{
+    border-left: none;
+}
+.currency_languages ul li.on a{
+    color:#FFF;
+    cursor: default;
+}
+.currency_lang_table th{
+    text-align: center;
+}
+.currency_wrap{
+    width: 320px;
+    float: left;
+    margin-bottom: 10px;
+}
+.currency_inner{
+    overflow-x: auto;
+    overflow-y: visible;
+}
+.currency_table tr,
+.currency_lang_table tr,
+.currency_lang_table tr.default_currency{
+    height: 64px;
+}
+
+.currency_table tr td{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.currency_table td,.currency_lang_table td{
+    vertical-align: middle;
+}
+.currency_lang_table.widefat td{
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.default_currency  select{
+    font-size: 10px;
+    height: 24px;
+    margin: 0;
+    margin-right: 3px;
+}
+.default_currency td{
+    border-top: 1px solid #e5e5e5;
+}
+.default_currency .cur_label{
+    display: block;
+}
+.default_currency .inf_message{
+    font-size: 10px;
+    font-style: italic;
+    color: #9A9A9A;
+}
+.wcml_add_currency.button-wrap{
+    margin-top: 0;
+    float: left;
+}
+
+.currency_table select, .currency_table input{
+    font-size:10px !important;
+    padding: 0px;
+    height: 20px;
+    line-height:20px;
+}
+
+.ext_rate,
+.decimals_number,
+.abstract_amount,
+.currency_option_input{
+    width:50px;
+}
+
+/* Currency switcher*/
+#wcml_currencies_order{
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+#wcml_currencies_order li {
+    float: left;
+    margin: 0 8px 0 0;
+    padding: 2px 8px;
+    border: 1px solid #DFDFDF;
+    border-radius: 2px;
+    background: linear-gradient(to top, #ECECEC, #F9F9F9) repeat scroll 0 0 #F1F1F1;
+    cursor: move;
+}
+.wcml_currencies_order_ajx_resp{
+    padding-top: 5px;
+    color: #E68A00;
+}
+.explanation-text {
+    color: #999;
+}
+input[name="wcml_curr_template"]{
+    width: 100%;
+}
+.wcml_curr_style label{
+    line-height: 30px;
+}
+
+#wcml_curr_sel_preview_wrap{
+    clear: both;
+    float: right;
+    padding: 15px 15px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+}
+#wcml_curr_sel_preview_wrap p{
+    margin-top: 0;
+}
+.wcml_product_name{
+    line-height: 20px;
+}
+.wcml_prod_filters{
+    float: left;
+}
+.wcml_content_tr{
+    width: 100%;
+}

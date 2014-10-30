@@ -1259,10 +1259,10 @@ jQuery.swift_page_builder.addLastClass(jQuery(".spb_main_sortable"));
 	if ( isTinyMceActive() != true ) {
 		jQuery('#content').val(shortcodes);
 	} else {
-		tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
-		if (tinyMCE.get('excerpt')) {
-		tinyMCE.get('excerpt').setContent(shortcodes);
-		}
+		//tinyMCE.activeEditor.setContent(shortcodes, {format : 'html'});
+//		if (tinyMCE.get('excerpt')) {
+//		tinyMCE.get('excerpt').setContent(shortcodes);
+//		}
 		if (tinyMCE.get('content')) {
 		tinyMCE.get('content').setContent(shortcodes);
 		}

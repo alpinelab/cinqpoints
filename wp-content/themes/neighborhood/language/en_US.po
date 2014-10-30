@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Neighborhood\n"
-"POT-Creation-Date: 2014-07-26 23:05-0000\n"
-"PO-Revision-Date: 2014-07-26 23:14-0000\n"
+"POT-Creation-Date: 2014-09-17 23:14-0000\n"
+"PO-Revision-Date: 2014-09-17 23:14-0000\n"
 "Last-Translator: Swift Ideas <ed@swiftideas.net>\n"
 "Language-Team: Swift Ideas <ed@swiftideas.net>\n"
 "Language: en_US\n"
@@ -146,7 +146,7 @@ msgstr ""
 msgid "Price"
 msgstr ""
 
-#: functions.php:804 functions.php:1062 woocommerce/order/tracking.php:18
+#: functions.php:804 functions.php:1062
 msgid "ago"
 msgstr ""
 
@@ -163,9 +163,9 @@ msgid "Author"
 msgstr ""
 
 #: functions.php:1402 functions.php:1431
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:189
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:286
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:492
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:192
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:289
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:495
 msgid "Edit"
 msgstr ""
 
@@ -407,8 +407,6 @@ msgid "Type"
 msgstr ""
 
 #: includes/class-tgm-plugin-activation.php:1300
-#: woocommerce/myaccount/my-orders.php:38
-#: woocommerce/myaccount/my-orders.php:129
 msgid "Status"
 msgstr ""
 
@@ -1258,6 +1256,10 @@ msgstr ""
 msgid "Swift Page Builder"
 msgstr ""
 
+#: includes/swift-framework/page-builder/builder/lib/builder.php:128
+msgid "<p>This is a text block. Click the edit button to change this text.</p>"
+msgstr ""
+
 #: includes/swift-framework/page-builder/builder/lib/default-map.php:16
 msgid "Text Block"
 msgstr ""
@@ -1341,10 +1343,6 @@ msgstr ""
 #: includes/swift-framework/page-builder/builder/shortcodes/full-width-text.php:69
 #: includes/swift-framework/sf-shortcodes/interface.php:387
 msgid "Text"
-msgstr ""
-
-#: includes/swift-framework/page-builder/builder/lib/default-map.php:43
-msgid "<p>This is a text block. Click the edit button to change this text.</p>"
 msgstr ""
 
 #: includes/swift-framework/page-builder/builder/lib/default-map.php:44
@@ -2556,49 +2554,45 @@ msgstr ""
 msgid "Update files list"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:187
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:190
 msgid "Decrease width"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:187
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:190
 msgid "Increase width"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:190
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:193
 #: includes/swift-framework/sf-shortcodes/interface.php:216
 msgid "Pop up"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:191
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:194
 msgid "Clone"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:191
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:194
 #: includes/taxonomy-meta-class/Tax-meta-class.php:250
 #: includes/taxonomy-meta-class/Tax-meta-class.php:882
 msgid "Delete"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:287
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:493
-#: woocommerce/myaccount/form-change-password.php:41
-#: woocommerce/myaccount/form-change-password.php:77
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:290
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:496
 #: woocommerce/myaccount/form-lost-password.php:58
 #: woocommerce/myaccount/form-lost-password.php:92
 msgid "Save"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:404
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:407
 msgid "Add images"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:416
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:419
 msgid "Add image"
 msgstr ""
 
-#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:493
-#: woocommerce/myaccount/my-orders.php:82
-#: woocommerce/myaccount/my-orders.php:170
+#: includes/swift-framework/page-builder/builder/lib/shortcodes.php:496
 msgid "Cancel"
 msgstr ""
 
@@ -3262,10 +3256,10 @@ msgstr ""
 
 #: includes/swift-framework/page-builder/builder/shortcodes/search.php:50
 #: includes/swift-framework/sf-content-display/sf-blog.php:166
-#: includes/swift-framework/sf-content-display/sf-header.php:400
-#: includes/swift-framework/sf-content-display/sf-header.php:432
-#: includes/swift-framework/sf-content-display/sf-header.php:470
-#: includes/swift-framework/sf-content-display/sf-header.php:587
+#: includes/swift-framework/sf-content-display/sf-header.php:402
+#: includes/swift-framework/sf-content-display/sf-header.php:434
+#: includes/swift-framework/sf-content-display/sf-header.php:472
+#: includes/swift-framework/sf-content-display/sf-header.php:589
 #: searchform.php:12
 msgid "Search"
 msgstr ""
@@ -3507,25 +3501,25 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:635
 #: includes/swift-framework/sf-content-display/sf-header.php:637
+#: includes/swift-framework/sf-content-display/sf-header.php:639
 msgid "Welcome"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:690
+#: includes/swift-framework/sf-content-display/sf-header.php:692
 msgid "Subscribe\b"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:699
+#: includes/swift-framework/sf-content-display/sf-header.php:701
 msgid "Language"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:709
+#: includes/swift-framework/sf-content-display/sf-header.php:711
 msgid "Sign Out"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:711
 #: includes/swift-framework/sf-content-display/sf-header.php:713
+#: includes/swift-framework/sf-content-display/sf-header.php:715
 #: woocommerce/checkout/thankyou.php:46
 #: woocommerce/myaccount/form-edit-address.php:47
 #: woocommerce/myaccount/form-edit-address.php:92
@@ -3534,93 +3528,93 @@ msgstr ""
 msgid "My Account"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:716
+#: includes/swift-framework/sf-content-display/sf-header.php:718
 #: woocommerce/checkout/form-checkout.php:111
 #: woocommerce/myaccount/form-login.php:55
-#: woocommerce/myaccount/form-login.php:151 woocommerce/shop/form-login.php:31
+#: woocommerce/myaccount/form-login.php:151
 msgid "Login"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:753
 #: includes/swift-framework/sf-content-display/sf-header.php:755
+#: includes/swift-framework/sf-content-display/sf-header.php:757
 #: includes/swift-framework/sf-woocommerce.php:123
 #: includes/swift-framework/sf-woocommerce.php:125
-msgid "View your shopping cart"
+msgid "View your shopping bag"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:764
+#: includes/swift-framework/sf-content-display/sf-header.php:766
 #: includes/swift-framework/sf-woocommerce.php:134
 msgid "in the shopping bag"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:779
+#: includes/swift-framework/sf-content-display/sf-header.php:781
 #: includes/swift-framework/sf-woocommerce.php:156
 msgid "Unit Price:"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:781
+#: includes/swift-framework/sf-content-display/sf-header.php:783
 #: includes/swift-framework/sf-woocommerce.php:157
 msgid "Quantity:"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:783
+#: includes/swift-framework/sf-content-display/sf-header.php:785
 #: includes/swift-framework/sf-woocommerce.php:160
 #: woocommerce/cart/cart.php:121 woocommerce/cart/cart.php:338
 msgid "Remove this item"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:793
+#: includes/swift-framework/sf-content-display/sf-header.php:795
 #: includes/swift-framework/sf-woocommerce.php:172
 msgid "View shopping bag"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:795
+#: includes/swift-framework/sf-content-display/sf-header.php:797
 #: includes/swift-framework/sf-woocommerce.php:174
 msgid "Proceed to checkout"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:801
+#: includes/swift-framework/sf-content-display/sf-header.php:803
 #: includes/swift-framework/sf-woocommerce.php:180
 msgid "0 items in the shopping bag"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:803
+#: includes/swift-framework/sf-content-display/sf-header.php:805
 #: includes/swift-framework/sf-woocommerce.php:182
 msgid "Unfortunately, your shopping bag is empty."
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:809
+#: includes/swift-framework/sf-content-display/sf-header.php:811
 #: includes/swift-framework/sf-woocommerce.php:188
 msgid "Go to the shop"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:855
+#: includes/swift-framework/sf-content-display/sf-header.php:857
 msgid "View your wishlist"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:931
+#: includes/swift-framework/sf-content-display/sf-header.php:933
 #: woocommerce/wishlist.php:197
 msgid "Your wishlist is currently empty."
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:938
+#: includes/swift-framework/sf-content-display/sf-header.php:940
 msgid "Go to your wishlist"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:995
+#: includes/swift-framework/sf-content-display/sf-header.php:997
 msgid "Other"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:1064
+#: includes/swift-framework/sf-content-display/sf-header.php:1066
 #, php-format
 msgid "View all %d results"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:1070
+#: includes/swift-framework/sf-content-display/sf-header.php:1072
 msgid "No results"
 msgstr ""
 
-#: includes/swift-framework/sf-content-display/sf-header.php:1071
+#: includes/swift-framework/sf-content-display/sf-header.php:1073
 msgid "No search results could be found, please try another query."
 msgstr ""
 
@@ -3682,7 +3676,7 @@ msgstr ""
 
 #: includes/swift-framework/sf-content-display/sf-template-parts.php:139
 #: includes/swift-framework/sf-content-display/sf-template-parts.php:173
-#: single-portfolio.php:144
+#: single-portfolio.php:148
 msgid "Client: "
 msgstr ""
 
@@ -6255,8 +6249,6 @@ msgid "Bolt (Colour)"
 msgstr ""
 
 #: includes/swift-framework/sf-shortcodes/interface.php:687
-#: woocommerce/myaccount/my-orders.php:37
-#: woocommerce/myaccount/my-orders.php:126
 msgid "Date"
 msgstr ""
 
@@ -6516,27 +6508,27 @@ msgstr ""
 msgid "<h1>%1$s results for <span>%2$s</span></h1>"
 msgstr ""
 
-#: single-portfolio.php:146
+#: single-portfolio.php:150
 msgid "Date: "
 msgstr ""
 
-#: single-portfolio.php:147
+#: single-portfolio.php:151
 msgid "Category: "
 msgstr ""
 
-#: single-portfolio.php:149
+#: single-portfolio.php:153
 msgid "View Project"
 msgstr ""
 
-#: single-portfolio.php:164 single.php:216
+#: single-portfolio.php:168 single.php:216
 msgid "Share:"
 msgstr ""
 
-#: single-portfolio.php:186 single-team.php:71
+#: single-portfolio.php:190 single-team.php:71
 msgid "<i class=\"fa-angle-left\"></i> <span class=\"nav-text\">%link</span>"
 msgstr ""
 
-#: single-portfolio.php:187 single-team.php:72
+#: single-portfolio.php:191 single-team.php:72
 msgid "<span class=\"nav-text\">%link</span><i class=\"fa-angle-right\"></i>"
 msgstr ""
 
@@ -6556,38 +6548,22 @@ msgstr ""
 msgid "<span class=\"nav-text\">%title</span><i class=\"fa-angle-right\"></i>"
 msgstr ""
 
-#: woocommerce/archive-product.php:105
+#: woocommerce/archive-product.php:95
 #, php-format
 msgid "Search Results: &ldquo;%s&rdquo;"
 msgstr ""
 
-#: woocommerce/archive-product.php:108
+#: woocommerce/archive-product.php:98
 #, php-format
 msgid "&nbsp;&ndash; Page %s"
 msgstr ""
 
-#: woocommerce/archive-product.php:173 woocommerce/loop/orderby.php:21
-msgid "Default sorting"
-msgstr ""
-
-#: woocommerce/archive-product.php:174
-msgid "Sort alphabetically"
-msgstr ""
-
-#: woocommerce/archive-product.php:175
-msgid "Sort by most recent"
-msgstr ""
-
-#: woocommerce/archive-product.php:176
-msgid "Sort by price"
-msgstr ""
-
 #: woocommerce/cart/cart-empty.php:18
-msgid "Your Shopping Bag is empty"
+msgid "Your shopping bag is empty"
 msgstr ""
 
 #: woocommerce/cart/cart-empty.php:20
-msgid "You currently have no items in your Shopping Bag."
+msgid "You currently have no items in your shopping bag."
 msgstr ""
 
 #: woocommerce/cart/cart-empty.php:25 woocommerce/cart/cart-empty.php:27
@@ -6699,16 +6675,16 @@ msgstr ""
 msgid "Promotional Code"
 msgstr ""
 
-#: woocommerce/cart/cart.php:142 woocommerce/checkout/form-coupon.php:35
+#: woocommerce/cart/cart.php:142
 msgid "Coupon code"
 msgstr ""
 
-#: woocommerce/cart/cart.php:142 woocommerce/checkout/form-coupon.php:39
+#: woocommerce/cart/cart.php:142
 msgid "Apply Coupon"
 msgstr ""
 
 #: woocommerce/cart/cart.php:155 woocommerce/cart/cart.php:376
-msgid "Update Shopping Bag"
+msgid "Update shopping bag"
 msgstr ""
 
 #: woocommerce/cart/cart.php:155 woocommerce/cart/cart.php:376
@@ -6846,21 +6822,6 @@ msgid ""
 "methods for your location."
 msgstr ""
 
-#: woocommerce/checkout/cart-errors.php:18
-#: woocommerce/checkout/cart-errors.php:28
-msgid ""
-"There are some issues with the items in your cart (shown above). Please go "
-"back to the cart page and resolve these issues before checking out."
-msgstr ""
-
-#: woocommerce/checkout/cart-errors.php:22
-msgid "Return To Cart"
-msgstr ""
-
-#: woocommerce/checkout/cart-errors.php:32
-msgid "&larr; Return To Cart"
-msgstr ""
-
 #: woocommerce/checkout/form-billing.php:19
 #: woocommerce/checkout/form-billing.php:75
 msgid "Billing &amp; Shipping"
@@ -6901,61 +6862,11 @@ msgid "Your Order"
 msgstr ""
 
 #: woocommerce/checkout/form-checkout.php:104
-#: woocommerce/checkout/form-login.php:14
 msgid "Returning customer?"
 msgstr ""
 
 #: woocommerce/checkout/form-checkout.php:104
 msgid "Login here"
-msgstr ""
-
-#: woocommerce/checkout/form-coupon.php:18
-#: woocommerce/checkout/form-coupon.php:24
-msgid "Have a coupon?"
-msgstr ""
-
-#: woocommerce/checkout/form-coupon.php:19
-#: woocommerce/checkout/form-coupon.php:29
-msgid "Click here to enter your code"
-msgstr ""
-
-#: woocommerce/checkout/form-login.php:15
-msgid "Click here to login"
-msgstr ""
-
-#: woocommerce/checkout/form-login.php:22
-msgid ""
-"If you have shopped with us before, please enter your details in the boxes "
-"below. If you are a new customer please proceed to the Billing &amp; "
-"Shipping section."
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:22 woocommerce/checkout/form-pay.php:110
-#: woocommerce/order/order-details.php:46
-msgid "Product"
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:23 woocommerce/checkout/form-pay.php:111
-msgid "Qty"
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:24 woocommerce/checkout/form-pay.php:112
-msgid "Totals"
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:57
-msgid "Payment"
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:82 woocommerce/checkout/form-pay.php:169
-msgid ""
-"Sorry, it seems that there are no available payment methods for your "
-"location. Please contact us if you require assistance or wish to make "
-"alternate arrangements."
-msgstr ""
-
-#: woocommerce/checkout/form-pay.php:92 woocommerce/checkout/form-pay.php:178
-msgid "Pay for order"
 msgstr ""
 
 #: woocommerce/checkout/form-shipping.php:34
@@ -6996,8 +6907,7 @@ msgstr ""
 msgid "Please attempt your purchase again."
 msgstr ""
 
-#: woocommerce/checkout/thankyou.php:44 woocommerce/myaccount/my-orders.php:75
-#: woocommerce/myaccount/my-orders.php:164
+#: woocommerce/checkout/thankyou.php:44
 msgid "Pay"
 msgstr ""
 
@@ -7027,9 +6937,8 @@ msgstr ""
 msgid "Out of Stock"
 msgstr ""
 
-#: woocommerce/content-product.php:76 woocommerce/loop/sale-flash.php:16
+#: woocommerce/content-product.php:76
 #: woocommerce/single-product/product-image.php:27
-#: woocommerce/single-product/sale-flash.php:16
 msgid "Sale!"
 msgstr ""
 
@@ -7049,7 +6958,7 @@ msgid_plural "%d Reviews"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/loop-shop.php:40 woocommerce/loop/no-products-found.php:14
+#: woocommerce/loop-shop.php:40
 msgid "No products found which match your selection."
 msgstr ""
 
@@ -7077,34 +6986,6 @@ msgstr ""
 msgid "Item added to bag"
 msgstr ""
 
-#: woocommerce/loop/orderby.php:22
-msgid "Sort by popularity"
-msgstr ""
-
-#: woocommerce/loop/orderby.php:23
-msgid "Sort by average rating"
-msgstr ""
-
-#: woocommerce/loop/orderby.php:24
-msgid "Sort by newness"
-msgstr ""
-
-#: woocommerce/loop/orderby.php:25
-msgid "Sort by price: low to high"
-msgstr ""
-
-#: woocommerce/loop/orderby.php:26
-msgid "Sort by price: high to low"
-msgstr ""
-
-#: woocommerce/loop/pagination.php:24
-msgid "Prev"
-msgstr ""
-
-#: woocommerce/loop/pagination.php:25
-msgid "Next"
-msgstr ""
-
 #: woocommerce/loop/result-count.php:47
 msgid "Showing the single product"
 msgstr ""
@@ -7119,32 +7000,8 @@ msgstr ""
 msgid "Showing %1$d-%2$d of %3$d products"
 msgstr ""
 
-#: woocommerce/loop/result-count.php:57 woocommerce/myaccount/my-orders.php:88
-#: woocommerce/myaccount/my-orders.php:180
+#: woocommerce/loop/result-count.php:57
 msgid "View"
-msgstr ""
-
-#: woocommerce/myaccount/form-change-password.php:26
-#: woocommerce/myaccount/form-change-password.php:63
-msgid "It is not possible to change the password for the demo account."
-msgstr ""
-
-#: woocommerce/myaccount/form-change-password.php:32
-#: woocommerce/myaccount/form-change-password.php:68
-#: woocommerce/myaccount/form-lost-password.php:43
-#: woocommerce/myaccount/form-lost-password.php:78
-msgid "New password"
-msgstr ""
-
-#: woocommerce/myaccount/form-change-password.php:36
-#: woocommerce/myaccount/form-change-password.php:72
-#: woocommerce/myaccount/form-lost-password.php:47
-#: woocommerce/myaccount/form-lost-password.php:82
-msgid "Re-enter new password"
-msgstr ""
-
-#: woocommerce/myaccount/form-change-password.php:54
-msgid "Change password"
 msgstr ""
 
 #: woocommerce/myaccount/form-edit-address.php:49
@@ -7170,7 +7027,7 @@ msgstr ""
 #: woocommerce/myaccount/form-login.php:47
 #: woocommerce/myaccount/form-login.php:97
 #: woocommerce/myaccount/form-login.php:144
-#: woocommerce/myaccount/form-login.php:211 woocommerce/shop/form-login.php:24
+#: woocommerce/myaccount/form-login.php:211
 msgid "Password"
 msgstr ""
 
@@ -7209,11 +7066,10 @@ msgstr ""
 #: woocommerce/myaccount/form-login.php:140
 #: woocommerce/myaccount/form-lost-password.php:36
 #: woocommerce/myaccount/form-lost-password.php:71
-#: woocommerce/shop/form-login.php:20
 msgid "Username or email"
 msgstr ""
 
-#: woocommerce/myaccount/form-login.php:161 woocommerce/shop/form-login.php:33
+#: woocommerce/myaccount/form-login.php:161
 msgid "Lost Password?"
 msgstr ""
 
@@ -7235,6 +7091,16 @@ msgstr ""
 #: woocommerce/myaccount/form-lost-password.php:40
 #: woocommerce/myaccount/form-lost-password.php:75
 msgid "Enter a new password below."
+msgstr ""
+
+#: woocommerce/myaccount/form-lost-password.php:43
+#: woocommerce/myaccount/form-lost-password.php:78
+msgid "New password"
+msgstr ""
+
+#: woocommerce/myaccount/form-lost-password.php:47
+#: woocommerce/myaccount/form-lost-password.php:82
+msgid "Re-enter new password"
 msgstr ""
 
 #: woocommerce/myaccount/form-lost-password.php:58
@@ -7278,82 +7144,16 @@ msgstr ""
 msgid "Edit address"
 msgstr ""
 
-#: woocommerce/myaccount/my-downloads.php:20
-#: woocommerce/myaccount/my-downloads.php:45
-msgid "Available downloads"
-msgstr ""
-
-#: woocommerce/myaccount/my-downloads.php:29
-#: woocommerce/myaccount/my-downloads.php:54
-#, php-format
-msgid "%s download remaining"
-msgid_plural "%s downloads remaining"
-msgstr[0] ""
-msgstr[1] ""
-
-#: woocommerce/myaccount/my-orders.php:30
-#: woocommerce/myaccount/my-orders.php:120
-msgid "Recent Orders"
-msgstr ""
-
-#: woocommerce/myaccount/my-orders.php:36
-#: woocommerce/myaccount/my-orders.php:127
-msgid "Order"
-msgstr ""
-
-#: woocommerce/myaccount/my-orders.php:39
-#: woocommerce/order/order-details.php:48
-msgid "Total"
-msgstr ""
-
-#: woocommerce/myaccount/my-orders.php:66
-#, php-format
-msgid "%s for %s item"
-msgid_plural "%s for %s items"
-msgstr[0] ""
-msgstr[1] ""
-
-#: woocommerce/myaccount/my-orders.php:128
-msgid "Amount"
-msgstr ""
-
-#: woocommerce/myaccount/my-orders.php:130
-msgid "Details"
-msgstr ""
-
-#: woocommerce/myaccount/my-orders.php:197
-msgid "You haven't placed any orders yet."
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:17
-msgid ""
-"To track your order please enter your Order ID in the box below and press "
-"return. This was given to you on your receipt and in the confirmation email "
-"you should have received."
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:19
-msgid "Order ID"
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:19
-msgid "Found in your order confirmation email."
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:20
-msgid "Billing Email"
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:20
-msgid "Email you used during checkout."
-msgstr ""
-
-#: woocommerce/order/form-tracking.php:23
-msgid "Track"
-msgstr ""
-
 #: woocommerce/order/order-details.php:41
 msgid "Order Details"
+msgstr ""
+
+#: woocommerce/order/order-details.php:46
+msgid "Product"
+msgstr ""
+
+#: woocommerce/order/order-details.php:48
+msgid "Total"
 msgstr ""
 
 #: woocommerce/order/order-details.php:87
@@ -7384,49 +7184,8 @@ msgstr ""
 msgid "N/A"
 msgstr ""
 
-#: woocommerce/order/tracking.php:18
-#, php-format
-msgid "Order %s which was made %s has the status &ldquo;%s&rdquo;"
-msgstr ""
-
-#: woocommerce/order/tracking.php:20
-msgid "and was completed"
-msgstr ""
-
-#: woocommerce/order/tracking.php:20
-msgid " ago"
-msgstr ""
-
-#: woocommerce/order/tracking.php:31
-msgid "Order Updates"
-msgstr ""
-
 #: woocommerce/share.php:24
 msgid "Share on:"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:63
-msgid "Products tagged &ldquo;"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:91 woocommerce/shop/breadcrumb.php:188
-msgid "Search results for &ldquo;"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:146
-msgid "Error 404"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:192
-msgid "Posts tagged &ldquo;"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:197
-msgid "Author:"
-msgstr ""
-
-#: woocommerce/shop/breadcrumb.php:202
-msgid "Page"
 msgstr ""
 
 #: woocommerce/single-product-reviews.php:33

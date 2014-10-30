@@ -129,7 +129,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			* @hooked woocommerce_template_single_meta - 40
 			* @hooked woocommerce_template_single_sharing - 50
 			*/
-			remove_action( 'woocommerce_single_product_summary', 'sf_product_accordion', 35);              // CHILD SPECIFIC
 			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);  // CHILD SPECIFIC
 			do_action( 'woocommerce_single_product_summary' );
 		?>

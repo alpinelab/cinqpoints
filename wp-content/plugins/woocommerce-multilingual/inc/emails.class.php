@@ -9,15 +9,40 @@ class WCML_Emails{
     }   
     
     function init(){
+        //wrappers for email's header
+        if(is_admin() && !defined( 'DOING_AJAX' )){
+            add_action('woocommerce_order_status_completed_notification', array($this, 'email_heading_completed'),9);            
+            add_action('woocommerce_new_customer_note_notification', array($this, 'email_heading_note'),9);
+            add_action('woocommerce_order_status_changed', array($this, 'comments_language'),10);
+        }
+
+        add_action( 'woocommerce_order_status_pending_to_processing_notification', array( $this, 'email_heading_processing' ) );
+        add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $this, 'email_heading_processing' ) );
+
         //wrappers for email's body
-        add_filter('woocommerce_order_status_completed_notification', array($this, 'email_header')); 
-        add_filter('woocommerce_order_status_processing_notification', array($this, 'email_header')); 
-        add_filter('woocommerce_new_customer_note_notification', array($this, 'email_header')); 
-        add_filter('woocommerce_before_resend_order_emails', array($this, 'email_header')); 
-        add_filter('woocommerce_after_resend_order_email', array($this, 'email_footer')); 
+        add_action('woocommerce_before_resend_order_emails', array($this, 'email_header'));
+        add_action('woocommerce_after_resend_order_email', array($this, 'email_footer'));
+        add_action( 'woocommerce_email_before_order_table', array( $this, 'email_instructions' ), 9, 3 );
         
         //WPML job link
         add_filter('icl_job_edit_url',array($this,'icl_job_edit_url'),10 ,2);
+
+        //change order status
+        add_action('woocommerce_order_status_completed',array($this,'refresh_email_lang'),9);
+        add_action('woocommerce_order_status_pending_to_processing_notification',array($this,'refresh_email_lang'),9);
+        add_action('woocommerce_order_status_pending_to_on-hold_notification',array($this,'refresh_email_lang'),9);
+        add_action('woocommerce_new_customer_note',array($this,'refresh_email_lang'),9);
+
+
+        //admin emails
+        add_action( 'woocommerce_order_status_pending_to_processing_notification', array( $this, 'admin_email' ), 9 );
+        add_action( 'woocommerce_order_status_pending_to_completed_notification', array( $this, 'admin_email' ), 9 );
+        add_action( 'woocommerce_order_status_pending_to_on-hold_notification', array( $this, 'admin_email' ), 9 );
+        add_action( 'woocommerce_order_status_failed_to_processing_notification', array( $this, 'admin_email' ), 9 );
+        add_action( 'woocommerce_order_status_failed_to_completed_notification', array( $this, 'admin_email' ), 9 );
+        add_action( 'woocommerce_order_status_failed_to_on-hold_notification', array( $this, 'admin_email' ), 9 );
+
+        add_filter( 'icl_st_admin_string_return_cached', array( $this, 'admin_string_return_cached' ), 10, 2 );
     }    
     
     /**
@@ -28,7 +53,7 @@ class WCML_Emails{
      * @return type
      */
     function email_header($order) {
-        global $sitepress,$woocommerce;
+
         
         if (is_array($order)) {
             $order = $order['order_id'];
@@ -36,12 +61,25 @@ class WCML_Emails{
             $order = $order->id;
         }
 
-        $lang = get_post_meta($order, 'wpml_language', TRUE);
+        $this->refresh_email_lang($order);
+
+    }
+
+
+    function refresh_email_lang($order_id){
+
+        if(is_array($order_id)){
+           if(isset($order_id['order_id'])){
+               $order_id = $order_id['order_id'];
+           }else{
+           return;
+        }
+
+        }
+
+        $lang = get_post_meta($order_id, 'wpml_language', TRUE);
         if(!empty($lang)){
-            $sitepress->switch_lang($lang, true);
-            $domain = 'woocommerce';
-            unload_textdomain($domain);
-            $woocommerce->load_plugin_textdomain();
+            $this->change_email_language($lang);
         }
     }
 
@@ -53,8 +91,119 @@ class WCML_Emails{
      */
     function email_footer() {
         global $sitepress;
+        $sitepress->switch_lang($sitepress->get_default_language());
 
-        $sitepress->switch_lang(ICL_LANGUAGE_CODE, true);
+    }    
+
+    function comments_language(){
+        global $sitepress_settings;
+
+        if ( defined( 'ICL_SITEPRESS_VERSION' ) && version_compare( ICL_SITEPRESS_VERSION, '3.2', '>=' ) ) {
+            $context_ob = icl_st_get_context( 'plugin woocommerce' );
+            if($context_ob){
+                $this->change_email_language($context_ob->language);
+            }
+        }else{
+            $this->change_email_language($sitepress_settings['st']['strings_language']);
+        }
+
+    }
+
+    function email_heading_completed($order_id){
+        global $woocommerce;
+        if(class_exists('WC_Email_Customer_Completed_Order')){
+            $heading = $this->wcml_get_email_string_info( '[woocommerce_customer_completed_order_settings]heading' );
+            if($heading)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->heading = icl_t($heading[0]->context,'[woocommerce_customer_completed_order_settings]heading',$heading[0]->value);
+            $subject = $this->wcml_get_email_string_info( '[woocommerce_customer_completed_order_settings]subject' );
+            if($subject)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->subject = icl_t($subject[0]->context,'[woocommerce_customer_completed_order_settings]subject',$subject[0]->value);
+            $heading_downloadable = $this->wcml_get_email_string_info( '[woocommerce_customer_completed_order_settings]heading_downloadable' );
+            if($heading_downloadable)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->heading_downloadable = icl_t($heading_downloadable[0]->context,'[woocommerce_customer_completed_order_settings]heading_downloadable',$heading_downloadable[0]->value);
+            $subject_downloadable = $this->wcml_get_email_string_info( '[woocommerce_customer_completed_order_settings]subject_downloadable' );
+            if($subject_downloadable)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->subject_downloadable = icl_t($subject_downloadable[0]->context,'[woocommerce_customer_completed_order_settings]subject_downloadable',$subject_downloadable[0]->value);
+
+            $enabled = $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->enabled;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->enabled = false;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->trigger($order_id);
+            $woocommerce->mailer()->emails['WC_Email_Customer_Completed_Order']->enabled = $enabled;
+        }
+    }
+
+    function email_heading_processing($order_id){
+        global $woocommerce;
+        if(class_exists('WC_Email_Customer_Processing_Order')){
+            $heading = $this->wcml_get_email_string_info( '[woocommerce_customer_processing_order_settings]heading' );
+            if($heading)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->heading = icl_t($heading[0]->context,'[woocommerce_customer_processing_order_settings]heading',$heading[0]->value);
+            $subject = $this->wcml_get_email_string_info( '[woocommerce_customer_processing_order_settings]subject' );
+            if($subject)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->subject = icl_t($subject[0]->context,'[woocommerce_customer_processing_order_settings]subject',$subject[0]->value);
+
+            $enabled = $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->enabled;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->enabled = false;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->trigger($order_id);
+            $woocommerce->mailer()->emails['WC_Email_Customer_Processing_Order']->enabled = $enabled;
+        }
+    }
+
+    function email_heading_note($args){
+        global $woocommerce,$sitepress;
+        if(class_exists('WC_Email_Customer_Note')){
+            $heading = $this->wcml_get_email_string_info( '[woocommerce_customer_note_settings]heading' );
+            if($heading)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Note']->heading = icl_t($heading[0]->context,'[woocommerce_customer_note_settings]heading',$heading[0]->value);
+            $subject = $this->wcml_get_email_string_info( '[woocommerce_customer_note_settings]subject' );
+            if($subject)
+                $woocommerce->mailer()->emails['WC_Email_Customer_Note']->subject = icl_t($subject[0]->context,'[woocommerce_customer_note_settings]subject',$subject[0]->value);
+
+            $enabled = $woocommerce->mailer()->emails['WC_Email_Customer_Note']->enabled;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Note']->enabled = false;
+            $woocommerce->mailer()->emails['WC_Email_Customer_Note']->trigger($args);
+            $woocommerce->mailer()->emails['WC_Email_Customer_Note']->enabled = $enabled;
+        }
+    }
+
+
+    function admin_email($order_id){
+        global $woocommerce,$sitepress;
+        if(class_exists('WC_Email_New_Order')){
+            $recipients = explode(',',$woocommerce->mailer()->emails['WC_Email_New_Order']->get_recipient());
+            foreach($recipients as $recipient){
+                $user = get_user_by('email',$recipient);
+                if($user){
+                    $user_lang = $sitepress->get_user_admin_language($user->ID);
+                }else{
+                    $user_lang = get_post_meta($order_id, 'wpml_language', TRUE);
+                }
+                $this->change_email_language($user_lang);
+                $heading = $this->wcml_get_email_string_info( '[woocommerce_new_order_settings]heading' );
+                if($heading)
+                    $woocommerce->mailer()->emails['WC_Email_New_Order']->heading = icl_t($heading[0]->context,'[woocommerce_new_order_settings]heading',$heading[0]->value);
+                $subject = $this->wcml_get_email_string_info( '[woocommerce_new_order_settings]subject' );
+                if($subject)
+                    $woocommerce->mailer()->emails['WC_Email_New_Order']->subject = icl_t($subject[0]->context,'[woocommerce_new_order_settings]subject',$subject[0]->value);
+
+                $woocommerce->mailer()->emails['WC_Email_New_Order']->recipient = $recipient;
+
+                $woocommerce->mailer()->emails['WC_Email_New_Order']->trigger($order_id);
+            }
+            $woocommerce->mailer()->emails['WC_Email_New_Order']->enabled = false;
+            $this->refresh_email_lang($order_id);
+        }
+    }
+
+    function change_email_language($lang){
+        global $sitepress,$woocommerce;
+        $sitepress->switch_lang($lang,true);
+        unload_textdomain('woocommerce');
+        unload_textdomain('default');
+        $woocommerce->load_plugin_textdomain();
+        load_default_textdomain();
+        global $wp_locale;
+        $wp_locale = new WP_Locale();
     }    
     
 
@@ -82,6 +231,33 @@ class WCML_Emails{
         }
 
         return $link;
+    }
+
+    function email_instructions($order, $sent_to_admin, $plain_text = false){
+        global $woocommerce_wpml;
+        $woocommerce_wpml->strings->translate_payment_instructions($order->payment_method);
+    }
+
+    function admin_string_return_cached( $value, $option ){
+        if( in_array( $option, array ( 'woocommerce_email_from_address', 'woocommerce_email_from_name' ) ) )
+            return false;
+
+        return $value;
+    }
+
+    function wcml_get_email_string_info( $name ){
+        global $wpdb;
+
+        if ( defined( 'ICL_SITEPRESS_VERSION' ) && version_compare( ICL_SITEPRESS_VERSION, '3.2', '>=' ) ) {
+            $result = $wpdb->get_results( $wpdb->prepare( "SELECT st.value,cn.context FROM {$wpdb->prefix}icl_strings as st LEFT JOIN {$wpdb->prefix}icl_string_contexts as cn ON st.context_id = cn.id WHERE st.name = %s ", $name ) );
+        }else{
+            global $sitepress_settings;
+            $language =  $sitepress_settings['st']['strings_language'];
+            $result = $wpdb->get_results( $wpdb->prepare( "SELECT value,context FROM {$wpdb->prefix}icl_strings WHERE language = %s AND name = %s ", $language, $name ) );
+        }
+
+        return $result;
+
     }
 
 }

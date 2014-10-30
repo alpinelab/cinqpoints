@@ -145,6 +145,7 @@
 	    return $teaser_width;
 	}
 	
+	if ( ! function_exists( 'spb_translateColumnWidthToSpan' ) ) {
 	function spb_translateColumnWidthToSpan($width) {
 		
 		$sidebars = "";
@@ -238,6 +239,7 @@
 	            $w = $width;
 	    }
 	    return $w;
+	}
 	}
 	
 	function spb_js_remove_wpautop($content) {
