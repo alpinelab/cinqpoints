@@ -6,7 +6,7 @@
 	Description: A Retina Responsive Multi-Purpose WordPress Theme - Designed & Developed by Swift Ideas ( www.swiftideas.net )
 	License: GNU General Public License version 3.0
 	License URI: http://www.gnu.org/licenses/gpl-3.0.html
-	Version: 1.90
+	Version: 1.95
 	Author: Swift Ideas
 	Author URI: www.swiftideas.net
 
@@ -567,6 +567,7 @@ body .wooslider.wooslider-type-slides img { max-width: 100%; }
 .flex-direction-nav .flex-disabled {
 	opacity: 0!important;
 	filter: alpha(opacity=0)!important;
+	display: none!important;
 }
 .rev_slider_wrapper .tp-leftarrow, .rev_slider_wrapper .tp-leftarrow.large, .rev_slider_wrapper .tp-leftarrow.square, .rev_slider_wrapper .tp-leftarrow.round, .rev_slider_wrapper .tp-leftarrow.default {
 	background: transparent url('images/showcase-nav.png') no-repeat center left;
@@ -7321,7 +7322,7 @@ div.pp_woocommerce .currentTextHolder {
 
 .woocommerce-count-wrap {
 	float: left;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 .woocommerce .woocommerce-result-count, .woocommerce-page .woocommerce-result-count {
 	float: none;
@@ -7383,7 +7384,7 @@ ul.products li.product .star-rating {
 	text-align: center;
 	padding: 4px;
 	width: 120px;
-	z-index: 2;
+	z-index: 4;
 	min-width: auto!important;
 	height: 26px!important;
 	min-height: 26px!important;
@@ -7496,16 +7497,19 @@ body .woocommerce ul.products li.product figure, body.woocommerce ul.products li
 	display: block;
 	overflow: hidden;
 }
-.standard-browser ul.products li.product figure.product-transition-fade > a > .product-image {
+ul.products li.product figure.product-transition-fade > a > .product-image {
 	position: relative;
 	z-index: 3;
 }
-.standard-browser ul.products li.product figure.product-transition-fade > a > .product-image.second-image {
+ul.products li.product figure.product-transition-fade > a > .product-image.second-image {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
 	z-index: 2;
+}
+.mobile-browser ul.products li.product figure.product-transition-fade > a > .product-image.second-image {
+	display: none;
 }
 .standard-browser ul.products li.product figure.product-transition-fade > a > .product-image img {
 	-webkit-animation-fill-mode: both;
@@ -7523,7 +7527,7 @@ body .woocommerce ul.products li.product figure, body.woocommerce ul.products li
 	-ms-backface-visibility: hidden;
 	opacity: 1;
 }
-.standard-browser ul.products li.product figure.product-transition-fade > a > .product-image:first-child {
+ul.products li.product figure.product-transition-fade > a > .product-image:first-child {
 	display: block;
 	width: 100%;
 	height: auto;
@@ -7711,14 +7715,11 @@ nav.woocommerce-pagination ul li a.prev i {
 	margin-top: 30px;
 }
 #product-img-nav li {
-	margin-left: 20px;
+	margin-right: 12px;
 	margin-bottom: 5px;
 	-webkit-box-shadow: 0 8px 6px -7px #ccc;
 	-moz-box-shadow: 0 8px 6px -7px #ccc;
 	box-shadow: 0 8px 6px -7px #ccc;
-}
-#product-img-nav li:first-child {
-	margin-left: 0;
 }
 #product-img-nav li:hover {
 	cursor: pointer;
@@ -8129,6 +8130,9 @@ nav.woocommerce-pagination ul li a.prev i {
 .carousel-wrap ul.products li.product {
 	margin-left: 20px!important;
 	margin-right: 0!important;
+}
+.carousel-wrap.carousel-disabled ul.products li.product:first-child {
+	margin-left: 0!important;
 }
 body .has-no-sidebar ul.products li.product {
 	width: 220px;
@@ -9252,6 +9256,9 @@ ul.my-account-nav > li a:before {
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 10px;
 	margin-top: 40px;	
+}
+.woocommerce-account .page-content .tab-content h2 {
+	margin-top: 0;
 }
 .woocommerce-account p.myaccount_address {
 	border-bottom: 1px solid #ccc;

@@ -1104,4 +1104,8 @@
 		float: none;
 		width: 100%;
 	}
+	.woocommerce .coupon input.input-text {
+		width: 100%;
+		margin-bottom: 15px;
+	}
 }

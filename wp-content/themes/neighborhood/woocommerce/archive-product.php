@@ -134,45 +134,15 @@
 			<!-- OPEN page-content -->
 			<section class="page-content <?php echo $content_class; ?>">
 			
-			<?php if ( version_compare( WOOCOMMERCE_VERSION, "2.1.0" ) >= 0 ) {
-			
-				wc_get_template( 'loop/result-count.php' );
-				
-				global $woocommerce;
-	
-				$orderby = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
-		
-				wc_get_template( 'loop/orderby.php', array( 'orderby' => $orderby ) );
-						
-			} else if ( version_compare( WOOCOMMERCE_VERSION, "2.0.0" ) >= 0 ) {
-				
-				woocommerce_get_template( 'loop/result-count.php' );
-				
-				global $woocommerce;
-	
-				$orderby = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
-		
-				woocommerce_get_template( 'loop/orderby.php', array( 'orderby' => $orderby ) );
-	        
-	        } else { ?>
-	
-                <form class="woocommerce-ordering" method="POST">
-                    <select name="sort" class="orderby">
-                        <?php
-                            $catalog_orderby = apply_filters('woocommerce_catalog_orderby', array(
-                                'menu_order' 	=> __('Default sorting', 'woocommerce'),
-                                'title' 		=> __('Sort alphabetically', 'woocommerce'),
-                                'date' 			=> __('Sort by most recent', 'woocommerce'),
-                                'price' 		=> __('Sort by price', 'woocommerce')
-                            ));
-                
-                            foreach ( $catalog_orderby as $id => $name )
-                                echo '<option value="' . $id . '" ' . selected( $_SESSION['orderby'], $id, false ) . '>' . $name . '</option>';
-                        ?>
-                    </select>
-                </form>
-	            
-	        <?php } ?>
+			<?php
+				/**
+				 * woocommerce_before_shop_loop hook
+				 *
+				 * @hooked woocommerce_result_count - 20
+				 * @hooked woocommerce_catalog_ordering - 30
+				 */
+				do_action( 'woocommerce_before_shop_loop' );
+			?>
 			
 			<?php do_action( 'woocommerce_archive_description' ); ?>
 			

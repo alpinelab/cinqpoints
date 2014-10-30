@@ -752,9 +752,9 @@
 				$cart_count_text = sf_product_items_text($cart_count);
 				
 				if ($show_cart_count) {
-					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping cart", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.' ('.$cart_count.')</a>';			
+					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping bag", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.' ('.$cart_count.')</a>';			
 				} else {
-					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping cart", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.'</a>';
+					$cart_output .= '<li class="parent shopping-bag-item"><a class="cart-contents" href="'.$woocommerce->cart->get_cart_url().'" title="'.__("View your shopping bag", "swiftframework").'"><i class="sf-cart"></i>'.$cart_total.'</a>';
 					
 				}
 	            $cart_output .= '<ul class="sub-menu">';     
@@ -990,7 +990,7 @@
 				foreach ($sorted_posts as $key => $type) {
 					$search_results_ouput .= '<div class="search-result-pt">';
 			        if(isset($post_type[$key]->labels->name)) {
-			            $search_results_ouput .= "<h6>".$post_type[$key]->labels->name."</h6>";
+			            $search_results_ouput .= "<h6>".__($post_type[$key]->labels->name, "swiftframework")."</h6>";
 			        } else if(isset($key)) {
 			            $search_results_ouput .= "<h6>".$key."</h6>";
 			        } else {
